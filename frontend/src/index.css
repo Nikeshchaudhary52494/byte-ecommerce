@@ -1,0 +1,26 @@
+@tailwind base;
+
+html {
+   scroll-behavior: smooth;
+}
+
+@tailwind components;
+@tailwind utilities;
+
+
+
+::-webkit-scrollbar {
+   width:0px;
+}
+
+/* color for theme */
+:root {
+   --blue1: 0E2954;
+   --blue2: 1F6E8C;
+   --blue3: 2E8A99;
+   --blue4: 84A7A1;
+   --green1: 040D12;
+   --green2: 183D3D;
+   --green3: 5C8374;
+   --green4: 93B1A6
+}
