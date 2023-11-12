@@ -7,6 +7,7 @@ import Products from "./component/Product/Products.js"
 import Categories from "./component/Product/Categories.js"
 import Login from "./component/User/Login.js"
 import SignUp from "./component/User/SignUp.js"
+import Filter from "./component/Product/productFilter.js"
 
 import { Route, Routes } from "react-router-dom";
 function App() {
@@ -26,7 +27,9 @@ function App() {
         <Route path="product/:id" element={<ProductDetails />} />
         <Route path="cart" element={<Cart />} />
         <Route path="products/:keyword" element={<Products />} />
-        <Route path="products" element={<Products />} />
+        <Route path="products" >
+          <Route path="filter" element={<Filter />} />
+        </Route>
         < Route path="user" >
           <Route path="login" element={<Login />} />
           <Route path="signup" element={<SignUp />} />

@@ -1,4 +1,5 @@
 import React from 'react'
+import { motion } from "framer-motion"
 import { Link } from "react-router-dom"
 const SignUp = () => {
     return (
@@ -14,7 +15,7 @@ const SignUp = () => {
 
                         <input class="w-[300px ] outline-none p-2 m-2 rounded-md" type="text" placeholder='Email' />
                         <input class="w-[300px ] outline-none p-2 m-2 rounded-md" type="password" placeholder='Password' />
-                        <input type="submit" class="w-[300px] m-2 h-[40px] bg-teal-600 rounded-lg" />
+                        <motion.input type="submit" whileTap={{ scale: 0.9 }} whileHover={{ scale: 1.1 }} transition={{duration:.5}} class="w-[300px] m-2 h-[40px] hover:bg-teal-700 bg-teal-600 rounded-lg" />
                     </form>
                     <Link to="/user/login">
                         <p class="text-sm ">

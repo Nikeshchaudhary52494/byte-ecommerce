@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { motion } from 'framer-motion'
 
 const Login = () => {
   return (
@@ -13,7 +14,7 @@ const Login = () => {
           <form class="flex gap-4 flex-col">
             <input class="w-[300px ] outline-none p-2 m-2 rounded-md" type="text" placeholder='Email' />
             <input class="w-[300px ] outline-none p-2 m-2 rounded-md" type="password" placeholder='Password' />
-            <input type="submit" class="w-[300px] m-2 h-[40px] bg-teal-600 rounded-lg" />
+            <motion.input type="submit" whileTap={{ scale: 0.9 }} whileHover={{ scale: 1.1 }} transition={{ duration: .5 }} class="w-[300px] m-2 h-[40px] hover:bg-teal-700 bg-teal-600 rounded-lg" />
           </form>
           <Link to="/user/signup">
             <p class="text-sm ">
@@ -21,9 +22,9 @@ const Login = () => {
             </p>
           </Link>
         </div>
-     <Link to="/" >
-     <button class="text-white p-2 mt-5"  >Go to Home</button>
-     </Link>
+        <Link to="/" >
+          <button class="text-white p-2 mt-5"  >Go to Home</button>
+        </Link>
       </div>
     </>
   )
