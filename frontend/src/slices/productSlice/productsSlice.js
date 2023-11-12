@@ -50,10 +50,11 @@ export const fetchProducts = createAsyncThunk('products/fetch',
 export const fetchProducts2 = createAsyncThunk('products/fetch',
     async (params) => {
         console.log(params);
-        const { keyword = "", price } = params;
+        // creating variable keyword with default=""
+        const { keyword = ""} = params;
         console.log(keyword);
 
-        const { data } = await axios.get(`/api/v1/products?keyword=${keyword}&price[gte]=${price[0]}&price[lte]=${price[1]}`);
+        const { data } = await axios.get(`/api/v1/products?keyword=${keyword}`);
         return data.products;
 
     }

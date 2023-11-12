@@ -1,8 +1,8 @@
 import React from 'react'
-import { RiH2 } from 'react-icons/ri'
+import { motion } from "framer-motion"
 
-const Categories = () => {
-    const categories = [{
+const CategoriesList = () => {
+    const categoriesList = [{
         imgAddress: "https://m.media-amazon.com/images/I/315vs3rLEZL._SY445_SX342_QL70_FMwebp_.jpg",
         categoryName: "Phones"
     },
@@ -38,26 +38,16 @@ const Categories = () => {
 
     return (
         <>
-          
-            {categories ? (
-                <div class=" mx-auto overflow-x-auto " >
-                    <div className='grid grid-cols-3 md:flex  gap-1 mx-10 mt-10 lg:gap-10  md:m-0'>
-                        {categories.map((category) =>
-                            <div class="w-[100px] m-1 p-1 bg-white border shadow-lg flex items-center justify-center flex-col h-[100px]" >
-                                <img class="h-[75%]" src={category.imgAddress} alt="Hello" />
-                                <p>{category.categoryName}</p>
-                            </div>
+            {categoriesList.map((category) =>
+                <motion.div whileHover={{ scale: 1.3 }} class="w-[100px] mt-1 p-1 bg-white border sm:border-none rounded-lg flex items-center justify-center flex-col h-[100px]" >
+                    <img class="h-[75%]" src={category.imgAddress} alt={category.categoryName} />
+                    <p>{category.categoryName}</p>
+                </motion.div>
 
-                        )}
-                    </div>
-                </div>
-            ) : (
-                <p class="text-center mb-32 text-red-400 font-medium">
-                    No Rerview Available
-                </p>
-            )}</>
+            )}
+        </>
     )
 }
 
-export default Categories
+export default CategoriesList
 

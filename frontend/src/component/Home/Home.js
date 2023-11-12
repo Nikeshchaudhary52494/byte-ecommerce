@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { STATUSES } from '../../store/statuses';
 import { fetchProducts } from '../../slices/productSlice/productsSlice';
 import ProductCard from "../layout/ProductCard";
-import Categories from "../Product/Categories";
+import CategoriesList from "../Product/CategoriesList";
 
 
 
@@ -43,9 +43,12 @@ const Home = () => {
   return (
     <>
       <MetaData title="ECOMMERCE" />
-      <div class=" border-y-2 mx-auto  hidden md:flex bg-white h-[110px] text-black " >
-        <Categories />
+
+      {/* Categories at the Top */}
+      <div class="md:flex gap-5 my-1 p-1 place-content-center hidden" >
+        <CategoriesList />
       </div>
+
       <div class=" min-h-screen md:min-h-[85vh]  flex flex-col dark:text-white dark:bg-slate-900 text-2xl justify-center items-center">
         <p class="font-mono text-xl">Welcome To Ecommerce</p>
         <h2 class="font-bold text-center m-24 text-3xl">
@@ -61,7 +64,7 @@ const Home = () => {
           <span>Scroll</span>
         </a>
       </div>
- 
+
 
 
       <h2 class="text-center text-black font-bold border-b-2  border-black m-2 max-w-4xl mx-auto">
