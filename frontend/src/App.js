@@ -7,19 +7,11 @@ import Products from "./component/Product/Products.js"
 import CategoriesPage from "./component/Product/CategoryPage.js"
 import Login from "./component/User/Login.js"
 import SignUp from "./component/User/SignUp.js"
-import Filter from "./component/Product/ProductFilter.js"
-
 import { Route, Routes } from "react-router-dom";
+
+
 function App() {
   return (
-    // <Router>
-    //   <Header />
-    //   <Routes>
-    //     <Route exact path="/" Component={Home} />
-    //     <Route exact path="/product/:id" Component={ProductDetails} />
-    //   </Routes>
-    //   <Footer />
-    // </Router>
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />} />
@@ -28,14 +20,11 @@ function App() {
         <Route path="cart" element={<Cart />} />
         <Route path="products/:keyword" element={<Products />} />
         <Route path="products" element={<Products />}>
-          {/* <Route index  />
-          <Route path="filter" element={<Filter />} /> */}
         </Route>
         < Route path="user" >
           <Route path="login" element={<Login />} />
           <Route path="signup" element={<SignUp />} />
         </Route>
-        {/* <Route path="products" element={<Products />} /> */}
       </Route>
     </Routes>
   );

@@ -33,11 +33,7 @@ const Header = () => {
     <>
       <nav class="bg-slate-200 dark:bg-slate-800 dark:text-white sticky  top-0 z-10">
         <div class="lg:w-full w-3/4 mx-auto">
-          <div class="max-w-5xl p-4 mx-auto flex justify-between items-center ">
-            {/* <div class="text-3xl font-bold text-cyan-500 cursor-pointer">
-              ECOMMERCE
-            </div> */}
-        
+          <div class="max-w-5xl p-4 mx-auto flex justify-between items-center ">     
              <img className="w-24" src={Logo} />
             <div class=" hidden md:block ">
               <SearchBar />

@@ -24,22 +24,9 @@ const productSlice = createSlice({
             .addCase(fetchProducts.rejected, (state, action) => {
                 state.status = STATUSES.ERROR;
             })
-        // .addCase(fetchProducts2.pending, (state, action) => {
-        //     state.status = STATUSES.LOADING;
-        // })
-        // .addCase(fetchProducts2.fulfilled, (state, action) => {
-        //     // sending data to store
-        //     state.data = action.payload;
-        //     state.status = STATUSES.IDLE;
-        // })
-        // .addCase(fetchProducts2.rejected, (state, action) => {
-        //     state.status = STATUSES.ERROR;
-        // });
     },
 });
 export default productSlice.reducer;
-// Thunks
-// let link = ``;
 
 export const fetchProducts = createAsyncThunk('products/fetch',
     async () => {
@@ -49,16 +36,9 @@ export const fetchProducts = createAsyncThunk('products/fetch',
 
 export const fetchProducts2 = createAsyncThunk('products/fetch',
     async (params) => {
-        console.log(params);
         // creating variable keyword with default=""
-        const { keyword = ""} = params;
-        console.log(keyword);
-
-        const { data } = await axios.get(`/api/v1/products?keyword=${keyword}`);
+        const { keyword = "", price = [0, 2500] } = params;
+        const { data } = await axios.get(`/api/v1/products?keyword=${keyword}&price[gte]=${price[0]}&price[lte]=${price[1]}`);
         return data.products;
-
     }
-
-
-
 );

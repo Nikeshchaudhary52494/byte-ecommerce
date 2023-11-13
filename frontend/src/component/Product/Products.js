@@ -6,11 +6,15 @@ import { fetchProducts2 } from '../../slices/productSlice/productsSlice';
 import ProductCard from "../layout/ProductCard";
 import { useParams } from "react-router-dom";
 import { FaFilter } from "react-icons/fa"
-import ProductFilter from "./ProductFilter";
+import ProductFilter from "./productFilter.js";
 const Products = () => {
 
     const dispatch = useDispatch();
     const { data: products, status } = useSelector((state) => state.products);
+    const price = useSelector((state) => state.filter);
+    console.log("pricecc")
+    console.log(price)
+    // This hook allows you to access the parameters from the current route's path.
     const { keyword } = useParams();
 
     // toggleFilte controller
@@ -32,8 +36,10 @@ const Products = () => {
     }, [toggleFilter]);
 
     useEffect(() => {
-        dispatch(fetchProducts2({ keyword }))
-    }, [dispatch, keyword]);
+        dispatch(fetchProducts2({ keyword,price}))
+        console.log("hello")
+        console.log(price);
+    }, [dispatch, keyword, price]);
 
     if (status === STATUSES.LOADING) {
         return <div class="w-full grid place-content-center h-[80vh] ">

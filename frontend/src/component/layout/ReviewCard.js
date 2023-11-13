@@ -2,9 +2,6 @@ import React from 'react'
 import ReactStars from "react-rating-stars-component"
 import ProfilePic from "../images/profile.jpg"
 
-
-
-
 const ReviewCard = ({ review }) => {
 
   const options = {

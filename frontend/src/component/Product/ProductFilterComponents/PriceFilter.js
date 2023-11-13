@@ -1,11 +1,9 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Slider } from "@mui/material";
 
 const minPrice = 100;
-const PriceFilter = () => {
+const PriceFilter = ({ price, setPrice }) => {
 
-    //initial min and maxprice
-    const [price, setPrice] = useState([0, 2500]);
 
     const handlePrice = (event, newPrice, activeThumb) => {
         // checking is newPrice is a array or not
@@ -19,6 +17,7 @@ const PriceFilter = () => {
             setPrice([price[0], Math.max(newPrice[1], price[0] + minPrice)]);
         }
     };
+
 
     return (
         <>
