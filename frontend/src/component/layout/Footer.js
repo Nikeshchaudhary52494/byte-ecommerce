@@ -1,6 +1,7 @@
 import React from "react";
 import { BiLogoPlayStore } from "react-icons/bi";
 import { FaAppStore } from "react-icons/fa";
+import Logo from "../images/byte.png"
 import {
   AiOutlineInstagram,
   AiOutlineYoutube,
@@ -15,13 +16,14 @@ const Footer = () => {
         <div class="items-center text-center md:w-[33.33%] flex flex-col">
           <h4 class="font-bold">DOWNLOAD OUR APP</h4>
           <p>download App for Android And Ios mobile phone</p>
-          <BiLogoPlayStore  />
+          <BiLogoPlayStore />
           <FaAppStore />
         </div>
-        <div class="text-center md:w-[33.33%]">
-          <h1 class="text-5xl font-bold text-cyan-500 m-2">ECOMMERCE</h1>
+        <div class="flex flex-col items-center md:w-[33.33%]">
+          <img className="w-40" src={Logo} alt="Byte Logo" />
+          <h1 class="text-5xl font-bold text-teal-400 m-2">ECOMMERCE</h1>
           <p>High Quality is our first priority</p>
-          <p>Copyright 2021 &copy; MeNikeshChaudhary</p>
+          <p>Copyright 2023 &copy; MeNikeshChaudhary</p>
         </div>
         <div class="items-center flex flex-col md:w-[33.33%]">
           <h4>FollowUs</h4>

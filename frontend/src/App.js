@@ -27,9 +27,9 @@ function App() {
         <Route path="product/:id" element={<ProductDetails />} />
         <Route path="cart" element={<Cart />} />
         <Route path="products/:keyword" element={<Products />} />
-        <Route path="products">
-          <Route index element={<Products />} />
-          <Route path="filter" element={<Filter />} />
+        <Route path="products" element={<Products />}>
+          {/* <Route index  />
+          <Route path="filter" element={<Filter />} /> */}
         </Route>
         < Route path="user" >
           <Route path="login" element={<Login />} />

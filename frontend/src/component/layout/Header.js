@@ -3,6 +3,7 @@ import SignINNavbar from "./SignInNavbar";
 import NavOptions from "./NavOptions.js";
 import SearchBar from "../layout/SearchBar.js"
 import { Link } from "react-router-dom";
+import Logo from "../images/byte.png"
 
 import {
   AiOutlineMenu,
@@ -33,9 +34,11 @@ const Header = () => {
       <nav class="bg-slate-200 dark:bg-slate-800 dark:text-white sticky  top-0 z-10">
         <div class="lg:w-full w-3/4 mx-auto">
           <div class="max-w-5xl p-4 mx-auto flex justify-between items-center ">
-            <div class="text-3xl font-bold text-cyan-500 cursor-pointer">
+            {/* <div class="text-3xl font-bold text-cyan-500 cursor-pointer">
               ECOMMERCE
-            </div>
+            </div> */}
+        
+             <img className="w-24" src={Logo} />
             <div class=" hidden md:block ">
               <SearchBar />
             </div>
@@ -63,7 +66,7 @@ const Header = () => {
 
             <div className={`inset-0 fixed bg-black backdrop-filter bg-opacity-50 backdrop-blur-md ${toggle ? `block` : `hidden`}`}>
               <ul
-                class={` lg:hidden flex flex-col gap-7 z-50 w-[270px] h-[300px] rounded-[20px] pl-4 pt-10 fixed bg-cyan-500 dark:bg-slate-800 text-white dark:text-slate-300 top-4 right-4 
+                class={` lg:hidden flex flex-col gap-7 w-[270px] h-[300px] rounded-[20px] pl-4 pt-10 fixed bg-cyan-500 dark:bg-slate-800 text-white dark:text-slate-300 top-4 right-4 
           ${toggle ? `right-4 top-4` : `right-[-100%] top-[-100%]`}
           `}
               >

@@ -50,7 +50,7 @@ const Home = () => {
       </div>
 
       <div class=" min-h-screen md:min-h-[85vh]  flex flex-col dark:text-white dark:bg-slate-900 text-2xl justify-center items-center">
-        <p class="font-mono text-xl">Welcome To Ecommerce</p>
+        <p class="font-mono text-xl">Welcome To Byte Ecommerce</p>
         <h2 class="font-bold text-center m-24 text-3xl">
           <Typed
             strings={["FIND AMAZING PRODUCTS HERE..."]}
@@ -59,8 +59,8 @@ const Home = () => {
             backSpeed={50}
           />
         </h2>
-        <a class="flex gap-2 items-center" href="#container">
-          <BsMouse class="hover:text-blue-900 " />
+        <a class="flex gap-2 items-center hover:text-cyan-600 duration-300 " href="#container">
+          <BsMouse />
           <span>Scroll</span>
         </a>
       </div>
