@@ -11,6 +11,7 @@ import SignUp from "./component/User/SignUp.js"
 import { Route, Routes } from "react-router-dom";
 import UserProfile from "./component/User/UserProfile.js"
 
+
 function App() {
   return (
     <Routes>

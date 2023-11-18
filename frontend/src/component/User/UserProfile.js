@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import demoAvatar from "../images/userProfile.avif";
 
 const UserProfile = () => {
@@ -7,9 +7,9 @@ const UserProfile = () => {
         { label: 'Email', value: 'nikesh@gmail.com' },
         { label: 'Password', value: '*********' },
     ];
-
-    return (
-      <>
+  return (
+    <div>
+         <>
         <div className='flex justify-center bg-slate-800 h-screen items-center'>
             <div className='w-[80%] max-w-lg p-5 m-10 bg-slate-700 rounded-md '>
                 <div className=' rounded-md bg-slate-600 m-2 p-2'>
@@ -29,7 +29,10 @@ const UserProfile = () => {
 
             </div>
         </div></>
-    );
-};
+    </div>
+  )
+}
 
-export default UserProfile;
+export default UserProfile
+
+
