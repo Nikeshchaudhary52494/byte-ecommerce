@@ -3,9 +3,10 @@ import { motion } from "framer-motion"
 import { Link, useNavigate } from "react-router-dom"
 import demoAvatar from "../images/userProfile.avif"
 import Logo from "../images/byte.png"
+
+
 const SignUp = () => {
     const navigate = useNavigate();
-    // const [signupMessage, setSignupMessage] = useState('');
     const [user, setUser] = useState({
         name: "",
         email: "",
@@ -17,20 +18,18 @@ const SignUp = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
         try {
-            // Create a FormData object to handle file uploads
-            const formData = new FormData();
-            formData.append('name', name);
-            formData.append('email', email);
-            formData.append('password', password);
-            formData.append('avatar', avatar);
-
             const response = await fetch('/api/v1/register', {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
                 method: 'POST',
-                body: formData,
+                body: JSON.stringify({
+                    name,
+                    email,
+                    password,
+                }),
             });
-
             if (response.ok) {
                 console.log('Signup successful!');
                 navigate('/'); // Redirect to the home page after successful signup
@@ -62,11 +61,9 @@ const SignUp = () => {
             <div className="grid bg-slate-900 h-[100vh]  fixed z-20 top-0 left-0 w-[100vw] place-content-center">
                 <div className="bg-slate-800 p-10 rounded-lg text-white">
                     <div className="px-4" >
-                        {/* <h1 className="text-3xl text-cyan-500 font-medium">Ecommerce</h1> */}
                         <img className='w-24' src={Logo} alt="Byte logo" />
                         <h3 className="text-xl mb-4 ">Sign UP</h3>
                     </div>
-                    {/* {signupMessage && <p className="text-green-500 mb-4">{signupMessage}</p>} */}
                     <form className="flex gap-4 text-black flex-col" onSubmit={handleSubmit} >
                         <input
                             required
