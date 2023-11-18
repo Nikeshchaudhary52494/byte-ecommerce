@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
+import Logo from "../images/byte.png"
 
 const Login = () => {
   return (
@@ -8,7 +9,9 @@ const Login = () => {
       <div class="grid bg-slate-900 h-[100vh]  fixed z-20 top-0 left-0 w-[100vw] place-content-center">
         <div class="bg-slate-800 p-10 rounded-lg text-white">
           <div class="px-4" >
-            <h1 class="text-3xl text-cyan-500 font-medium">Ecommerce</h1>
+            {/* <h1 class="text-3xl text-cyan-500 font-medium">Ecommerce</h1> */}
+            <img className='w-24' src={Logo} alt="Byte logo" />
+
             <h3 class="text-xl mb-4 ">Login</h3>
           </div>
           <form class="flex gap-4 flex-col">

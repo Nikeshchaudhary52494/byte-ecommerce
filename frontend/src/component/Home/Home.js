@@ -42,7 +42,7 @@ const Home = () => {
 
   return (
     <>
-      <MetaData title="ECOMMERCE" />
+      <MetaData title="BYTE ECOMMERCE" />
 
       {/* Categories at the Top */}
       <div class="md:flex gap-5 my-1 p-1 place-content-center hidden" >

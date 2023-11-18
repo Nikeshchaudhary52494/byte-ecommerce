@@ -7,8 +7,9 @@ import Products from "./component/Product/Products.js"
 import CategoriesPage from "./component/Product/CategoryPage.js"
 import Login from "./component/User/Login.js"
 import SignUp from "./component/User/SignUp.js"
-import { Route, Routes } from "react-router-dom";
 
+import { Route, Routes } from "react-router-dom";
+import UserProfile from "./component/User/UserProfile.js"
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         < Route path="user" >
           <Route path="login" element={<Login />} />
           <Route path="signup" element={<SignUp />} />
+          <Route path="profile" element={<UserProfile />} />
         </Route>
       </Route>
     </Routes>

@@ -3,11 +3,14 @@ import ItemConditionFilter from './ProductFilterComponents/ItemConditionFilter';
 import PriceFilter from './ProductFilterComponents/PriceFilter';
 import RatingFilter from './ProductFilterComponents/RatingFilter';
 import { updateData } from '../../slices/filterSlice/filterSlice';
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+// import ()
 
 
 const ProductFilter = ({ toggleFilter, setToggleFilter }) => {
-    const [price, setPrice] = useState([0, 2500]);
+    const [minprice, Maxprice] = useSelector((state) => state.filter)
+    const [price, setPrice] = useState([minprice, Maxprice]);
+    // const [category, setCategory] = useState(null);
     const dispatch = useDispatch();
     const sendPriceData = () => {
         dispatch(updateData(price))
