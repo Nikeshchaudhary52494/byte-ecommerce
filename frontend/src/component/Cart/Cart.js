@@ -1,11 +1,13 @@
 import React from 'react'
 import { Link } from "react-router-dom"
 import LoggedInComponenet from './LoggedInComponenet';
-const isLogedin = false;
+import { useSelector } from 'react-redux';
+
 const Cart = () => {
+    const logedin = useSelector((state) => state.user)
     return (
         <>
-            {isLogedin ? (
+            {logedin ? (
                 <LoggedInComponenet />) : (
                 <div class="text-center  m-20 h-[50vh]">
                     <div class="grid  place-content-center">

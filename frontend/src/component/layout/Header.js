@@ -1,26 +1,35 @@
 import React, { useEffect, useState } from "react";
-import SignINNavbar from "./SignInNavbar";
 import NavOptions from "./NavOptions.js";
 import SearchBar from "../layout/SearchBar.js"
 import { Link } from "react-router-dom";
+import { useSelector } from 'react-redux';
 import Logo from "../images/byte.png"
-
+import { motion } from "framer-motion"
+import demoAvatar from "../images/userProfile.avif"
 import {
   AiOutlineMenu,
   AiOutlineClose,
   AiOutlineUser,
-  // AiOutlineSearch,
 } from "react-icons/ai";
 import { RiArrowDropDownLine } from "react-icons/ri";
+import UserProfileOptions from "./UserProfileOptions.js";
+
+
 const Header = () => {
+  const logedin = useSelector((state) => state.user);
+  console.log(logedin)
   const [toggle, setToggle] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
+  const containerVariants = {
+    visible: { opacity: 1, transition: { duration: 0.5 } },
+    hidden: { opacity: 0 },
+  };
   useEffect(() => {
     const handleScroll = (event) => {
       if (toggle) {
         event.preventDefault();
       }
     };
-
     // Add event listener when the component mounts
     document.body.addEventListener("wheel", handleScroll, { passive: false });
 
@@ -31,51 +40,71 @@ const Header = () => {
   }, [toggle]);
   return (
     <>
-      <nav class="bg-slate-200 dark:bg-slate-800 dark:text-white sticky  top-0 z-10">
-        <div class="lg:w-full w-3/4 mx-auto">
-          <div class="max-w-5xl p-4 mx-auto flex justify-between items-center ">     
-             <img className="w-24" src={Logo} />
-            <div class=" hidden md:block ">
+      <nav className="bg-slate-200 dark:bg-slate-800 dark:text-white sticky  top-0 z-10">
+        <div className="lg:w-full w-3/4 mx-auto">
+          <div className="max-w-5xl p-4 mx-auto flex justify-between items-center ">
+            <img className="w-24" src={Logo} />
+            <div className=" hidden md:block ">
               <SearchBar />
             </div>
 
-            <Link to="/user/signup">
-              <div class="flex items-center text-xl  cursor-pointer">
-                <AiOutlineUser />
-                <span> sign in</span>
-                <RiArrowDropDownLine />
-                <SignINNavbar />
-              </div>
-            </Link>
+            {/* signin button */}
+            <div className="flex gap-10 items-center">
+              {
 
-            <AiOutlineMenu
-              onClick={() => setToggle(!toggle)}
-              class="text-2xl lg:hidden  cursor-pointer"
-            />
+                logedin ? (
+                  <div>
+                    <div className='w-10 h-10 rounded-full overflow-hidden'>
+                      <img onMouseEnter={() => setIsHovered(true)} className='w-full h-full' src={demoAvatar} alt="user profile" />
+                    </div>
+                    <motion.div
+                      initial="hidden"
+                      animate={isHovered ? 'visible' : 'hidden'}
+                      variants={containerVariants}
+                      onMouseLeave={() => setIsHovered(false)}
+                    >
+                      {isHovered && <   UserProfileOptions isHovered={isHovered} setIsHovered={setIsHovered} />}
+                    </motion.div></div>
+                ) : (
+                  <Link to="/user/login">
+                    <div className="flex items-center text-xl  h-10 cursor-pointer">
+                      <AiOutlineUser />
+                      <span>Login</span>
+                      <RiArrowDropDownLine />
+                    </div>
+                  </Link>
+                )
+              }
+
+              <AiOutlineMenu
+                onClick={() => setToggle(!toggle)}
+                className="text-2xl lg:hidden  cursor-pointer"
+              />
+            </div>
 
             {/* Navigation bar for Larger screen */}
-            <ul class=" hidden lg:flex gap-5 ">
-              <NavOptions toggle={toggle} setToggle={setToggle} />
+            <ul className=" hidden lg:flex gap-5 ">
+              <NavOptions />
             </ul>
 
             {/* SideBar(Navigation) for Small screen */}
 
             <div className={`inset-0 fixed bg-black backdrop-filter bg-opacity-50 backdrop-blur-md ${toggle ? `block` : `hidden`}`}>
               <ul
-                class={` lg:hidden flex flex-col gap-7 w-[270px] h-[300px] rounded-[20px] pl-4 pt-10 fixed bg-cyan-500 dark:bg-slate-800 text-white dark:text-slate-300 top-4 right-4 
+                className={` lg:hidden flex flex-col gap-7 w-[270px] h-[300px] rounded-[20px] pl-4 pt-10 fixed bg-cyan-500 dark:bg-slate-800 text-white dark:text-slate-300 top-4 right-4 
           ${toggle ? `right-4 top-4` : `right-[-100%] top-[-100%]`}
           `}
               >
                 <AiOutlineClose
                   onClick={() => setToggle(!toggle)}
-                  class="text-2xl fixed right-[50px]"
+                  className="text-2xl fixed right-[50px]"
                 />
                 <NavOptions toggle={toggle} setToggle={setToggle} />
               </ul>
             </div>
           </div>
         </div>
-        <div class="md:hidden  pb-4 ">
+        <div className="md:hidden  pb-4 ">
           <SearchBar />
         </div>
 
