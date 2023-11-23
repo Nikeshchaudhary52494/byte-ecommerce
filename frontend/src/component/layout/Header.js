@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import NavOptions from "./NavOptions.js";
 import SearchBar from "../layout/SearchBar.js"
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useSelector } from 'react-redux';
 import Logo from "../images/byte.png"
 import { motion } from "framer-motion"
@@ -16,8 +16,8 @@ import UserProfileOptions from "./UserProfileOptions.js";
 
 
 const Header = () => {
-  const logedin = useSelector((state) => state.user);
-  console.log(logedin)
+  const location = useLocation();
+  const { isAuthenticated } = useSelector((state) => state.user)
   const [toggle, setToggle] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const containerVariants = {
@@ -43,7 +43,7 @@ const Header = () => {
       <nav className="bg-slate-200 dark:bg-slate-800 dark:text-white sticky  top-0 z-10">
         <div className="lg:w-full w-3/4 mx-auto">
           <div className="max-w-5xl p-4 mx-auto flex justify-between items-center ">
-            <img className="w-24" src={Logo} />
+            <img className="w-24" src={Logo} alt="BYTE" />
             <div className=" hidden md:block ">
               <SearchBar />
             </div>
@@ -52,7 +52,7 @@ const Header = () => {
             <div className="flex gap-10 items-center">
               {
 
-                logedin ? (
+                isAuthenticated ? (
                   <div>
                     <div className='w-10 h-10 rounded-full overflow-hidden'>
                       <img onMouseEnter={() => setIsHovered(true)} className='w-full h-full' src={demoAvatar} alt="user profile" />
@@ -66,7 +66,7 @@ const Header = () => {
                       {isHovered && <   UserProfileOptions isHovered={isHovered} setIsHovered={setIsHovered} />}
                     </motion.div></div>
                 ) : (
-                  <Link to="/user/login">
+                  <Link to="/user/login" state={{ previousLocation: location.pathname }}>
                     <div className="flex items-center text-xl  h-10 cursor-pointer">
                       <AiOutlineUser />
                       <span>Login</span>

@@ -1,13 +1,14 @@
 import React from 'react'
-import { Link } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 import LoggedInComponenet from './LoggedInComponenet';
 import { useSelector } from 'react-redux';
 
 const Cart = () => {
-    const logedin = useSelector((state) => state.user)
+    const { isAuthenticated } = useSelector((state) => state.user)
+    const location = useLocation()
     return (
         <>
-            {logedin ? (
+            {isAuthenticated ? (
                 <LoggedInComponenet />) : (
                 <div class="text-center  m-20 h-[50vh]">
                     <div class="grid  place-content-center">
@@ -17,7 +18,7 @@ const Cart = () => {
                         Missing Cart items?
                     </h3>
                     <p>Login to see items you added previously</p>
-                    <Link to="/user/login">
+                    <Link to="/user/login" state={{ previousLocation: location.pathname }}>
                         <button class="bg-orange-600 m-4 w-[200px] h-10 rounded-sm">
                             Login
                         </button>

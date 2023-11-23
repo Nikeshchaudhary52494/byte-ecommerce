@@ -1,17 +1,21 @@
 import React, { useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import Logo from "../images/byte.png"
 import { useState } from 'react'
-import { useDispatch } from 'react-redux'
-import { updateData } from '../../slices/userSlice/userSlice'
-import Cart from '../Cart/Cart'
+import { useDispatch, useSelector } from 'react-redux'
+import { loginUser } from '../../slices/userSlice/userSlice'
+
 
 
 const Login = () => {
+  const location = useLocation();
+  console.log(location)
+  const { isAuthenticated } = useSelector((state) => state.user);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // const [logedin, setLogedIn] = useState(null);
+
   const [user, setUser] = useState({
     email: "",
     password: ""
@@ -23,32 +27,13 @@ const Login = () => {
   }
   const submitHandler = async (e) => {
     e.preventDefault()
-    try {
-      const response = await fetch("/api/v1/login", {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        method: 'POST',
-        body: JSON.stringify({
-          email,
-          password,
-        }),
-      });
-      if (response.ok) {
-        console.log('Login successful!');
-        // setLogedIn(!logedin)
-        dispatch(updateData(true))
-        navigate('/'); // Redirect to the home page after successful signup
-      } else {
-        console.error('Login failed');
-      }
-    } catch (error) {
-      console.error('Error during login:', error);
-    }
+    dispatch(loginUser(user));
   }
-  // useEffect(() => {
-  //   dispatch(updateData(logedin))
-  // }, [logedin, setLogedIn, dispatch])
+  useEffect(() => {
+    if (isAuthenticated === true) {
+      navigate(location.state.previousLocation);
+    }
+  }, [isAuthenticated, navigate,location])
   return (
     <>
       <div class="grid bg-slate-900 h-[100vh]  fixed z-20 top-0 left-0 w-[100vw] place-content-center">

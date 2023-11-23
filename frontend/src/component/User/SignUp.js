@@ -1,12 +1,14 @@
 import React, { useState } from 'react'
 import { motion } from "framer-motion"
-import { Link, useNavigate } from "react-router-dom"
+import { Link} from "react-router-dom"
 import demoAvatar from "../images/userProfile.avif"
 import Logo from "../images/byte.png"
+import { registerUser } from '../../slices/userSlice/userSlice'
+import { useDispatch } from 'react-redux'
 
 
 const SignUp = () => {
-    const navigate = useNavigate();
+    const dispatch = useDispatch();
     const [user, setUser] = useState({
         name: "",
         email: "",
@@ -16,29 +18,9 @@ const SignUp = () => {
     const [avatar, setAvatar] = useState("/profile.jpg");
     const [avatarPreview, setAvatarPreview] = useState(demoAvatar);
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
-        try {
-            const response = await fetch('/api/v1/register', {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                method: 'POST',
-                body: JSON.stringify({
-                    name,
-                    email,
-                    password,
-                }),
-            });
-            if (response.ok) {
-                console.log('Signup successful!');
-                navigate('/'); // Redirect to the home page after successful signup
-            } else {
-                console.error('Signup failed');
-            }
-        } catch (error) {
-            console.error('Error during signup:', error);
-        }
+        dispatch(registerUser(user))
     };
     const registerDataChange = (e) => {
         if (e.target.name === "avatar") {

@@ -9,6 +9,7 @@ const UserProfile = () => {
     const navigate = useNavigate();
     const [userData, setUserData] = useState({ name: '', email: '' });
     const logedin = useSelector((state) => state.user)
+    console.log(logedin)
     //Function to fetch data from /api/v1/me 
     const fetchData = async () => {
         try {

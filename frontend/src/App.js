@@ -7,6 +7,7 @@ import Products from "./component/Product/Products.js"
 import CategoriesPage from "./component/Product/CategoryPage.js"
 import Login from "./component/User/Login.js"
 import SignUp from "./component/User/SignUp.js"
+import Dashbord from "./component/admin/Dashbord.js";
 
 import { Route, Routes } from "react-router-dom";
 import UserProfile from "./component/User/UserProfile.js"
@@ -27,6 +28,9 @@ function App() {
           <Route path="login" element={<Login />} />
           <Route path="signup" element={<SignUp />} />
           <Route path="profile" element={<UserProfile />} />
+          <Route path='admin'>
+            <Route path="dashbord" element={<Dashbord />} />
+          </Route>
         </Route>
       </Route>
     </Routes>

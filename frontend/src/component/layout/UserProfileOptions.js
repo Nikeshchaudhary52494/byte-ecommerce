@@ -1,8 +1,7 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { updateData } from '../../slices/userSlice/userSlice';
-
+import { logoutUser } from '../../slices/userSlice/userSlice';
 
 const UserProfileOptions = ({ isHovered, setIsHovered }) => {
     const dispatch = useDispatch();
@@ -22,17 +21,7 @@ const UserProfileOptions = ({ isHovered, setIsHovered }) => {
 
     ]
     const handelLogout = async () => {
-        try {
-            const response = await fetch("/api/v1/logout", {
-                method: "GET"
-            })
-            if (response.ok) {
-                console.log("User Logout")
-                dispatch(updateData(false))
-            }
-        } catch (error) {
-            console.error(error)
-        }
+        dispatch(logoutUser())
     }
     return (
         <>
