@@ -8,9 +8,11 @@ import CategoriesPage from "./component/Product/CategoryPage.js"
 import Login from "./component/User/Login.js"
 import SignUp from "./component/User/SignUp.js"
 import Dashbord from "./component/admin/Dashbord.js";
-
 import { Route, Routes } from "react-router-dom";
 import UserProfile from "./component/User/UserProfile.js"
+import MangeUser from "./component/admin/MangeUser.js";
+import Manageproduct from "./component/admin/Manageproduct.js";
+import ManageOrder from "./component/admin/ManageOrder.js";
 
 
 function App() {
@@ -30,6 +32,9 @@ function App() {
           <Route path="profile" element={<UserProfile />} />
           <Route path='admin'>
             <Route path="dashbord" element={<Dashbord />} />
+            <Route path="manageuser" element={<MangeUser />} />
+            <Route path="manageproduct" element={<Manageproduct />} />
+            <Route path="manageorder" element={<ManageOrder />} />
           </Route>
         </Route>
       </Route>

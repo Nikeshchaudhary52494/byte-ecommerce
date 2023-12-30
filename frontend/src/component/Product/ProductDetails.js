@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { STATUSES } from '../../store/statuses';
 import { fetchProduct } from "../../slices/productSlice/productDetailsSlice";
@@ -8,10 +8,28 @@ import Carousel from "react-material-ui-carousel"
 import ReactStars from "react-rating-stars-component"
 import ReviewCard from "./ReviewCard.js"
 const ProductDetails = () => {
-
+  const [numberOfProduct, setNumberOfProduct] = useState(1);
   const { id } = useParams();
   const dispatch = useDispatch();
   const { data: product, status } = useSelector((state) => state.productDetails);
+
+
+  const addToCart = (productId, numberOfProduct) => {
+    const existingCart = JSON.parse(localStorage.getItem('cart')) || {};
+
+    if (!existingCart[productId]) {
+      // If the product is not in the cart, add it with the specified quantity
+      existingCart[productId] = numberOfProduct;
+      localStorage.setItem('cart', JSON.stringify(existingCart));
+      alert('Product added to the cart!');
+    } else {
+      // If the product is already in the cart, update the quantity
+      existingCart[productId] += numberOfProduct;
+      localStorage.setItem('cart', JSON.stringify(existingCart));
+      alert('Product quantity updated in the cart!');
+    }
+  };
+
 
   useEffect(() => {
     dispatch(fetchProduct({ id: id }));
@@ -62,11 +80,22 @@ const ProductDetails = () => {
           <h2 class="text-orange-500 text-3xl font-bold">${product.price} <br /><p class="text-sm font-thin text-slate-600 border-b border-slate-400 mb-4 pb-4" > Including all taxes</p> </h2>
           <div class="flex flex-col items-center " >
             <div class="flex items-center ">
-              <button class="p-4 w-[50px] h-[40px] grid place-content-center bg-green-400 rounded-l-lg " >-</button>
-              <input class="border-y-2 h-[40px] text-center border-slate-400 outline-none  " value="1" type="number" />
-              <button class="p-4 w-[50px] h-[40px] hover:bg-green-500 bg-green-400 rounded-r-lg grid place-content-center " >+</button>
+              <button
+                class="p-4 w-[50px] h-[40px] grid place-content-center bg-green-400 rounded-l-lg "
+                onClick={() => setNumberOfProduct((prevCount) => prevCount - 1)}
+              >-</button>
+              <input
+                class="border-y-2 h-[40px] text-center border-slate-400 outline-none  "
+                value={numberOfProduct}
+                type="text"
+                style={{ pointerEvents: "none" }}
+              />
+              <button
+                class="p-4 w-[50px] h-[40px] hover:bg-green-500 bg-green-400 rounded-r-lg grid place-content-center "
+                onClick={() => setNumberOfProduct((prevCount) => prevCount + 1)}
+              >+</button>
             </div>
-            <button class="w-[200px] h-[40px] bg-yellow-500 rounded-3xl my-4 hover:bg-yellow-700 duration-500 " >Add to Cart</button>
+            <button class="w-[200px] h-[40px] bg-yellow-500 rounded-3xl my-4 hover:bg-yellow-700 duration-500 " onClick={() => addToCart(product._id, numberOfProduct)} >Add to Cart</button>
           </div>
           <p class="border-b border-slate-400 mb-4 pb-4">Staus: <b>{product.stock}</b></p>
           <p><span class="text-2xl" >
@@ -77,12 +106,12 @@ const ProductDetails = () => {
         </div>
       </div>
 
-    <div class=" w-3/4  max-w-3xl flex p-4 lg:px-12  flex-col  mx-auto items-center justify-between sm:flex-row ">
-    <h3 class="text-2xl text-center font-medium " >Reviews</h3>
+      <div class=" w-3/4  max-w-3xl flex p-4 lg:px-12  flex-col  mx-auto items-center justify-between sm:flex-row ">
+        <h3 class="text-2xl text-center font-medium " >Reviews</h3>
 
-    <button class="text-white  font-medium w-[200px] h-[40px] bg-blue-200 rounded-lg">Submit Review</button>
+        <button class="text-white  font-medium w-[200px] h-[40px] bg-blue-200 rounded-lg">Submit Review</button>
 
-    </div>
+      </div>
 
 
       {/* Review section */}

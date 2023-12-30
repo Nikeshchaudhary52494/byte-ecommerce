@@ -33,7 +33,7 @@ const Login = () => {
     if (isAuthenticated === true) {
       navigate(location.state.previousLocation);
     }
-  }, [isAuthenticated, navigate,location])
+  }, [isAuthenticated, navigate, location])
   return (
     <>
       <div class="grid bg-slate-900 h-[100vh]  fixed z-20 top-0 left-0 w-[100vw] place-content-center">
@@ -67,7 +67,7 @@ const Login = () => {
               transition={{ duration: .5 }}
               class="w-[300px] m-2 h-[40px] hover:bg-teal-700 text-white bg-teal-600 rounded-lg" />
           </form>
-          <Link to="/user/signup">
+          <Link to="/user/signup" state={location.state}>
             <p class="text-sm ">
               New User? Create Account
             </p>

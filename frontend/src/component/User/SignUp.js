@@ -1,13 +1,17 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { motion } from "framer-motion"
-import { Link} from "react-router-dom"
+import { Link, useLocation, useNavigate } from "react-router-dom"
 import demoAvatar from "../images/userProfile.avif"
 import Logo from "../images/byte.png"
 import { registerUser } from '../../slices/userSlice/userSlice'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 
 const SignUp = () => {
+    const { isAuthenticated } = useSelector((state) => state.user)
+    const navigate = useNavigate();
+    const location = useLocation();
+    console.log(location)
     const dispatch = useDispatch();
     const [user, setUser] = useState({
         name: "",
@@ -21,6 +25,7 @@ const SignUp = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         dispatch(registerUser(user))
+        console.log(location)
     };
     const registerDataChange = (e) => {
         if (e.target.name === "avatar") {
@@ -38,6 +43,11 @@ const SignUp = () => {
             setUser({ ...user, [e.target.name]: e.target.value });
         }
     };
+    useEffect(() => {
+        if (isAuthenticated === true) {
+            navigate(location.state.previousLocation);
+        }
+    }, [isAuthenticated, navigate, location])
     return (
         <>
             <div className="grid bg-slate-900 h-[100vh]  fixed z-20 top-0 left-0 w-[100vw] place-content-center">

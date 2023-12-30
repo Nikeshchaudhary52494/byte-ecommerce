@@ -4,7 +4,8 @@ import { FaUser } from "react-icons/fa6";
 import { MdDashboard } from "react-icons/md";
 import { MdOutlineAttachMoney } from "react-icons/md";
 import { PieChart, Pie, Sector, Cell, ResponsiveContainer } from "recharts";
-import { BarChart, Bar,Label } from "recharts";
+import { BarChart, Bar, Label } from "recharts";
+import { Link } from 'react-router-dom'
 import Messages from './Messages';
 
 
@@ -62,13 +63,26 @@ const Dashbord = () => {
     const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
     return (
         <>
+
             <div className='bg-slate-800 min-h-screen flex flex-col items-center justify-center'>
                 <div className='text-2xl flex gap-4 items-center text-white font-bold pl-10 mt-10'>
                     <MdDashboard />
                     <h4>Dashboard</h4>
                 </div>
                 <div>
+
+
                     <div className='grid grid-cols-1 w-[90vw] md:grid-cols-2 lg:grid-cols-3 my-10 mx-5 max-w-5xl text-white rounded-md bg-slate-700 p-8 gap-4'>
+                        <Link to="/user/admin/manageproduct">
+                            <p className='bg-orange-500 p-2 rounded-md'>ManageProduct</p>
+                        </Link>
+                        <Link to="/user/admin/manageuser">
+                            <p className='bg-green-600 p-2 rounded-md'>ManageUsers</p>
+                        </Link>
+                        <Link to="/user/admin/manageorder">
+                            <p className='bg-violet-700 p-2 rounded-md'>ManageOrder</p>
+
+                        </Link>
                         <div className='h-28 flex-grow rounded-md flex items-center bg-blue-800'>
                             <IoMdCart /> total order
                         </div>
@@ -86,8 +100,6 @@ const Dashbord = () => {
                             <PieChart width={200} height={200}>
                                 <Pie
                                     data={data}
-                                    // cx={120}
-                                    // cy={200}
                                     innerRadius={60}
                                     outerRadius={80}
                                     fill="#8884d8"
@@ -102,28 +114,28 @@ const Dashbord = () => {
                         </div>
                         <div className='border lg:col-span-2 rounded-md h-[200px] bg-slate-600'>
                             <BarChart width={200} height={150} data={data1}
-                  
+
                             >
-                                 <Label value="Pages of my website" offset={0} position="insideBottom" />
-                            <Bar dataKey="uv" fill="#8884d8" />
-                        </BarChart>
-                    </div>
-                    <div className='lg:col-span-2'>
-                        <Messages />
-
-                    </div>
-
-                    <div className='bg-green-400 p-5 rounded-md'>
-                        <div className='' >
-                            top sells
+                                <Label value="Pages of my website" offset={0} position="insideBottom" />
+                                <Bar dataKey="uv" fill="#8884d8" />
+                            </BarChart>
                         </div>
-                        <div>
+                        <div className='lg:col-span-2'>
+                            <Messages />
 
+                        </div>
+
+                        <div className='bg-green-400 p-5 rounded-md'>
+                            <div className='' >
+                                top sells
+                            </div>
+                            <div>
+
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div >
+            </div >
         </>
     )
 }

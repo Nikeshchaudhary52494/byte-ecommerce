@@ -9,6 +9,7 @@ import { STATUSES } from '../../store/statuses';
 import { fetchProducts } from '../../slices/productSlice/productsSlice';
 import ProductCard from "../layout/ProductCard";
 import CategoriesList from "../Product/CategoriesList";
+import { loadUser } from "../../slices/userSlice/userSlice";
 
 
 
@@ -23,7 +24,7 @@ const Home = () => {
 
   // const alert = useAlert();
   useEffect(() => {
-
+    dispatch(loadUser());
     dispatch(fetchProducts());
   }, [dispatch]);
 
