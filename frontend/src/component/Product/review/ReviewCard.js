@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactStars from "react-rating-stars-component"
-import ProfilePic from "../images/profile.jpg"
+import ProfilePic from "../../images/profile.jpg"
 
 
 
@@ -20,7 +20,7 @@ const ReviewCard = ({ review }) => {
 
     <div class="flex w-[100%] flex-col mx-auto   ">
       <div class="flex justify-left items-center" >
-        <img class= "h-[100px] w-[100px] object-cover m-4 rounded-full "  src={ProfilePic} alt="User" />
+        <img class="h-[100px] w-[100px] object-cover m-4 rounded-full " src={ProfilePic} alt="User" />
         <div>
           <p>{review.name}</p>
           <ReactStars {...options} />

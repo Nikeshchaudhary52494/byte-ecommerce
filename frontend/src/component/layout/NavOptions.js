@@ -17,27 +17,27 @@ const NavOptions = ({ toggle, setToggle = () => { } }) => {
       to: "/cart",
       name: "Cart"
     }, {
-      to: "/contactUs",
+      to: "/contactus",
       name: "Contact Us"
     }, {
-      to: "/aboutUs",
+      to: "/aboutus",
       name: "About US"
     }];
   if (user.role === "admin") {
     navOptions = [{
-        to: "/",
-        name: "Home"
-      },
-      {
-        to: "products/catogries",
-        name: "Categories"
-      }, {
-        to: "/cart",
-        name: "Cart"
-      }, {
-        to: "/user/admin/dashbord",
-        name: "Dashbord"
-      }];
+      to: "/",
+      name: "Home"
+    },
+    {
+      to: "products/catogries",
+      name: "Categories"
+    }, {
+      to: "/cart",
+      name: "Cart"
+    }, {
+      to: "/user/admin/dashbord",
+      name: "Dashbord"
+    }];
   };
 
   return (

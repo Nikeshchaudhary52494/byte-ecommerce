@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllCartProducts } from '../../slices/cartSlice/cartSlice';
 import CartItemCard from './CartItemCard';
+import { Link, Navigate } from 'react-router-dom';
 
 const LoginUserCart = () => {
     const dispatch = useDispatch();
@@ -42,8 +43,11 @@ const LoginUserCart = () => {
                             <p>Total price: <span className='text-orange-500 font-bold text-xl'>${totalPrice}</span></p>
                         </div>
                         : <div className='text-center h-44 font-bold'>
-                            <p className='italic  text-indigo-400'>No Product Added To cart</p>
-                            <button className='bg-indigo-400 p-2 m-2 rounded-sm'>Continue Shopping</button>
+                            <p className='italic  text-blue-500'>No Product Added To cart</p>
+
+                            <Link to='/'>
+                                <button className='bg-blue-500 p-2 m-2 rounded-sm' >Continue Shopping</button>
+                            </Link>
                         </div>}
                 </div>
             </div>

@@ -13,6 +13,8 @@ import UserProfile from "./component/User/UserProfile.js"
 import MangeUser from "./component/admin/MangeUser.js";
 import Manageproduct from "./component/admin/Manageproduct.js";
 import ManageOrder from "./component/admin/ManageOrder.js";
+import AboutUs from "./component/aboutUs/aboutUs.js";
+import ContactUs from "./component/contactUs/ContactUs.js";
 
 
 function App() {
@@ -37,6 +39,8 @@ function App() {
             <Route path="manageorder" element={<ManageOrder />} />
           </Route>
         </Route>
+        <Route path="aboutus" element={<AboutUs />} />
+        <Route path="contactus" element={<ContactUs />} />
       </Route>
     </Routes>
   );

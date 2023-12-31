@@ -7,8 +7,11 @@ import { useParams } from "react-router-dom";
 import Loader from "../layout/Loader/Loader";
 import Carousel from "react-material-ui-carousel"
 import ReactStars from "react-rating-stars-component"
-import ReviewCard from "./ReviewCard.js"
+import ReviewCard from "./review/ReviewCard.js"
+import AddReview from "./review/AddReview.js";
+import { AiOutlineClose } from "react-icons/ai";
 const ProductDetails = () => {
+  const [toggle, setToggle] = useState(false);
   const [numberOfProduct, setNumberOfProduct] = useState(1);
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -98,11 +101,11 @@ const ProductDetails = () => {
       <div class=" w-3/4  max-w-3xl flex p-4 lg:px-12  flex-col  mx-auto items-center justify-between sm:flex-row ">
         <h3 class="text-2xl text-center font-medium " >Reviews</h3>
 
-        <button class="text-white  font-medium w-[200px] h-[40px] bg-blue-200 rounded-lg">Submit Review</button>
-
+        <button class="text-white  font-medium w-[200px] h-[40px] bg-blue-200 rounded-lg" onClick={() => setToggle(!toggle)}> Add Review</button>
+        <div className={`inset-0 z-10 fixed flex justify-center items-center bg-black backdrop-filter bg-opacity-50 backdrop-blur-md ${toggle ? `block` : `hidden`}`}>
+          <AddReview toggle={toggle} setToggle={setToggle} />
+        </div>
       </div>
-
-
       {/* Review section */}
 
       {product.reviews && product.reviews[0] ? (
