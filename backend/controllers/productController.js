@@ -4,12 +4,6 @@ const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const ApiFeatures = require("../utils/APIfeatures");
 
 
-
-// req.params   -> getting something from Url
-// req.body     -> getting something from Postman Body (from the form in Html)
-// req.query    -> getting something from Post (keyword and Value) buttons in Html
-
-
 // create product -- Admin
 exports.createProduct = catchAsyncErrors(async (req, res, next) => {
   req.body.user = req.user.id;
@@ -88,7 +82,6 @@ exports.getProduct = catchAsyncErrors(async (req, res, next) => {
 
 //Create New Review or Update Review
 exports.createProductReview = catchAsyncErrors(async (req, res, next) => {
-  //   Geting all these from POSTman body section
   const { rating, comment, productId } = req.body;
   const review = {
     user: req.user._id,

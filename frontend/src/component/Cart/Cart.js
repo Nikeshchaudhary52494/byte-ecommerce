@@ -1,10 +1,16 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link, useLocation } from "react-router-dom"
-import LoggedInComponenet from './LoggedInComponenet';
-import { useSelector } from 'react-redux';
-
+import LoggedInComponenet from './LoginUserCart';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllCartProducts } from '../../slices/cartSlice/cartSlice';
 const Cart = () => {
-    const { isAuthenticated } = useSelector((state) => state.user)
+    const { isAuthenticated, user } = useSelector((state) => state.user)
+    const dispatch = useDispatch();
+    useEffect(() => {
+        if (isAuthenticated == true)
+            dispatch(getAllCartProducts(user._id));
+
+    })
     const location = useLocation()
     return (
         <>

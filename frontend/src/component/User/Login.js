@@ -5,13 +5,14 @@ import Logo from "../images/byte.png"
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { loginUser } from '../../slices/userSlice/userSlice'
+import { getAllCartProducts } from '../../slices/cartSlice/cartSlice'
 
 
 
 const Login = () => {
   const location = useLocation();
   console.log(location)
-  const { isAuthenticated } = useSelector((state) => state.user);
+  const { isAuthenticated, user: logedinUser } = useSelector((state) => state.user);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -31,6 +32,7 @@ const Login = () => {
   }
   useEffect(() => {
     if (isAuthenticated === true) {
+      dispatch(getAllCartProducts(loginUser._id))
       navigate(location.state.previousLocation);
     }
   }, [isAuthenticated, navigate, location])

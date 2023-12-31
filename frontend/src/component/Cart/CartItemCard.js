@@ -1,24 +1,32 @@
-import React from 'react'
-import { ImBin } from "react-icons/im";
+import React from 'react';
+import { ImBin } from 'react-icons/im';
+import { useDispatch, useSelector } from 'react-redux';
+import { removeFromCart } from '../../slices/cartSlice/cartSlice';
 
+const CartItemCard = ({ product }) => {
+    const dispatch = useDispatch();
+    const { user } = useSelector((state) => state.user);
 
-const CartItemCard = () => {
+    const removeProductFromCart = (userId, productId) => {
+        dispatch(removeFromCart({ userId, productId }));
+    };
+
     return (
-        <>
-            <div className='flex justify-between p-2 my-2 border bg-slate-800 w-full rounded-md items-center'>
-                <div>
-                    <img className='h-14' src="https://www.reliancedigital.in/medias/Apple-iPhone-15-512GB-Black-493839319-i-1-1200Wx1200H?context=bWFzdGVyfGltYWdlc3wzMDYxNjR8aW1hZ2UvanBlZ3xpbWFnZXMvaDRmL2g0NS8xMDA1MTg3ODUxODgxNC5qcGd8ZGVmYTc3MTc3ODExZjZmMTM4Njg4MGEwYWU5YjhhZTFmODQ5YTZkMTY2ODVlZTI3ZDRhNDM3ODNlODJjNjE3ZA" alt="product img" />
-                </div>
-                <div>
-                    <p className='text-xl'>Iphone</p>
-                    <p className='text-orange-500 font-bold'>$1000</p>
-                </div>
-                <button className='text-red-500'>
-                    <ImBin />
-                </button>
+        <div className='flex justify-between p-2 my-2 border bg-slate-800 w-full rounded-md items-center'>
+            <div className='bg-white p-2 rounded-md'>
+                {product.productImage && product.productImage[0] && (
+                    <img className='h-14' src={product.productImage[0].url} alt='product img' />
+                )}
             </div>
-        </>
-    )
-}
+            <div>
+                <p className='text-xl'>{product.productName} <span className='text-blue-500'>{product.quantity > 1 ? `x ${product.quantity}` : ''}</span> </p>
+                <p className='text-orange-500 font-bold'>{`$${product.productPrice}`}</p>
+            </div>
+            <button className='text-red-500' onClick={() => removeProductFromCart(user._id, product.productId)}>
+                <ImBin />
+            </button>
+        </div>
+    );
+};
 
-export default CartItemCard
+export default CartItemCard;

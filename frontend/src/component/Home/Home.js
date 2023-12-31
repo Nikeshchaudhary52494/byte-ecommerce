@@ -10,6 +10,7 @@ import { fetchProducts } from '../../slices/productSlice/productsSlice';
 import ProductCard from "../layout/ProductCard";
 import CategoriesList from "../Product/CategoriesList";
 import { loadUser } from "../../slices/userSlice/userSlice";
+import { getAllCartProducts } from "../../slices/cartSlice/cartSlice";
 
 
 

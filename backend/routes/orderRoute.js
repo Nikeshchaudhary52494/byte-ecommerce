@@ -1,5 +1,8 @@
 const express = require("express");
-const { isAuthenticatedUser, authorizeRole } = require("../middleware/auth");
+const {
+  isAuthenticatedUser,
+  authorizeRole
+} = require("../middleware/auth");
 const {
   createNewOrder,
   getSingleOrder,
