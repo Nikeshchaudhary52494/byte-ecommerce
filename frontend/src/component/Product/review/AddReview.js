@@ -1,11 +1,21 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { addReview } from '../../../slices/reviewSlice/reviewSlice';
 
-const AddReview = ({ toggle, setToggle }) => {
-    const [comment, setComment] = useState('');
-    const [rating, setRating] = useState(0);
+const AddReview = ({ toggle, setToggle, productId }) => {
+    const [review, setReview] = useState({
+        comment: '',
+        rating: 0,
+    })
+    const { comment, rating } = review;
+    const handleInputChange = (e) => {
+        setReview({ ...review, [e.target.name]: e.target.value });
+    };
+    const dispatch = useDispatch();
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        dispatch(addReview({ rating, comment, productId }))
     };
 
     return (
@@ -30,7 +40,7 @@ const AddReview = ({ toggle, setToggle }) => {
                                 rows='4'
                                 cols='50'
                                 value={comment}
-                                onChange={(e) => setComment(e.target.value)}
+                                onChange={handleInputChange}
                                 className='resize-none  outline-none rounded-md p-1'
                             />
                         </div>
@@ -45,11 +55,12 @@ const AddReview = ({ toggle, setToggle }) => {
                                 min='0'
                                 max='5'
                                 value={rating}
-                                onChange={(e) => setRating(parseInt(e.target.value, 10))}
+                                onChange={handleInputChange}
                                 className='border rounded-md p-2'
                             />
                         </div>
                         <button
+                            onClick={() => setToggle(!toggle)}
                             type='submit'
                             className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'
                         >

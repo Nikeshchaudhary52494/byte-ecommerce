@@ -19,7 +19,6 @@ const ProductDetails = () => {
   const { user } = useSelector((state) => state.user);
   useEffect(() => {
     dispatch(fetchProduct({ id: id }));
-    console.log(user);
   }, [dispatch, id]);
 
   const addProduct = (userId, productId, quantity) => {
@@ -103,7 +102,7 @@ const ProductDetails = () => {
 
         <button class="text-white  font-medium w-[200px] h-[40px] bg-blue-200 rounded-lg" onClick={() => setToggle(!toggle)}> Add Review</button>
         <div className={`inset-0 z-10 fixed flex justify-center items-center bg-black backdrop-filter bg-opacity-50 backdrop-blur-md ${toggle ? `block` : `hidden`}`}>
-          <AddReview toggle={toggle} setToggle={setToggle} />
+          <AddReview toggle={toggle} setToggle={setToggle} productId={product._id} />
         </div>
       </div>
       {/* Review section */}
