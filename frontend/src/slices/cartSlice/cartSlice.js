@@ -67,7 +67,6 @@ export const removeFromCart = createAsyncThunk("cart/removeFromCart", async ({ u
 export const getAllCartProducts = createAsyncThunk("cart/getAllCartProducts", async (userId) => {
     try {
         const response = await axios.get(`/api/v1/cart`);
-        console.log(response.data);
         return response.data.cartProducts;
     } catch (error) {
         throw error.response.data;

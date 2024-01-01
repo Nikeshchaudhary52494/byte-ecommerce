@@ -9,25 +9,25 @@ import { STATUSES } from '../../store/statuses';
 import { fetchProducts } from '../../slices/productSlice/productsSlice';
 import ProductCard from "../layout/ProductCard";
 import CategoriesList from "../Product/CategoriesList";
-import { loadUser } from "../../slices/userSlice/userSlice";
-import { getAllCartProducts } from "../../slices/cartSlice/cartSlice";
+// import { loadUser } from "../../slices/userSlice/userSlice";
+// import { getAllCartProducts } from "../../slices/cartSlice/cartSlice";
 
 
 
 
 const Home = () => {
 
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   // accessing store data using useSelector of products Slice
 
   const { data: products, status } = useSelector((state) => state.products);
 
 
   // const alert = useAlert();
-  useEffect(() => {
-    dispatch(loadUser());
-    dispatch(fetchProducts());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(loadUser());
+  //   // dispatch(fetchProducts());
+  // }, [dispatch]);
 
 
 

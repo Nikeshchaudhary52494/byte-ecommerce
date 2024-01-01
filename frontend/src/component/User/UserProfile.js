@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import demoAvatar from "../images/userProfile.avif";
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 
 
@@ -50,7 +50,7 @@ const UserProfile = () => {
                                     <p className='m-2'>{field.label}</p>
                                     <div className='flex justify-between items-center'>
                                         <p className='m-2'>{field.value}</p>
-                                        <button className='w-[100px] bg-yellow-100 text-black rounded-md shadow-sm'>Edit</button>
+                                        <Link to='/user/profile/updatepassword'><button className='w-[100px] bg-yellow-100 text-black rounded-md shadow-sm'>Edit</button></Link>
                                     </div>
                                 </div>
                             ))}

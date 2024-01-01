@@ -10,11 +10,14 @@ import SignUp from "./component/User/SignUp.js"
 import Dashbord from "./component/admin/Dashbord.js";
 import { Route, Routes } from "react-router-dom";
 import UserProfile from "./component/User/UserProfile.js"
-import MangeUser from "./component/admin/MangeUser.js";
-import Manageproduct from "./component/admin/Manageproduct.js";
-import ManageOrder from "./component/admin/ManageOrder.js";
+import MangeUser from "./component/admin/manageUsers/MangeUsers.js";
+import Manageproduct from "./component/admin/manageProduct/Manageproduct.js";
+import ManageOrder from "./component/admin/manageOrders/ManageOrder.js";
 import AboutUs from "./component/aboutUs/aboutUs.js";
 import ContactUs from "./component/contactUs/ContactUs.js";
+import AddProduct from "./component/admin/manageProduct/AddProduct.js";
+import UpDatePassword from "./component/User/UpDatePassword.js";
+import ShippingForm from "./component/User/ShippingForm.js";
 
 
 function App() {
@@ -31,11 +34,17 @@ function App() {
         < Route path="user" >
           <Route path="login" element={<Login />} />
           <Route path="signup" element={<SignUp />} />
-          <Route path="profile" element={<UserProfile />} />
+          <Route path="profile">
+            <Route index element={<UserProfile />} />
+            <Route path="updatepassword" element={<ShippingForm />} />
+          </Route>
           <Route path='admin'>
             <Route path="dashbord" element={<Dashbord />} />
             <Route path="manageuser" element={<MangeUser />} />
-            <Route path="manageproduct" element={<Manageproduct />} />
+            <Route path="manageproduct">
+              <Route index element={<Manageproduct />} />
+              <Route path="addproduct" element={<AddProduct />} />
+            </Route>
             <Route path="manageorder" element={<ManageOrder />} />
           </Route>
         </Route>

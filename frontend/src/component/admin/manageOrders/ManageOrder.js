@@ -1,0 +1,17 @@
+import ManageOrdersTable from "./ManageOrdersTable";
+const ManageOrders = () => {
+  return (
+    <>
+      <div className='bg-slate-900  p-10 min-h-screen'>
+        <div className='max-w-5xl mx-auto'>
+          <div className='mx-5'>
+            <p className='text-white text-3xl font-bold mb-5'>Available Orders</p>
+            <ManageOrdersTable />
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default ManageOrders;

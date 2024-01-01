@@ -46,13 +46,13 @@ const orderSchema = mongoose.Schema({
         ref: "Product",
         required: true,
       },
-    }, 
+    },
   ],
   user: {
     type: mongoose.Schema.ObjectId,
     ref: "User",
     required: true,
-  }, 
+  },
   paymentInfo: {
     id: {
       type: String,

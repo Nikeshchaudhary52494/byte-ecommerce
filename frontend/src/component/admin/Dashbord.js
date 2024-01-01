@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { IoMdCart } from "react-icons/io";
 import { FaUser } from "react-icons/fa6";
 import { MdDashboard } from "react-icons/md";
@@ -7,10 +7,24 @@ import { PieChart, Pie, Sector, Cell, ResponsiveContainer } from "recharts";
 import { BarChart, Bar, Label } from "recharts";
 import { Link } from 'react-router-dom'
 import Messages from './Messages';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllUsers } from '../../slices/adminSlice/adminSlice';
+import { getAllOrders } from '../../slices/orderSlice/orderSlice';
+import { STATUSES } from '../../store/statuses';
+import Loader from '../layout/Loader/Loader';
+
 
 
 const Dashbord = () => {
-    const data1 = [
+    const { UserCount } = useSelector((state) => state.admin.data);
+    const { data, status } = useSelector((state) => state.orders);
+    const ordersLength = data?.orders?.length || 0;
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(getAllUsers());
+        dispatch(getAllOrders());
+    }, [dispatch])
+    const ba1 = [
         {
             name: "Page A",
             uv: 4000,
@@ -54,13 +68,25 @@ const Dashbord = () => {
             amt: 2100
         }
     ];
-    const data = [
+    const ba = [
         { name: "Group A", value: 400 },
         { name: "Group B", value: 300 },
         { name: "Group C", value: 300 },
         { name: "Group D", value: 200 }
     ];
     const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
+
+    if (status === STATUSES.LOADING) {
+        return <div class="w-full grid place-content-center h-[80vh] ">
+            <Loader />
+        </div>
+
+    }
+
+    if (status === STATUSES.ERROR) {
+        return <h2>Something went wrong!</h2>;
+    }
+
     return (
         <>
 
@@ -70,9 +96,10 @@ const Dashbord = () => {
                     <h4>Dashboard</h4>
                 </div>
                 <div>
-
-
-                    <div className='grid grid-cols-1 w-[90vw] md:grid-cols-2 lg:grid-cols-3 my-10 mx-5 max-w-5xl text-white rounded-md bg-slate-700 p-8 gap-4'>
+                    <div className='bg-blue-500 mx-5 p-5 rounded-md mt-10 text-center text-white font-bold'>
+                        TotalAmount: {data.totalAmount}
+                    </div>
+                    <div className='grid grid-cols-1 w-[90vw] md:grid-cols-2 lg:grid-cols-3 mt-2 mb-10 mx-5 max-w-5xl text-white rounded-md bg-slate-700 p-8 gap-4'>
                         <Link to="/user/admin/manageproduct">
                             <p className='bg-orange-500 p-2 rounded-md'>ManageProduct</p>
                         </Link>
@@ -84,14 +111,14 @@ const Dashbord = () => {
 
                         </Link>
                         <div className='h-28 flex-grow rounded-md flex items-center bg-blue-800'>
-                            <IoMdCart /> total order
+                            Review
                         </div>
                         <div className='h-28 flex-grow rounded-md flex items-center bg-violet-500'>
-                            <MdOutlineAttachMoney /> total income
+                            <IoMdCart /> total order : {ordersLength}
                         </div>
                         <div className='h-28 flex-grow rounded-md flex items-center bg-fuchsia-500'>
                             <FaUser />
-                            total user
+                            Total user : {UserCount}
                         </div >
                         <div className='h-24 hidden md:flex flex-grow rounded-md lg:hidden items-center bg-violet-500'>
 
@@ -99,25 +126,25 @@ const Dashbord = () => {
                         <div className='border  rounded-md h-[200px] bg-slate-600 '>
                             <PieChart width={200} height={200}>
                                 <Pie
-                                    data={data}
+                                    ba={ba}
                                     innerRadius={60}
                                     outerRadius={80}
                                     fill="#8884d8"
                                     paddingAngle={5}
-                                    dataKey="value"
+                                    baKey="value"
                                 >
-                                    {data.map((entry, index) => (
+                                    {ba.map((entry, index) => (
                                         <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                                     ))}
                                 </Pie>
                             </PieChart>
                         </div>
                         <div className='border lg:col-span-2 rounded-md h-[200px] bg-slate-600'>
-                            <BarChart width={200} height={150} data={data1}
+                            <BarChart width={200} height={150} ba={ba1}
 
                             >
                                 <Label value="Pages of my website" offset={0} position="insideBottom" />
-                                <Bar dataKey="uv" fill="#8884d8" />
+                                <Bar baKey="uv" fill="#8884d8" />
                             </BarChart>
                         </div>
                         <div className='lg:col-span-2'>
@@ -130,7 +157,6 @@ const Dashbord = () => {
                                 top sells
                             </div>
                             <div>
-
                             </div>
                         </div>
                     </div>
