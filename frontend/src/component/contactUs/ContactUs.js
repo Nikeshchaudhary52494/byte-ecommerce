@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { createMessage } from '../../slices/contactUsSlice/contactUsSlice';
 const ContactUs = () => {
     const [message, setMessage] = useState('');
+    const dispatch = useDispatch();
     const handleSubmit = (e) => {
         e.preventDefault();
+        dispatch(createMessage({ message }));
         console.log('Submitted message:', message);
         setMessage('');
     };

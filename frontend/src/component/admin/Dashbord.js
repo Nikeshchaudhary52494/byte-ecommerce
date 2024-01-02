@@ -12,6 +12,7 @@ import { getAllUsers } from '../../slices/adminSlice/adminSlice';
 import { getAllOrders } from '../../slices/orderSlice/orderSlice';
 import { STATUSES } from '../../store/statuses';
 import Loader from '../layout/Loader/Loader';
+import { getAllMessages } from '../../slices/contactUsSlice/contactUsSlice';
 
 
 
@@ -23,6 +24,7 @@ const Dashbord = () => {
     useEffect(() => {
         dispatch(getAllUsers());
         dispatch(getAllOrders());
+        dispatch(getAllMessages());
     }, [dispatch])
     const ba1 = [
         {
