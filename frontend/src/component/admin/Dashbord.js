@@ -110,9 +110,11 @@ const Dashbord = () => {
                             <p className='bg-violet-700 p-2 rounded-md'>ManageOrder</p>
 
                         </Link>
-                        <div className='h-28 flex-grow rounded-md flex items-center bg-blue-800'>
-                            Review
-                        </div>
+                        <Link to="/user/admin/managereviews">
+                            <div className='h-28 flex-grow rounded-md flex items-center bg-blue-800'>
+                                Review
+                            </div>
+                        </Link>
                         <div className='h-28 flex-grow rounded-md flex items-center bg-violet-500'>
                             <IoMdCart /> total order : {ordersLength}
                         </div>

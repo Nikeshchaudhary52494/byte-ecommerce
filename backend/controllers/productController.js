@@ -130,25 +130,31 @@ exports.getProductReviews = catchAsyncErrors(async (req, res, next) => {
     reviews: product.reviews,
   });
 });
+
 // Delete Review
+const mongoose = require('mongoose');
 exports.deleteProductReviews = catchAsyncErrors(async (req, res, next) => {
-  const product = await Product.findById(req.query.productId);
-
-  if (!product) {
-    return next(new ErrorHandler("Product Not Found", 404));
+  const productId = req.query.productId;
+  const reviewId = req.query.id;
+  if (!mongoose.Types.ObjectId.isValid(productId)) {
+    return next(new ErrorHandler('Invalid Product ID', 400));
   }
-
-  const reviews = product.reviews.filter(
-    (rev) => rev._id.toString() !== req.query.id.toString()
-  );
-  let toalReviewPoints = 0;
+  if (!mongoose.Types.ObjectId.isValid(reviewId)) {
+    return next(new ErrorHandler('Invalid Review ID', 400));
+  }
+  const product = await Product.findById(productId);
+  if (!product) {
+    return next(new ErrorHandler('Product Not Found', 404));
+  }
+  const reviews = product.reviews.filter((rev) => rev._id.toString() !== reviewId.toString());
+  let totalReviewPoints = 0;
   reviews.forEach((rev) => {
-    toalReviewPoints += rev.rating;
+    totalReviewPoints += rev.rating;
   });
-  const ratings = toalReviewPoints / reviews.length;
+  const ratings = reviews.length > 0 ? totalReviewPoints / reviews.length : 0;
   const numberOfReviews = reviews.length;
-  await Product.findByIdAndUpdate(
-    req.query.productId,
+  const updatedProduct = await Product.findByIdAndUpdate(
+    productId,
     {
       reviews,
       ratings,
@@ -160,7 +166,9 @@ exports.deleteProductReviews = catchAsyncErrors(async (req, res, next) => {
       useFindAndModify: false,
     }
   );
-
+  if (!updatedProduct) {
+    return next(new ErrorHandler('Error updating product', 500));
+  }
   res.status(200).json({
     success: true,
   });

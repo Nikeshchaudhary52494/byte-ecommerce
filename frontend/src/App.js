@@ -20,6 +20,7 @@ import ShippingForm from "./component/User/ShippingForm.js";
 import ManageOrders from "./component/admin/manageOrders/ManageOrders.js";
 import ManageSingleUser from "./component/admin/manageUsers/ManageSingleUser.js";
 import ManageSingleOrder from "./component/admin/manageOrders/ManageSingleOrder.js";
+import ManageReviews from "./component/admin/manageReviews/ManageReviews.js";
 
 
 function App() {
@@ -50,6 +51,7 @@ function App() {
             </Route>
             <Route path="manageorder" element={<ManageOrders />} />
             <Route path="order/:id" element={<ManageSingleOrder />} />
+            <Route path="managereviews" element={<ManageReviews />} />
           </Route>
         </Route>
         <Route path="aboutus" element={<AboutUs />} />
