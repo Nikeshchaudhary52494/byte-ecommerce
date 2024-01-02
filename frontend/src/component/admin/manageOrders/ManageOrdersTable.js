@@ -1,14 +1,55 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useTable } from 'react-table';
+import { useNavigate } from 'react-router-dom';
+import { MdDelete, MdEdit } from "react-icons/md";
+import { deleteOrder, getAllOrders } from '../../../slices/orderSlice/orderSlice';
 
 const ManageOrdersTable = () => {
     const { orders } = useSelector((state) => state.orders.data);
     const data = orders ? orders : [];
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    const handleEditClick = (orderId) => {
+        navigate(`/user/admin/order/${orderId}`);
+    };
+
+    const handleDeleteClick = (orderId) => {
+        console.log(orderId);
+        dispatch(deleteOrder(orderId)).then(() => {
+            dispatch(getAllOrders());
+        });
+    };
+
+    useEffect(() => {
+        dispatch(getAllOrders());
+    }, [dispatch]);
+
     const columns = [
         { Header: 'Order ID', accessor: '_id' },
         { Header: 'Status', accessor: 'orderStatus' },
         { Header: 'Total Price', accessor: 'totalPrice' },
+        {
+            Header: 'Actions',
+            accessor: 'actions',
+            Cell: ({ row }) => (
+                <div className="flex space-x-2">
+                    <button
+                        onClick={() => handleEditClick(row.original._id)}
+                        className="text-blue-500 hover:underline focus:outline-none mx-2"
+                    >
+                        <MdEdit />
+                    </button>
+                    <button
+                        onClick={() => handleDeleteClick(row.original._id)}
+                        className="text-red-500 hover:underline focus:outline-none"
+                    >
+                        <MdDelete />
+                    </button>
+                </div>
+            ),
+        },
     ];
 
     function MyTable() {
@@ -37,8 +78,9 @@ const ManageOrdersTable = () => {
                     <tbody {...getTableBodyProps()}>
                         {rows.map(row => {
                             prepareRow(row);
+                            const rowClassName = row.original.orderStatus === 'Delivered' ? 'bg-green-200' : '';
                             return (
-                                <tr {...row.getRowProps()} className="border-b border-gray-200">
+                                <tr {...row.getRowProps()} className={`border-b border-gray-200 ${rowClassName}`}>
                                     {row.cells.map(cell => (
                                         <td {...cell.getCellProps()} className="py-2 px-4">
                                             {cell.render('Cell')}

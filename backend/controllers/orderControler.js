@@ -82,8 +82,8 @@ exports.updateOrder = catchAsyncErrors(async (req, res, next) => {
   order.orderItems.forEach(async (order) => {
     await updateStock(order.product, order.quantity);
   });
-  order.orderStatus = req.body.orderStatus;
-  if (req.body.status === "Delivered") {
+  order.orderStatus = req.body.selectedOrderStatus;
+  if (req.body.selectedOrderStatus === "Delivered") {
     order.deliveredAt = Date.now();
   }
 
@@ -93,9 +93,9 @@ exports.updateOrder = catchAsyncErrors(async (req, res, next) => {
   });
 });
 // function  to update stocks of a Product
-async function updateStock(id,quantity) {
+async function updateStock(id, quantity) {
   const product = await Product.findById(id);
-  product.stock-= quantity;
+  product.stock -= quantity;
   await product.save({ validateBeforeSave: false });
 }
 

@@ -12,12 +12,14 @@ import { Route, Routes } from "react-router-dom";
 import UserProfile from "./component/User/UserProfile.js"
 import MangeUser from "./component/admin/manageUsers/MangeUsers.js";
 import Manageproduct from "./component/admin/manageProduct/Manageproduct.js";
-import ManageOrder from "./component/admin/manageOrders/ManageOrder.js";
 import AboutUs from "./component/aboutUs/aboutUs.js";
 import ContactUs from "./component/contactUs/ContactUs.js";
 import AddProduct from "./component/admin/manageProduct/AddProduct.js";
 import UpDatePassword from "./component/User/UpDatePassword.js";
 import ShippingForm from "./component/User/ShippingForm.js";
+import ManageOrders from "./component/admin/manageOrders/ManageOrders.js";
+import ManageSingleUser from "./component/admin/manageUsers/ManageSingleUser.js";
+import ManageSingleOrder from "./component/admin/manageOrders/ManageSingleOrder.js";
 
 
 function App() {
@@ -41,11 +43,13 @@ function App() {
           <Route path='admin'>
             <Route path="dashbord" element={<Dashbord />} />
             <Route path="manageuser" element={<MangeUser />} />
+            <Route path="user/:id" element={<ManageSingleUser />} />
             <Route path="manageproduct">
               <Route index element={<Manageproduct />} />
               <Route path="addproduct" element={<AddProduct />} />
             </Route>
-            <Route path="manageorder" element={<ManageOrder />} />
+            <Route path="manageorder" element={<ManageOrders />} />
+            <Route path="order/:id" element={<ManageSingleOrder />} />
           </Route>
         </Route>
         <Route path="aboutus" element={<AboutUs />} />

@@ -1,16 +1,45 @@
 import React from 'react';
+import { MdDelete, MdEdit } from 'react-icons/md';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { useTable } from 'react-table';
 
 const ManageUserTable = () => {
     const adminData = useSelector((state) => state.admin.data);
     const users = adminData ? adminData.users : [];
-
+    const navigate = useNavigate();
+    const handleEditClick = (userId) => {
+        navigate(`/user/admin/user/${userId}`);
+    };
+    const handleDeleteClick = (userId) => {
+        // Add logic for deleting the order, e.g., dispatch an action
+        // dispatch(deleteOrder(orderId));
+    };
     const columns = [
         { Header: 'User ID', accessor: '_id' },
         { Header: 'Email', accessor: 'email' },
         { Header: 'Name', accessor: 'name' },
         { Header: 'Role', accessor: 'role' },
+        {
+            Header: 'Actions',
+            accessor: 'actions',
+            Cell: ({ row }) => (
+                <div className="flex space-x-2">
+                    <button
+                        onClick={() => handleEditClick(row.original._id)}
+                        className="text-blue-500 hover:underline focus:outline-none mx-2"
+                    >
+                        <MdEdit />
+                    </button>
+                    <button
+                        onClick={() => handleDeleteClick(row.original._id)}
+                        className="text-red-500 hover:underline focus:outline-none"
+                    >
+                        <MdDelete />
+                    </button>
+                </div>
+            ),
+        },
     ];
     function MyTable() {
         const {
