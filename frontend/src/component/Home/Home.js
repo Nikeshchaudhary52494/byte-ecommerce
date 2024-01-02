@@ -9,6 +9,7 @@ import { STATUSES } from '../../store/statuses';
 import { fetchProducts } from '../../slices/productSlice/productsSlice';
 import ProductCard from "../layout/ProductCard";
 import CategoriesList from "../Product/CategoriesList";
+import Footer from "../layout/Footer";
 // import { loadUser } from "../../slices/userSlice/userSlice";
 // import { getAllCartProducts } from "../../slices/cartSlice/cartSlice";
 
@@ -80,7 +81,7 @@ const Home = () => {
           <ProductCard product={product} />
         ))}
       </div>
-
+      <Footer />
     </>
   );
 }
