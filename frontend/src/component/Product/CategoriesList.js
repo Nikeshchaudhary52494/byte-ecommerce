@@ -1,14 +1,20 @@
 import React from 'react'
 import { motion } from "framer-motion"
+import { useDispatch } from 'react-redux'
+import { fetchProducts2 } from '../../slices/productSlice/productsSlice';
+import { useNavigate } from 'react-router-dom';
 
 const CategoriesList = () => {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
     const categoriesList = [{
         imgAddress: "https://m.media-amazon.com/images/I/315vs3rLEZL._SY445_SX342_QL70_FMwebp_.jpg",
-        categoryName: "Phones"
+        categoryName: "Phone"
     },
     {
         imgAddress: "https://m.media-amazon.com/images/I/316ArzLeJ2L._SY445_SX342_QL70_FMwebp_.jpg",
-        categoryName: "Laptops"
+        categoryName: "Laptop"
     },
     {
         imgAddress: "https://m.media-amazon.com/images/I/61Xv6ytnYiL._UY741_.jpg",
@@ -35,12 +41,22 @@ const CategoriesList = () => {
         categoryName: "bicylces"
     }
     ]
+    const handleCategoryClick = (categoryName) => {
+        dispatch(fetchProducts2({ categoryName }));
+        navigate("/products")
+    };
 
     return (
         <>
             {categoriesList.map((category) =>
-                <motion.div whileHover={{ scale: 1.3 }} class="w-[100px] mt-1 p-1 bg-white border sm:border-none rounded-lg flex items-center justify-center flex-col h-[100px]" >
-                    <img class="h-[75%]" src={category.imgAddress} alt={category.categoryName} />
+                <motion.div
+                    key={category.categoryName}
+                    whileHover={{ scale: 1.3 }}
+                    onClick={() => handleCategoryClick(category.categoryName)}
+                    className="w-[100px] mt-1 p-1 bg-white border sm:border-none rounded-lg flex items-center justify-center flex-col h-[100px]" >
+                    <img className="h-[75%]"
+                        src={category.imgAddress}
+                        alt={category.categoryName} />
                     <p>{category.categoryName}</p>
                 </motion.div>
 

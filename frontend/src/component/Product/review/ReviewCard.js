@@ -18,15 +18,15 @@ const ReviewCard = ({ review }) => {
 
   return (
 
-    <div class="flex w-[100%] flex-col mx-auto   ">
-      <div class="flex justify-left items-center" >
-        <img class="h-[100px] w-[100px] object-cover m-4 rounded-full " src={ProfilePic} alt="User" />
+    <div className="flex  flex-col border-b p-10  ">
+      <div className="flex justify-left mb-4 items-center" >
+        <img className="h-[50px] w-[50px] mr-4 object-cover  rounded-full " src={ProfilePic} alt="User" />
         <div>
-          <p>{review.name}</p>
+          <p className='text-sm font-bold'>{review.name}</p>
           <ReactStars {...options} />
         </div>
       </div>
-      <span>{review.comment}</span>
+      <span className='text-sm'>{review.comment}</span>
     </div>
 
   )

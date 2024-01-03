@@ -10,6 +10,7 @@ const {
   updateUserProfile,
   getAllUsers,
   getSingleUser,
+  updateUserRole,
 } = require("../controllers/userController");
 const { isAuthenticatedUser, authorizeRole } = require("../middleware/auth");
 const router = express.Router();
@@ -28,5 +29,8 @@ router
 router
   .route("/admin/getUser/:id")
   .get(isAuthenticatedUser, authorizeRole("admin"), getSingleUser);
+router
+  .route("/admin/updateuserrole/:id")
+  .put(isAuthenticatedUser, authorizeRole("admin"), updateUserRole);
 
 module.exports = router;

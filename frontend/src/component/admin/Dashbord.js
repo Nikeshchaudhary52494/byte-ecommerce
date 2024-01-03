@@ -5,23 +5,25 @@ import { MdDashboard } from "react-icons/md";
 import { Link } from 'react-router-dom'
 import Messages from './Messages';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllUsers } from '../../slices/adminSlice/adminSlice';
+import { getAdminProducts, getAllUsers } from '../../slices/adminSlice/adminSlice';
 import { getAllOrders } from '../../slices/orderSlice/orderSlice';
 import { STATUSES } from '../../store/statuses';
 import Loader from '../layout/Loader/Loader';
 import { getAllMessages } from '../../slices/contactUsSlice/contactUsSlice';
+// import { getAdminProducts } from '../../../../backend/controllers/productController';
 
 const Dashbord = () => {
-    const { UserCount } = useSelector((state) => state.admin.data);
+    const { UserCount } = useSelector((state) => state.admin.usersData);
     const { data, status } = useSelector((state) => state.orders);
     const ordersLength = data?.orders?.length || 0;
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(getAllUsers());
+        dispatch(getAdminProducts());
         dispatch(getAllOrders());
         dispatch(getAllMessages());
     }, [dispatch])
-    
+
     if (status === STATUSES.LOADING) {
         return <div class="w-full grid place-content-center h-[80vh] ">
             <Loader />

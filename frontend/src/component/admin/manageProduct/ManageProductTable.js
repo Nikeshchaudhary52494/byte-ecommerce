@@ -5,7 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import { useTable } from 'react-table';
 
 const ManageProductTable = () => {
-    const { data } = useSelector((state) => state.products);
+    const productsData = useSelector((state) => state.admin.productsData);
+    const data = productsData ? productsData.products : [];
     const navigate = useNavigate();
     const handleEditClick = (orderId) => {
         navigate(`/user/admin/product/${orderId}`);

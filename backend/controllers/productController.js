@@ -21,7 +21,6 @@ exports.getAllProducts = catchAsyncErrors(async (req, res) => {      //Passing f
   const apiFeature = new ApiFeatures(Product.find(), req.query)
     .search()
     .filter()
-    .pagination(resultPerPage);
   const products = await apiFeature.query;
   res.status(200).json({
     success: true,
@@ -30,6 +29,14 @@ exports.getAllProducts = catchAsyncErrors(async (req, res) => {      //Passing f
   });
 });
 
+exports.getAdminProducts = catchAsyncErrors(async (req, res, next) => {
+  const products = await Product.find();
+
+  res.status(200).json({
+    success: true,
+    products,
+  });
+});
 
 // Update product --Admin
 exports.updateProduct = catchAsyncErrors(async (req, res, next) => {

@@ -45,10 +45,14 @@ export const fetchProducts = createAsyncThunk('products/fetch',
     });
 
 export const fetchProducts2 = createAsyncThunk('products/fetch',
-    async (params) => {
-        const { keyword = "", price = [0, 2500] } = params;
-        const { data } = await axios.get(`/api/v1/products?keyword=${keyword}&price[gte]=${price[0]}&price[lte]=${price[1]}`);
-        return data.products;
+    async ({ keyword = "", price = [0, 2500], categoryName }) => {
+        if (categoryName) {
+            const { data } = await axios.get(`/api/v1/products?keyword=${keyword}&price[gte]=${price[0]}&price[lte]=${price[1]}&category=${categoryName}`);
+            return data.products;
+        } else {
+            const { data } = await axios.get(`/api/v1/products?keyword=${keyword}&price[gte]=${price[0]}&price[lte]=${price[1]}`);
+            return data.products;
+        }
     },
 );
 export const getProductReviews = createAsyncThunk('products/getProductsreviews', async ({ productId }) => {

@@ -1,14 +1,18 @@
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { fetchProducts2 } from '../../slices/productSlice/productsSlice';
 
 
 const SearchBar = () => {
     //useNavigate is used for programmatic navigation in React components.
+    const dispatch = useDispatch()
     const navigate = useNavigate();
     const [keyword, setKeyword] = useState("");
     const searchSubmitHandler = (e) => {
         e.preventDefault();
         if (keyword.trim()) {  //trim removes space from the beginning and end
+            dispatch(fetchProducts2({ keyword }));
             navigate(`/products/${keyword}`);
         } else {
             navigate("/products")

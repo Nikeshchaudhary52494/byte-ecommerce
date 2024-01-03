@@ -1,19 +1,19 @@
 import React from 'react';
-import { MdDelete, MdEdit } from 'react-icons/md';
-import { useSelector } from 'react-redux';
+import { SiTrustpilot } from "react-icons/si";
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useTable } from 'react-table';
+import { getAllUsers, updateUserRole } from '../../../slices/adminSlice/adminSlice';
 
 const ManageUserTable = () => {
-    const adminData = useSelector((state) => state.admin.data);
+    const adminData = useSelector((state) => state.admin.usersData);
     const users = adminData ? adminData.users : [];
     const navigate = useNavigate();
-    const handleEditClick = (userId) => {
-        navigate(`/user/admin/user/${userId}`);
-    };
-    const handleDeleteClick = (userId) => {
-        // Add logic for deleting the order, e.g., dispatch an action
-        // dispatch(deleteOrder(orderId));
+    const dispatch = useDispatch();
+    const handleUpdateClick = (userId, role) => {
+        dispatch(updateUserRole({ userId, role })).then(() => {
+            dispatch(getAllUsers());
+        })
     };
     const columns = [
         { Header: 'User ID', accessor: '_id' },
@@ -26,16 +26,13 @@ const ManageUserTable = () => {
             Cell: ({ row }) => (
                 <div className="flex space-x-2">
                     <button
-                        onClick={() => handleEditClick(row.original._id)}
+                        onClick={() => {
+                            const role = row.original.role === "admin" ? "user" : "admin";
+                            handleUpdateClick(row.original._id, role);
+                        }}
                         className="text-blue-500 hover:underline focus:outline-none mx-2"
                     >
-                        <MdEdit />
-                    </button>
-                    <button
-                        onClick={() => handleDeleteClick(row.original._id)}
-                        className="text-red-500 hover:underline focus:outline-none"
-                    >
-                        <MdDelete />
+                        <SiTrustpilot />
                     </button>
                 </div>
             ),

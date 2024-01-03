@@ -12,12 +12,7 @@ const Products = () => {
     const dispatch = useDispatch();
     const { data: products, status } = useSelector((state) => state.products);
     const price = useSelector((state) => state.filter);
-    console.log("pricecc")
-    console.log(price)
-    // This hook allows you to access the parameters from the current route's path.
-    const { keyword } = useParams();
-
-    // toggleFilte controller
+    const { category } = useParams();
     const [toggleFilter, setToggleFilter] = useState(false);
     useEffect(() => {
         const handleScroll = (event) => {
@@ -25,21 +20,11 @@ const Products = () => {
                 event.preventDefault();
             }
         };
-
-        // Add event listener when the component mounts
         document.body.addEventListener("wheel", handleScroll, { passive: false });
-
-        // Remove event listener when the component unmounts
         return () => {
             document.body.removeEventListener("wheel", handleScroll);
         };
     }, [toggleFilter]);
-
-    useEffect(() => {
-        dispatch(fetchProducts2({ keyword,price}))
-        console.log("hello")
-        console.log(price);
-    }, [dispatch, keyword, price]);
 
     if (status === STATUSES.LOADING) {
         return <div class="w-full grid place-content-center h-[80vh] ">

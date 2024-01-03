@@ -8,11 +8,11 @@ class ApiFeatures {
   search() {
     const keyword = this.querySrt.keyword
       ? {
-          name: {
-            $regex: this.querySrt.keyword,
-            $options: "i",
-          },
-        }
+        name: {
+          $regex: this.querySrt.keyword,
+          $options: "i",
+        },
+      }
       : {};
 
     this.query = this.query.find({ ...keyword });
@@ -31,14 +31,6 @@ class ApiFeatures {
     let queryStr = JSON.stringify(copyQueryStr);
     queryStr = queryStr.replace(/\b(gt|gte|lt|lte)\b/g, (key) => `$${key}`);
     this.query = this.query.find(JSON.parse(queryStr));
-    return this;
-  }
-
-  // Pagination
-  pagination(resultPerPage) {
-    const curentPage = Number(this.querySrt.page) || 1;
-    const skip = resultPerPage * (curentPage - 1);
-    this.query = this.query.limit(resultPerPage).skip(skip);
     return this;
   }
 }
