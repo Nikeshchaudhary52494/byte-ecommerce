@@ -16,8 +16,10 @@ const UserProfile = () => {
             const response = await fetch("/api/v1/me");
             if (response.ok) {
                 const { user } = await response.json();
-                const { name, email } = user;
-                setUserData({ name, email });
+                // console.log(user.avtar);
+                const { name, email, avtar } = user;
+                // console.log(`this is avatar ${avatar.url}`)
+                setUserData({ name, email, avtar: avtar.url });
             } else {
                 console.error("Failed to fetch user data");
             }
@@ -42,7 +44,7 @@ const UserProfile = () => {
                         <div className='w-[80%] max-w-lg p-5 m-10  bg-slate-700 rounded-md '>
                             <div className=' rounded-md bg-slate-600 m-2 p-2'>
                                 <div className='w-24 h-24 rounded-full m-2 overflow-hidden'>
-                                    <img className='w-full h-full' src={demoAvatar} alt="user profile" />
+                                    <img className='w-full h-full' src={userData.avtar} alt="user profile" />
                                 </div>
                             </div>
                             {fields.map((field, index) => (

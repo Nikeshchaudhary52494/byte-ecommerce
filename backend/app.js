@@ -2,9 +2,12 @@ const express = require("express");
 const app = express();
 const cookieParser = require("cookie-parser");
 const ErrorMiddleware = require("./middleware/error");
-
+const fileUpload = require("express-fileupload");
 app.use(express.json());
 app.use(cookieParser());
+app.use(fileUpload({
+    useTempFiles: true,
+}));
 
 const product = require("./routes/productRoute");
 const user = require("./routes/userRoute");

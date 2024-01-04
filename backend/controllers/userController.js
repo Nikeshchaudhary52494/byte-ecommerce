@@ -4,15 +4,21 @@ const User = require("../models/userModel");
 const { sendToken } = require("../utils/jwtToken");
 const { sendEail } = require("../utils/sendEmail");
 const crypto = require("crypto")
+const cloudinary = require("cloudinary");
+const { getDataUri } = require("../utils/dataUri");
 
 // Regiser a User
 exports.registerUser = catchAsyncErrors(async (req, res, next) => {
+    const sampleFile = req.files.image;
+    const myCloud = await cloudinary.uploader.upload(sampleFile.tempFilePath);
     const { name, email, password } = req.body;
     const user = await User.create({
-        name, email, password,
+        name,
+        email,
+        password,
         avtar: {
-            public_id: "this is a samole id",
-            url: "profilepicUrl"
+            public_id: myCloud.public_id,
+            url: myCloud.secure_url,
         }
     })
     sendToken(user, 201, res);
@@ -193,16 +199,16 @@ exports.getSingleUser = catchAsyncErrors(async (req, res, next) => {
 
 exports.updateUserRole = catchAsyncErrors(async (req, res, next) => {
     const newUserData = {
-      role: req.body.role,
+        role: req.body.role,
     };
-  
+
     await User.findByIdAndUpdate(req.params.id, newUserData, {
-      new: true,
-      runValidators: true,
-      useFindAndModify: false,
+        new: true,
+        runValidators: true,
+        useFindAndModify: false,
     });
-  
+
     res.status(200).json({
-      success: true,
+        success: true,
     });
-  });
+});

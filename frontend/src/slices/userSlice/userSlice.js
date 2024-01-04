@@ -1,7 +1,12 @@
-
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { STATUSES } from "../../store/statuses";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { STATUSES } from "../../store/statuses";
+
+const initialState = {
+  user: { role: "user" },
+  isAuthenticated: false,
+  status: STATUSES.IDLE,
+};
 
 const setLoadingState = (state) => {
   state.status = STATUSES.LOADING;
@@ -13,22 +18,33 @@ const handleAuthFulfilled = (state, action) => {
   state.status = STATUSES.IDLE;
 };
 
-const makeRequest = async (url, method, data) => {
-  try {
-    const response = await axios({ url, method, data });
-    return response.data.user;
-  } catch (error) {
-    throw error;
-  }
-};
+export const registerUser = createAsyncThunk("user/register", async (userData) => {
+
+  const response = await axios.post("/api/v1/register", userData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+  return response.data.user;
+});
+
+export const loginUser = createAsyncThunk("user/login", async (userData) => {
+  const response = await axios.post("/api/v1/login", userData);
+  return response.data.user;
+});
+
+export const logoutUser = createAsyncThunk("user/logout", async () => {
+  await axios.get("/api/v1/logout");
+});
+
+export const loadUser = createAsyncThunk("user/load", async () => {
+  const response = await axios.get("/api/v1/me");
+  return response.data.user;
+});
 
 const userSlice = createSlice({
   name: "user",
-  initialState: {
-    user: { role: "user" },
-    isAuthenticated: false,
-    status: STATUSES.IDLE
-  },
+  initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
@@ -42,20 +58,7 @@ const userSlice = createSlice({
         state.isAuthenticated = false;
         state.status = STATUSES.IDLE;
       });
-  }
+  },
 });
 
 export default userSlice.reducer;
-
-export const registerUser = createAsyncThunk("user/register", async (userData) => {
-  return makeRequest('/api/v1/register', 'post', userData);
-});
-export const loginUser = createAsyncThunk("user/login", async (userData) => {
-  return makeRequest('/api/v1/login', 'post', userData);
-});
-export const logoutUser = createAsyncThunk("user/logout", async () => {
-  await axios.get('/api/v1/logout');
-});
-export const loadUser = createAsyncThunk("user/load", async () => {
-  return makeRequest('/api/v1/me', 'get');
-});

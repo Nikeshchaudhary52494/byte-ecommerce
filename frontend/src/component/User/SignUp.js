@@ -11,38 +11,45 @@ const SignUp = () => {
     const { isAuthenticated } = useSelector((state) => state.user)
     const navigate = useNavigate();
     const location = useLocation();
-    console.log(location)
     const dispatch = useDispatch();
+
     const [user, setUser] = useState({
         name: "",
         email: "",
-        password: ""
+        password: "",
+        avatar: null,
     });
-    const { name, email, password } = user;
-    const [avatar, setAvatar] = useState("/profile.jpg");
     const [avatarPreview, setAvatarPreview] = useState(demoAvatar);
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        dispatch(registerUser(user))
-        console.log(location)
+        console.log(user.name)
+        console.log(user.avatar)
+        const formData = new FormData();
+        formData.append('name', user.name);
+        formData.append('email', user.email);
+        formData.append('password', user.password);
+        formData.append('image', user.avatar);
+        dispatch(registerUser(formData));
     };
+
     const registerDataChange = (e) => {
-        if (e.target.name === "avatar") {
+        if (e.target.name === "image") {
             const reader = new FileReader();
 
             reader.onload = () => {
                 if (reader.readyState === 2) {
                     setAvatarPreview(reader.result);
-                    setAvatar(reader.result);
+                    setUser({ ...user, avatar: e.target.files[0] });
                 }
             };
-
             reader.readAsDataURL(e.target.files[0]);
         } else {
             setUser({ ...user, [e.target.name]: e.target.value });
         }
     };
+
     useEffect(() => {
         if (isAuthenticated === true) {
             navigate(location.state.previousLocation);
@@ -56,14 +63,16 @@ const SignUp = () => {
                         <img className='w-24' src={Logo} alt="Byte logo" />
                         <h3 className="text-xl mb-4 ">Sign UP</h3>
                     </div>
-                    <form className="flex gap-4 text-black flex-col" onSubmit={handleSubmit} >
+                    <form
+                        className="flex gap-4 text-black flex-col"
+                        onSubmit={handleSubmit} >
                         <input
                             required
                             className="w-[300px ] outline-none p-2 m-2 rounded-md"
                             type="text"
                             name='name'
                             placeholder='Name'
-                            value={name}
+                            value={user.name}
                             onChange={registerDataChange} />
 
                         <input
@@ -72,7 +81,7 @@ const SignUp = () => {
                             type="email"
                             name='email'
                             placeholder='Email'
-                            value={email}
+                            value={user.email}
                             onChange={registerDataChange} />
 
                         <input
@@ -81,7 +90,7 @@ const SignUp = () => {
                             type="password"
                             name='password'
                             placeholder='Password'
-                            value={password}
+                            value={user.password}
                             onChange={registerDataChange} />
                         <div className='flex justify-between border rounded-md bg-slate-700 mx-2 p-2 items-center'>
 
@@ -95,9 +104,12 @@ const SignUp = () => {
                                 <span class="hidden md:inline">Choose File</span>
                                 <span class="md:hidden">Upload</span>
                             </label>
-                            <input id='fileInput' className='hidden '
+                            <input
+                                required
+                                id='fileInput'
+                                className='hidden '
                                 type="file"
-                                name="avatar"
+                                name="image"
                                 accept="image/*"
                                 onChange={registerDataChange} />
                         </div>
