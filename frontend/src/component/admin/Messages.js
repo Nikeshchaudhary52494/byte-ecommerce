@@ -1,8 +1,16 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { MdDelete } from 'react-icons/md';
+import { useDispatch, useSelector } from 'react-redux'
+import { deleteMessageById, getAllMessages } from '../../slices/contactUsSlice/contactUsSlice';
 
 const Messages = () => {
     const { data } = useSelector((state) => state.contactUs);
+    const dispatch = useDispatch();
+    const deleteMessage = (messageId) => {
+        dispatch(deleteMessageById({messageId})).then(() => {
+            dispatch(getAllMessages());
+        })
+    };
     return (
         <>
             <div className='bg-slate-600 border p-4 rounded-md'>
@@ -11,7 +19,7 @@ const Messages = () => {
                     {
                         data.map((messsage) => (
                             <div className='mb-2 bg-slate-500 p-2 text-sm rounded-md'>
-                                <p className='font-bold text-cyan-500'>{messsage.name}</p>
+                                <div className='flex justify-between'> <p className='font-bold text-cyan-500'>{messsage.name}  </p><button className='text-red-500' onClick={() => deleteMessage(messsage._id)}><MdDelete /></button></div>
                                 <p className='text-xs'>{messsage.email}</p>
                                 <p>{messsage.message}</p>
                             </div>

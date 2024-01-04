@@ -23,17 +23,6 @@ const contactUsSlice = createSlice({
                 state.status = STATUSES.ERROR;
                 state.error = action.error.message;
             })
-            .addCase(deleteMessageById.pending, (state) => {
-                state.status = STATUSES.LOADING;
-            })
-            .addCase(deleteMessageById.fulfilled, (state, action) => {
-                state.status = STATUSES.IDLE;
-                state.messages = state.messages.filter(message => message._id !== action.payload);
-            })
-            .addCase(deleteMessageById.rejected, (state, action) => {
-                state.status = STATUSES.ERROR;
-                state.error = action.error.message;
-            });
     }
 })
 export const createMessage = createAsyncThunk('contactUs/createmessaage', async ({ message }) => {
@@ -52,10 +41,9 @@ export const getAllMessages = createAsyncThunk('contactUs/getAllMessages', async
     }
 });
 
-export const deleteMessageById = createAsyncThunk('contactUs/deleteMessageById', async (messageId) => {
+export const deleteMessageById = createAsyncThunk('contactUs/deleteMessageById', async ({ messageId }) => {
     try {
-        await axios.delete(`/api/v1/contactus/${messageId}`);
-        return messageId;
+        await axios.delete(`/api/v1/admin/message/${messageId}`);
     } catch (error) {
         throw error.response.data;
     }

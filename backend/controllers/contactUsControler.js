@@ -44,22 +44,14 @@ exports.getAllMessages = catchAsyncErrors(async (req, res, next) => {
 
 exports.deleteMessageById = catchAsyncErrors(async (req, res, next) => {
     const messageId = req.params.id;
-
     try {
-        // Check if the message exists
         const existingMessage = await ContactUs.findById(messageId);
+
         if (!existingMessage) {
             return res.status(404).json({ error: "Message not found." });
         }
 
-        // Check if the logged-in user is the owner of the message (optional, modify as needed)
-        if (existingMessage.user.toString() !== req.user._id.toString()) {
-            return res.status(403).json({ error: "You do not have permission to delete this message." });
-        }
-
-        // Delete the message
-        await existingMessage.remove();
-
+        await existingMessage.deleteOne({ _id: messageId });
         res.status(200).json({
             success: true,
             message: "Message deleted successfully.",

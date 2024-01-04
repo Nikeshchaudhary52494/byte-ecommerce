@@ -1,7 +1,7 @@
 const express = require("express");
 
 const { isAuthenticatedUser, authorizeRole } = require("../middleware/auth");
-const { createMessage, getAllMessages } = require("../controllers/contactUsControler");
+const { createMessage, getAllMessages, deleteMessageById } = require("../controllers/contactUsControler");
 
 const router = express.Router();
 
@@ -12,6 +12,9 @@ router
 router
     .route("/admin/messages")
     .get(isAuthenticatedUser, authorizeRole("admin"), getAllMessages);
+router
+    .route("/admin/message/:id")
+    .delete(isAuthenticatedUser, authorizeRole("admin"), deleteMessageById);
 
 
 module.exports = router;
