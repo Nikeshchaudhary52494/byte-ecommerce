@@ -9,8 +9,8 @@ const { getDataUri } = require("../utils/dataUri");
 
 // Regiser a User
 exports.registerUser = catchAsyncErrors(async (req, res, next) => {
-    const sampleFile = req.files.image;
-    const myCloud = await cloudinary.uploader.upload(sampleFile.tempFilePath);
+    const image = req.files.image;
+    const myCloud = await cloudinary.uploader.upload(image.tempFilePath);
     const { name, email, password } = req.body;
     const user = await User.create({
         name,

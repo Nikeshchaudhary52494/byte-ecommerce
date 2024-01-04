@@ -58,4 +58,19 @@ export const updateUserRole = createAsyncThunk('admin/updateuserrole', async ({ 
         throw error.response.data;
     }
 });
+export const createProduct = createAsyncThunk('admin/createproducts', async ({ productData }) => {
+    try {
+        await axios.post('/api/v1/admin/product/new', productData);
+    } catch (error) {
+        throw error.response.data;
+    }
+});
+export const updatedProduct = createAsyncThunk('admin/updateproduct', async ({ _id, productData }) => {
+    try {
+        console.log(_id)
+        await axios.put(`/api/v1/admin/product/${_id}`, productData);
+    } catch (error) {
+        throw error.response.data;
+    }
+})
 export default adminSlice.reducer;

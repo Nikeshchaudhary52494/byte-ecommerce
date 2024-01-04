@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { SiTrustpilot } from "react-icons/si";
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -6,15 +6,17 @@ import { useTable } from 'react-table';
 import { getAllUsers, updateUserRole } from '../../../slices/adminSlice/adminSlice';
 
 const ManageUserTable = () => {
-    const adminData = useSelector((state) => state.admin.usersData);
-    const users = adminData ? adminData.users : [];
-    const navigate = useNavigate();
+    const users = useSelector((state) => state.admin.usersData.users || []);
     const dispatch = useDispatch();
     const handleUpdateClick = (userId, role) => {
         dispatch(updateUserRole({ userId, role })).then(() => {
             dispatch(getAllUsers());
         })
     };
+    useEffect(() => {
+        if (users.length === 0)
+            dispatch(getAllUsers());
+    }, [dispatch, users]);
     const columns = [
         { Header: 'User ID', accessor: '_id' },
         { Header: 'Email', accessor: 'email' },

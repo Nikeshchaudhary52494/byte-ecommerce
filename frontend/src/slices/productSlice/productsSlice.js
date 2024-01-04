@@ -69,4 +69,12 @@ export const deleteProductReviews = createAsyncThunk('products/deleteProductRevi
     } catch (error) {
         throw error.response.data;
     }
+});
+export const deleteProduct = createAsyncThunk('products/deleteproduct', async ({ productId }) => {
+    try {
+        console.log({ productId });
+        await axios.delete(`/api/v1/admin/product/${productId}`);
+    } catch (error) {
+        throw error.response.data;
+    }
 })

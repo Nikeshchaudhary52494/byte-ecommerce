@@ -21,6 +21,9 @@ import ManageOrders from "./component/admin/manageOrders/ManageOrders.js";
 import ManageSingleUser from "./component/admin/manageUsers/ManageSingleUser.js";
 import ManageSingleOrder from "./component/admin/manageOrders/ManageSingleOrder.js";
 import ManageReviews from "./component/admin/manageReviews/ManageReviews.js";
+import ManageSingleU from "./component/admin/manageProduct/ManageSingleProduct.js";
+import ManageSingleProduct from "./component/admin/manageProduct/ManageSingleProduct.js";
+import EditProduct from "./component/admin/manageProduct/EditProduct.js";
 
 
 function App() {
@@ -41,18 +44,20 @@ function App() {
             <Route index element={<UserProfile />} />
             <Route path="updatepassword" element={<ShippingForm />} />
           </Route>
-          <Route path='admin'>
-            <Route path="dashbord" element={<Dashbord />} />
-            <Route path="manageuser" element={<MangeUser />} />
-            <Route path="user/:id" element={<ManageSingleUser />} />
-            <Route path="manageproduct">
-              <Route index element={<Manageproduct />} />
-              <Route path="addproduct" element={<AddProduct />} />
-            </Route>
-            <Route path="manageorder" element={<ManageOrders />} />
-            <Route path="order/:id" element={<ManageSingleOrder />} />
-            <Route path="managereviews" element={<ManageReviews />} />
+        </Route>
+        <Route path='admin'>
+          <Route path="dashbord" element={<Dashbord />} />
+          <Route path="manageuser" element={<MangeUser />} />
+          <Route path="user/:id" element={<ManageSingleUser />} />
+          <Route path="manageproduct">
+            <Route index element={<Manageproduct />} />
+            <Route path="addproduct" element={<AddProduct />} />
+            <Route path="editproduct" element={<EditProduct />} />
           </Route>
+          <Route path="product/:id" element={<ManageSingleProduct />} />
+          <Route path="manageorder" element={<ManageOrders />} />
+          <Route path="order/:id" element={<ManageSingleOrder />} />
+          <Route path="managereviews" element={<ManageReviews />} />
         </Route>
         <Route path="aboutus" element={<AboutUs />} />
         <Route path="contactus" element={<ContactUs />} />

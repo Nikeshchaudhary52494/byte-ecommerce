@@ -11,7 +11,6 @@ import { getAllCartProducts } from '../../slices/cartSlice/cartSlice'
 
 const Login = () => {
   const location = useLocation();
-  console.log(location)
   const { isAuthenticated, user: logedinUser } = useSelector((state) => state.user);
 
   const dispatch = useDispatch();

@@ -1,22 +1,26 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { MdDelete, MdEdit } from 'react-icons/md';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useTable } from 'react-table';
+import { getAdminProducts } from '../../../slices/adminSlice/adminSlice';
+import { deleteProduct } from '../../../slices/productSlice/productsSlice';
 
 const ManageProductTable = () => {
-    const productsData = useSelector((state) => state.admin.productsData);
-    const data = productsData ? productsData.products : [];
+    const data = useSelector((state) => state.admin.productsData.products || []);
     const navigate = useNavigate();
+    const dispatch = useDispatch()
     const handleEditClick = (orderId) => {
-        navigate(`/user/admin/product/${orderId}`);
+        navigate(`/admin/product/${orderId}`);
     };
-
-    const handleDeleteClick = (orderId) => {
-        // console.log(orderId);
-        // dispatch(deleteOrder(orderId)).then(() => {
-        //     dispatch(getAllOrders());
-        // });
+    useEffect(() => {
+        if (data.length === 0)
+            dispatch(getAdminProducts());
+    }, [dispatch]);
+    const handleDeleteClick = (productId) => {
+        dispatch(deleteProduct({ productId })).then(() => {
+            dispatch(getAdminProducts());
+        })
     };
     const columns = [
         { Header: 'ID', accessor: '_id' },

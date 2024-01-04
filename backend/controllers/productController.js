@@ -2,12 +2,24 @@ const Product = require("../models/productModel");
 const ErrorHandler = require("../utils/errorhandler");
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const ApiFeatures = require("../utils/APIfeatures");
-
+const cloudinary = require("cloudinary")
 
 // create product -- Admin
 exports.createProduct = catchAsyncErrors(async (req, res, next) => {
-  req.body.user = req.user.id;
-  const product = await Product.create(req.body);
+  const image = req.files.image;
+  console.log("hello");
+  const myCloud = await cloudinary.uploader.upload(image.tempFilePath);
+  const productData = {
+    ...req.body,
+    images: [{
+      public_id: myCloud.public_id,
+      url: myCloud.url,
+    }],
+    user: req.user.id,
+  };
+  console.log("hell22o");
+  console.log(`this is my productData${productData}`);
+  const product = await Product.create(productData);
   res.status(201).json({
     success: true,
     product,

@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { motion } from "framer-motion";
+import { useDispatch } from 'react-redux';
+import { createProduct, getAdminProducts } from '../../../slices/adminSlice/adminSlice';
+import { useNavigate } from 'react-router-dom';
 const AddProductForm = () => {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         name: '',
         description: '',
@@ -28,21 +32,10 @@ const AddProductForm = () => {
         productData.append('category', formData.category);
         productData.append('stock', formData.stock);
         productData.append('image', image);
-
-        try {
-            const response = await axios.post('/api/products', productData);
-            console.log('Product added successfully:', response.data);
-            setFormData({
-                name: '',
-                description: '',
-                price: 0,
-                category: '',
-                stock: 1,
-            });
-            setImage(null);
-        } catch (error) {
-            console.error('Error adding product:', error.message);
-        }
+        dispatch(createProduct({ productData })).then(() => {
+            dispatch(getAdminProducts())
+            navigate("/admin/manageproduct");
+        })
     };
 
     return (

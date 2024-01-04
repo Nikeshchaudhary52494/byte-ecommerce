@@ -17,8 +17,8 @@ const ManageReviews = () => {
 
   return (
     <>
-      <div className='flex flex-col items-center p-10 bg-slate-900'>
-        <div>
+      <div className='p-10 bg-slate-900 min-h-screen'>
+        <div className='flex flex-col items-center'>
           <p className='font-bold text-3xl text-white'>View Reviews</p>
           <form
             className='flex flex-col my-10'
@@ -39,10 +39,12 @@ const ManageReviews = () => {
             </button>
           </form>
         </div>
-        <div className={`mt-10 border-t w-[70%] ${toggle ? 'hidden' : ''}`}>
-          <ManageReviewTable productId={productId} />
+    
+          <div className={`mt-5 mb-20  max-w-5xl mx-auto  ${toggle ? 'hidden' : ''}`}>
+            <ManageReviewTable productId={productId} />
+          </div>
         </div>
-      </div>
+      
     </>
   );
 };

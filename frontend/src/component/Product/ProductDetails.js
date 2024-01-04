@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { STATUSES } from '../../store/statuses';
-import { fetchProduct } from "../../slices/productSlice/productDetailsSlice";
+import { fetchProductDetails } from "../../slices/productSlice/productDetailsSlice";
 import { addToCart } from "../../slices/cartSlice/cartSlice.js"
 import { useParams } from "react-router-dom";
 import Loader from "../layout/Loader/Loader";
@@ -18,7 +18,7 @@ const ProductDetails = () => {
   const { data: product, status } = useSelector((state) => state.productDetails);
   const { user } = useSelector((state) => state.user);
   useEffect(() => {
-    dispatch(fetchProduct({ id: id }));
+    dispatch(fetchProductDetails({ id: id }));
   }, [dispatch, id]);
 
   const addProduct = (userId, productId, quantity) => {

@@ -35,7 +35,7 @@ const NavOptions = ({ toggle, setToggle = () => { } }) => {
       to: "/cart",
       name: "Cart"
     }, {
-      to: "/user/admin/dashbord",
+      to: "/admin/dashbord",
       name: "Dashbord"
     }];
   };
