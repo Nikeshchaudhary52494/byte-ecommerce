@@ -111,7 +111,6 @@ text-white py-2 px-4  rounded-md">
                             <span class="md:hidden">Upload</span>
                         </label>
                         <input
-                            required
                             id='fileInput'
                             className='hidden '
                             type="file"

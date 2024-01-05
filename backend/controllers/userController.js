@@ -5,7 +5,6 @@ const { sendToken } = require("../utils/jwtToken");
 const { sendEail } = require("../utils/sendEmail");
 const crypto = require("crypto")
 const cloudinary = require("cloudinary");
-const { getDataUri } = require("../utils/dataUri");
 
 // Regiser a User
 exports.registerUser = catchAsyncErrors(async (req, res, next) => {
@@ -161,15 +160,16 @@ exports.updateUserProfile = catchAsyncErrors(async (req, res, next) => {
     let newUserData;
     const { name, email, oldAvatarUrl, oldAvatarPublicId } = req.body;
     if (image) {
-        const myCloud = await cloudinary.uploader.upload(image.tempFilePath);
-        newUserData = {
-            name,
-            email,
-            avatar: {
-                public_id: myCloud.public_id,
-                url: myCloud.secure_url,
+        cloudinary.uploader.upload_stream(async (error, result) => {
+            newUserData = {
+                name,
+                email,
+                avatar: {
+                    public_id: result.public_id,
+                    url: result.secure_url,
+                }
             }
-        }
+        })
     } else {
         newUserData = {
             name,
