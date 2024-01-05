@@ -11,7 +11,7 @@ import { getAllCartProducts } from '../../slices/cartSlice/cartSlice'
 
 const Login = () => {
   const location = useLocation();
-  const { isAuthenticated, user: logedinUser } = useSelector((state) => state.user);
+  const { isAuthenticated } = useSelector((state) => state.user);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -68,11 +68,19 @@ const Login = () => {
               transition={{ duration: .5 }}
               class="w-[300px] m-2 h-[40px] hover:bg-teal-700 text-white bg-teal-600 rounded-lg" />
           </form>
-          <Link to="/user/signup" state={location.state}>
-            <p class="text-sm ">
+          <div className='flex justify-between'>
+            <Link
+              class="text-xs"
+              to="/user/signup"
+              state={location.state}>
               New User? Create Account
-            </p>
-          </Link>
+            </Link>
+            <Link
+              className='text-xs text-red-400'
+              to="/user/password/forget">
+              Forget Password
+            </Link>
+          </div>
         </div>
         <Link to="/" >
           <button class="text-white p-2 mt-5"  >Go to Home</button>

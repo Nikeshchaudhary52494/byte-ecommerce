@@ -26,6 +26,8 @@ import UpdateUserProfile from "./component/User/UpdateUserProfile.js";
 import ShippingInfo from "./component/Cart/ShippingInfo.js";
 import PaymentSucessfull from "./component/Cart/PaymentSucessfull.js";
 import UpdatePassword from "./component/User/UpdatePassword.js";
+import ForgetPassword from "./component/User/ForgetPassword.js";
+import ResetPassword from "./component/User/ResetPassword.js";
 
 
 function App() {
@@ -50,7 +52,9 @@ function App() {
           <Route path="profile" element={<UserProfile />} />
           <Route path="updateprofile" element={<UpdateUserProfile />} />
           <Route path="updatepassword" element={<UpdatePassword />} />
+          <Route path="password/forget" element={<ForgetPassword />} />
         </Route>
+        <Route path="password/reset/:token" element={<ResetPassword />} />
         <Route path='admin'>
           <Route path="dashbord" element={<Dashbord />} />
           <Route path="manageuser" element={<MangeUser />} />

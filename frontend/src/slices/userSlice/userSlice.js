@@ -48,6 +48,13 @@ export const updateUserProfile = createAsyncThunk("user/updateuserprofile", asyn
 export const updatepassword = createAsyncThunk('user/updatepassword', async (passwordData) => {
   const response = await axios.put("/api/v1/password/update", passwordData);
   return response.data.user;
+});
+export const forgotPassword = createAsyncThunk("user/forgetpassword", async ({ email }) => {
+  await axios.post("/api/v1/password/forgot", { email });
+})
+export const resetPassword = createAsyncThunk("user/resetpassword", async ({ token, passwordData }) => {
+  console.log(token)
+  await axios.put(`/api/v1/password/reset/${token}`, passwordData);
 })
 const userSlice = createSlice({
   name: "user",
