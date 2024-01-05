@@ -44,6 +44,17 @@ const orderSlice = createSlice({
                 state.status = STATUSES.ERROR;
                 state.error = action.error.message;
             })
+            .addCase(createNewOrder.pending, (state, action) => {
+                state.status = STATUSES.LOADING;
+            })
+            .addCase(createNewOrder.fulfilled, (state, action) => {
+                state.status = STATUSES.IDLE;
+                state.singleOrderData = action.payload;
+            })
+            .addCase(createNewOrder.rejected, (state, action) => {
+                state.status = STATUSES.ERROR;
+                state.error = action.error.message;
+            })
     }
 })
 export const getAllOrders = createAsyncThunk('order/getAllOrders', async () => {
@@ -75,12 +86,18 @@ export const updateOrderStatus = createAsyncThunk(
     'order/updateOrderStatus',
     async ({ id, selectedOrderStatus }) => {
         try {
-            console.log({ id, selectedOrderStatus })
             const response = await axios.put(`/api/v1/admin/order/${id}`, { selectedOrderStatus });
             return response.data;
         } catch (error) {
             throw error.response.data;
         }
+    });
+export const createNewOrder = createAsyncThunk("order/createnewOrder", async ({ orderData }) => {
+    try {
+        const response = await axios.post(`/api/v1/order/new`, orderData);
+        return response.data;
+    } catch (error) {
+        throw error.response.data;
     }
-);
+})
 export default orderSlice.reducer;

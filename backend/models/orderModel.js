@@ -41,7 +41,7 @@ const orderSchema = mongoose.Schema({
         type: String,
         required: true,
       },
-      product: {
+      productId: {
         type: mongoose.Schema.ObjectId,
         ref: "Product",
         required: true,
@@ -54,25 +54,14 @@ const orderSchema = mongoose.Schema({
     required: true,
   },
   paymentInfo: {
-    id: {
-      type: String,
-      required: true,
-    },
-    status: {
-      type: String,
-      required: true,
-    },
+    type: String,
+    required: true,
   },
   paidAt: {
     type: Date,
     required: true,
   },
   itemPrice: {
-    type: Number,
-    required: true,
-    default: 0,
-  },
-  taxPrice: {
     type: Number,
     required: true,
     default: 0,

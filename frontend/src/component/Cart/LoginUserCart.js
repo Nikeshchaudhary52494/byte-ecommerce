@@ -2,25 +2,29 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllCartProducts } from '../../slices/cartSlice/cartSlice';
 import CartItemCard from './CartItemCard';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { STATUSES } from '../../store/statuses';
+import Loader from '../layout/Loader/Loader';
 
 const LoginUserCart = () => {
     const dispatch = useDispatch();
-    const { data, loading } = useSelector((state) => state.cart);
-    const [totalPrice, setTotalPrice] = useState(0);
+    const navigate = useNavigate();
+    const { data, status } = useSelector((state) => state.cart);
+    const { cartProducts, totalPrice } = data;
 
     useEffect(() => {
         dispatch(getAllCartProducts());
     }, [dispatch]);
+    if (status === STATUSES.LOADING) {
+        return <div className="w-full grid place-content-center h-[80vh] ">
+            <Loader />
+        </div>
 
-    useEffect(() => {
-        if (data && data.length > 0) {
-            const total = data.reduce((acc, product) => acc + (product.productPrice * product.quantity), 0);
-            setTotalPrice(total);
-        } else {
-            setTotalPrice(0);
-        }
-    }, [data]);
+    }
+
+    if (status === STATUSES.ERROR) {
+        return <h2>Something went wrong!</h2>;
+    }
 
     return (
         <>
@@ -30,18 +34,16 @@ const LoginUserCart = () => {
                         <h4>Shopping Cart</h4>
                     </div>
                     <div className='flex flex-col justify-center items-center my-2 min-h-44 rounded-md p-5'>
-                        {loading ? (
-                            <p>Loading...</p>
-                        ) : (
-                            data.map((product) => (
+                        {
+                            cartProducts?.map((product) => (
                                 <CartItemCard key={product.productId} product={product} />
                             ))
-                        )}
+                        }
                     </div>
                     {totalPrice > 0 ?
                         <div className='text-right p-5'>
                             <p>Total price: <span className='text-orange-500 font-bold text-xl'>${totalPrice}</span></p>
-                            <button className='bg-orange-400 p-2'>CheckOut</button>
+                            <button onClick={() => navigate("/cart/checkout")} className='bg-orange-400 p-2'>CheckOut</button>
                         </div>
                         : <div className='text-center h-44 font-bold'>
                             <p className='italic  text-blue-500'>No Product Added To cart</p>

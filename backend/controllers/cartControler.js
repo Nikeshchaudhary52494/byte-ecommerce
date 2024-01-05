@@ -39,7 +39,7 @@ exports.removeProduct = catchAsyncErrors(async (req, res, next) => {
     if (!cart) {
         return next(new ErrorHandler("Cart not find for the User", 404));
     }
-    const productIndex = cart.products.find(product => product.productId.toString() === productId);
+    const productIndex = cart.products.findIndex(product => product.productId.toString() === productId);
     if (productIndex === -1) {
         return res.status(404).json({
             success: false,
@@ -62,22 +62,29 @@ exports.getCartProducts = catchAsyncErrors(async (req, res, next) => {
         if (!cart) {
             return next(new ErrorHandler('Cart not found for the specified user', 404));
         }
+        let totalPrice = 0;
+        cart.products.forEach(cartProduct => {
+            const { productId, quantity } = cartProduct;
+            const { price } = productId;
+            totalPrice += price * quantity;
+        });
         const cartProducts = cart.products.map(cartProduct => {
             const { productId, quantity } = cartProduct;
             const { _id, name, price, images } = productId;
 
             return {
                 productId: _id,
-                productName: name,
-                productPrice: price,
-                productImage: images,
-                quantity: quantity
+                name,
+                price,
+                image: images[0].url,
+                quantity
             };
         });
 
         res.status(200).json({
             success: true,
-            cartProducts: cartProducts
+            cartProducts: cartProducts,
+            totalPrice: totalPrice
         });
     } catch (error) {
         console.error('Error retrieving cart products:', error);

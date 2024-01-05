@@ -16,7 +16,7 @@ import AboutUs from "./component/aboutUs/aboutUs.js";
 import ContactUs from "./component/contactUs/ContactUs.js";
 import AddProduct from "./component/admin/manageProduct/AddProduct.js";
 import UpDatePassword from "./component/User/UpdatePassword.js";
-import ShippingForm from "./component/User/ShippingForm.js";
+import ShippingForm from "./component/Cart/ShippingForm.js";
 import ManageOrders from "./component/admin/manageOrders/ManageOrders.js";
 import ManageSingleUser from "./component/admin/manageUsers/ManageSingleUser.js";
 import ManageSingleOrder from "./component/admin/manageOrders/ManageSingleOrder.js";
@@ -25,6 +25,8 @@ import ManageSingleU from "./component/admin/manageProduct/ManageSingleProduct.j
 import ManageSingleProduct from "./component/admin/manageProduct/ManageSingleProduct.js";
 import EditProduct from "./component/admin/manageProduct/EditProduct.js";
 import UpdateUserProfile from "./component/User/UpdateUserProfile.js";
+import ShippingInfo from "./component/Cart/ShippingInfo.js";
+import PaymentSucessfull from "./component/Cart/PaymentSucessfull.js";
 
 
 function App() {
@@ -34,7 +36,12 @@ function App() {
         <Route index element={<Home />} />
         <Route path="products/catogries" element={<CategoriesPage />} />
         <Route path="product/:id" element={<ProductDetails />} />
-        <Route path="cart" element={<Cart />} />
+        <Route path="cart" >
+          <Route index element={<Cart />} />
+          <Route path="checkout" element={<ShippingForm />} />
+          <Route path="shippinginfo" element={<ShippingInfo />} />
+          <Route path="orderplaced" element={<PaymentSucessfull />} />
+        </Route>
         <Route path="products/:keyword" element={<Products />} />
         <Route path="products" element={<Products />}>
         </Route>

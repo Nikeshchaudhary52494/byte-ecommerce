@@ -5,9 +5,16 @@ const cartSlice = createSlice({
     name: "cart",
     initialState: {
         data: [],
+        shippingData: null,
         status: STATUSES.IDLE,
     },
-    reducers: {},
+    reducers: {
+        addShippingData: (state, action) => {
+            console.log(action.payload)
+            state.shippingData = { ...action.payload };
+            console.log(state);
+        },
+    },
     extraReducers: (builder) => {
         builder
             // AddCase for getAllCartProducts
@@ -64,12 +71,13 @@ export const removeFromCart = createAsyncThunk("cart/removeFromCart", async ({ u
         throw error.response.data;
     }
 });
-export const getAllCartProducts = createAsyncThunk("cart/getAllCartProducts", async (userId) => {
+export const getAllCartProducts = createAsyncThunk("cart/getAllCartProducts", async () => {
     try {
         const response = await axios.get(`/api/v1/cart`);
-        return response.data.cartProducts;
+        return response.data;
     } catch (error) {
         throw error.response.data;
     }
 });
 export default cartSlice.reducer;
+export const { addShippingData } = cartSlice.actions;
