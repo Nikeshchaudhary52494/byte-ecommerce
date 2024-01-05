@@ -1,58 +1,58 @@
 import React, { useEffect, useState } from 'react'
-import demoAvatar from "../images/userProfile.avif";
-import { useSelector } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { loadUser } from '../../slices/userSlice/userSlice';
+import Loader from '../layout/Loader/Loader';
+import { STATUSES } from '../../store/statuses';
+import { MdEdit } from 'react-icons/md';
 
 
 
 const UserProfile = () => {
     const navigate = useNavigate();
-    const [userData, setUserData] = useState({ name: '', email: '' });
-    const logedin = useSelector((state) => state.user)
-    console.log(logedin)
-    //Function to fetch data from /api/v1/me 
-    const fetchData = async () => {
-        try {
-            const response = await fetch("/api/v1/me");
-            if (response.ok) {
-                const { user } = await response.json();
-                // console.log(user.avtar);
-                const { name, email, avtar } = user;
-                // console.log(`this is avatar ${avatar.url}`)
-                setUserData({ name, email, avtar: avtar.url });
-            } else {
-                console.error("Failed to fetch user data");
-            }
-        } catch (error) {
-            console.error("Error during data fetching:", error);
-        }
-    };
+    const location = useLocation();
+    const dispatch = useDispatch();
+    const { user, isAuthenticated, status } = useSelector((state) => state.user)
     useEffect(() => {
-        fetchData();
-    }, []);
+        dispatch(loadUser());
+    }, [dispatch]);
 
     const fields = [
-        { label: 'Name', value: userData.name },
-        { label: 'Email', value: userData.email },
+        { label: 'Name', value: user.name },
+        { label: 'Email', value: user.email },
         { label: 'Password', value: '*********' },
     ];
+    if (status === STATUSES.LOADING) {
+        return <div className="w-full grid place-content-center h-[80vh] ">
+            <Loader />
+        </div>
+
+    }
+
+    if (status === STATUSES.ERROR) {
+        return <h2>Something went wrong!</h2>;
+    }
     return (
         <div>
             <>
-                {logedin ? (<div>
-                    <div className='flex justify-center bg-slate-800 h-screen items-start'>
+                {isAuthenticated ? (<div>
+                    <div className='flex justify-center  bg-slate-800 h-screen items-start'>
                         <div className='w-[80%] max-w-lg p-5 m-10  bg-slate-700 rounded-md '>
-                            <div className=' rounded-md bg-slate-600 m-2 p-2'>
+                            <div className=' rounded-md flex justify-between items-center bg-slate-600 m-2 p-2'>
                                 <div className='w-24 h-24 rounded-full m-2 overflow-hidden'>
-                                    <img className='w-full h-full' src={userData.avtar} alt="user profile" />
+                                    <img className='w-full h-full object-cover' src={user.avatar.url} alt="user profile" />
                                 </div>
+                                <Link className='text-white text-2xl'
+                                    to="/user/updateprofile">
+
+                                    <MdEdit />
+                                </Link>
                             </div>
                             {fields.map((field, index) => (
                                 <div key={index} className=' bg-slate-600 text-white rounded-md m-2 p-2'>
                                     <p className='m-2'>{field.label}</p>
                                     <div className='flex justify-between items-center'>
                                         <p className='m-2'>{field.value}</p>
-                                        <Link to='/user/profile/updatepassword'><button className='w-[100px] bg-yellow-100 text-black rounded-md shadow-sm'>Edit</button></Link>
                                     </div>
                                 </div>
                             ))}

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const UpDatePassword = () => {
+const UpdatePassword = () => {
     const [formData, setFormData] = useState({
         oldPassword: '',
         newPassword: '',
@@ -66,4 +66,4 @@ const UpDatePassword = () => {
     );
 };
 
-export default UpDatePassword;
+export default UpdatePassword;

@@ -14,6 +14,7 @@ const AddProductForm = () => {
         stock: 1,
     });
     const [image, setImage] = useState(null);
+    const [productPreview, setProductPreview] = useState("https://ov12-engine.flamingtext.com/netfu/tmp28014/coollogo_com-3966664.png");
     const handleInputChange = (e) => {
         setFormData({
             ...formData,
@@ -21,7 +22,15 @@ const AddProductForm = () => {
         });
     };
     const handleImageChange = (e) => {
-        setImage(e.target.files[0]);
+        const reader = new FileReader();
+
+        reader.onload = () => {
+            if (reader.readyState === 2) {
+                setProductPreview(reader.result);
+                setImage(e.target.files[0]);
+            }
+        };
+        reader.readAsDataURL(e.target.files[0]);
     };
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -41,9 +50,7 @@ const AddProductForm = () => {
     return (
         <div className="grid bg-slate-900 h-[100vh] fixed z-20 top-0 left-0 w-[100vw] place-content-center">
             <div className="bg-slate-800 p-10 rounded-lg text-white">
-                <div className="px-4">
-                    <h3 className="text-xl mb-4 text-blue-500 font-bold italic ">Add Product</h3>
-                </div>
+                <h3 className="text-xl mb-4 text-cyan-500 font-bold">Add Product</h3>
                 <form
                     className="flex gap-4 text-black flex-col"
                     onSubmit={handleSubmit}
@@ -92,14 +99,27 @@ const AddProductForm = () => {
                         value={formData.stock}
                         onChange={handleInputChange}
                     />
-                    <input
-                        required
-                        className="w-[300px] outline-none p-2  rounded-md"
-                        type="file"
-                        name="image"
-                        accept="image/*"
-                        onChange={handleImageChange}
-                    />
+                    <div className='flex justify-between border rounded-md bg-slate-700 p-2 items-center'>
+
+                        <div className='w-14 h-14 rounded-full overflow-hidden'>
+                            <img className='object-cover w-full h-full'
+                                src={productPreview}
+                                alt="Product" />
+                        </div>
+                        <label for="fileInput" class="cursor-pointer bg-blue-500 
+text-white py-2 px-4  rounded-md">
+                            <span class="hidden md:inline">Choose File</span>
+                            <span class="md:hidden">Upload</span>
+                        </label>
+                        <input
+                            required
+                            id='fileInput'
+                            className='hidden '
+                            type="file"
+                            name="image"
+                            accept="image/*"
+                            onChange={handleImageChange} />
+                    </div>
                     <motion.input
                         type="submit"
                         whileTap={{ scale: 0.9 }}

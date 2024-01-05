@@ -16,7 +16,7 @@ exports.registerUser = catchAsyncErrors(async (req, res, next) => {
         name,
         email,
         password,
-        avtar: {
+        avatar: {
             public_id: myCloud.public_id,
             url: myCloud.secure_url,
         }
@@ -157,10 +157,28 @@ exports.updateUserPassword = catchAsyncErrors(async (req, res, next) => {
 
 // Update User Profile
 exports.updateUserProfile = catchAsyncErrors(async (req, res, next) => {
-    const { name, email, } = req.body;
-    const newUserData = {
-        name: name,
-        email: email
+    const image = req.files?.avatar;
+    let newUserData;
+    const { name, email, oldAvatarUrl, oldAvatarPublicId } = req.body;
+    if (image) {
+        const myCloud = await cloudinary.uploader.upload(image.tempFilePath);
+        newUserData = {
+            name,
+            email,
+            avatar: {
+                public_id: myCloud.public_id,
+                url: myCloud.secure_url,
+            }
+        }
+    } else {
+        newUserData = {
+            name,
+            email,
+            avatar: {
+                public_id: oldAvatarPublicId,
+                url: oldAvatarUrl
+            }
+        }
     }
     const user = await User.findByIdAndUpdate(req.user.id, newUserData, {
         new: true,
@@ -173,7 +191,6 @@ exports.updateUserProfile = catchAsyncErrors(async (req, res, next) => {
     })
 
 })
-
 // Get All User (Admin)
 exports.getAllUsers = catchAsyncErrors(async (req, res, next) => {
     const UserCount = await User.countDocuments();

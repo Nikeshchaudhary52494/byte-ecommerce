@@ -41,6 +41,11 @@ export const loadUser = createAsyncThunk("user/load", async () => {
   const response = await axios.get("/api/v1/me");
   return response.data.user;
 });
+export const updateUserProfile = createAsyncThunk("user/updateuserprofile", async (userData) => {
+  console.log(userData);
+  const response = await axios.put("/api/v1/me/update", userData);
+  return response.data.user;
+});
 
 const userSlice = createSlice({
   name: "user",
@@ -53,11 +58,14 @@ const userSlice = createSlice({
       .addCase(registerUser.fulfilled, handleAuthFulfilled)
       .addCase(loginUser.fulfilled, handleAuthFulfilled)
       .addCase(loadUser.fulfilled, handleAuthFulfilled)
+      .addCase(updateUserProfile.pending, setLoadingState)
+      .addCase(updateUserProfile.fulfilled, handleAuthFulfilled)
       .addCase(logoutUser.fulfilled, (state) => {
         state.user = { role: "user" };
         state.isAuthenticated = false;
         state.status = STATUSES.IDLE;
       });
+
   },
 });
 
