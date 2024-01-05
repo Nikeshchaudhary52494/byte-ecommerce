@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { loadUser } from '../../slices/userSlice/userSlice';
+import { loadUser, logoutUser } from '../../slices/userSlice/userSlice';
 import Loader from '../layout/Loader/Loader';
 import { STATUSES } from '../../store/statuses';
-import { MdEdit } from 'react-icons/md';
+import { MdEdit, MdLogout } from 'react-icons/md';
 
 
 
@@ -35,9 +35,9 @@ const UserProfile = () => {
     return (
         <div>
             <>
-                {isAuthenticated ? (<div>
-                    <div className='flex justify-center  bg-slate-800 h-screen items-start'>
-                        <div className='w-[80%] max-w-lg p-5 m-10  bg-slate-700 rounded-md '>
+                {isAuthenticated ? (
+                    <div className='flex justify-center flex-col-reverse items-center bg-slate-800 h-screen'>
+                        <div className='w-[80%] max-w-lg p-5  bg-slate-700 rounded-md '>
                             <div className=' rounded-md flex justify-between items-center bg-slate-600 m-2 p-2'>
                                 <div className='w-24 h-24 rounded-full m-2 overflow-hidden'>
                                     <img className='w-full h-full object-cover' src={user.avatar.url} alt="user profile" />
@@ -50,15 +50,21 @@ const UserProfile = () => {
                             </div>
                             {fields.map((field, index) => (
                                 <div key={index} className=' bg-slate-600 text-white rounded-md m-2 p-2'>
-                                    <p className='m-2'>{field.label}</p>
+                                    <p className='m-2 flex justify-between'>{field.label} <Link state={{ previousLocation: location.pathname }} to="/user/updatepassword"> <MdEdit className={`${field.label === "Password" ? `text-blue-500` : `hidden`}`} /></Link></p>
                                     <div className='flex justify-between items-center'>
                                         <p className='m-2'>{field.value}</p>
                                     </div>
                                 </div>
                             ))}
                         </div>
+                        <div className=' w-[80%] max-w-lg '>
+                            <button onClick={() => {
+                                dispatch(logoutUser());
+                            }}
+                                className='flex items-center my-2 gap-2 p-2 bg-blue-500 rounded-md'>Logout <MdLogout /></button>
+                        </div>
                     </div>
-                </div>) : (
+                ) : (
                     navigate("/")
                 )}
             </>

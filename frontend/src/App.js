@@ -15,18 +15,17 @@ import Manageproduct from "./component/admin/manageProduct/Manageproduct.js";
 import AboutUs from "./component/aboutUs/aboutUs.js";
 import ContactUs from "./component/contactUs/ContactUs.js";
 import AddProduct from "./component/admin/manageProduct/AddProduct.js";
-import UpDatePassword from "./component/User/UpdatePassword.js";
 import ShippingForm from "./component/Cart/ShippingForm.js";
 import ManageOrders from "./component/admin/manageOrders/ManageOrders.js";
 import ManageSingleUser from "./component/admin/manageUsers/ManageSingleUser.js";
 import ManageSingleOrder from "./component/admin/manageOrders/ManageSingleOrder.js";
 import ManageReviews from "./component/admin/manageReviews/ManageReviews.js";
-import ManageSingleU from "./component/admin/manageProduct/ManageSingleProduct.js";
 import ManageSingleProduct from "./component/admin/manageProduct/ManageSingleProduct.js";
 import EditProduct from "./component/admin/manageProduct/EditProduct.js";
 import UpdateUserProfile from "./component/User/UpdateUserProfile.js";
 import ShippingInfo from "./component/Cart/ShippingInfo.js";
 import PaymentSucessfull from "./component/Cart/PaymentSucessfull.js";
+import UpdatePassword from "./component/User/UpdatePassword.js";
 
 
 function App() {
@@ -50,7 +49,7 @@ function App() {
           <Route path="signup" element={<SignUp />} />
           <Route path="profile" element={<UserProfile />} />
           <Route path="updateprofile" element={<UpdateUserProfile />} />
-          <Route path="updatepassword" element={<ShippingForm />} />
+          <Route path="updatepassword" element={<UpdatePassword />} />
         </Route>
         <Route path='admin'>
           <Route path="dashbord" element={<Dashbord />} />

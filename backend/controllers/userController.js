@@ -83,7 +83,7 @@ exports.forgotPassword = catchAsyncErrors(async (req, res, next) => {
     try {
         await sendEail({
             email: user.email,
-            subject: "Ecommerce Password 55recovery",
+            subject: "Ecommerce Password recovery",
             messgae,
         })
 
@@ -135,7 +135,7 @@ exports.getUserDetails = catchAsyncErrors(async (req, res, next) => {
 
 // Update User Password
 exports.updateUserPassword = catchAsyncErrors(async (req, res, next) => {
-    const { oldPassword, newPassword, confirmNewPassword } = req.body;
+    const { oldPassword, newPassword, confirmPassword } = req.body;
     const user = await User.findById(req.user.id).select("+password");
 
     const isPasswordMatched = await user.comparePassword(oldPassword);
@@ -143,7 +143,7 @@ exports.updateUserPassword = catchAsyncErrors(async (req, res, next) => {
     if (!isPasswordMatched) {
         return next(new ErrorHandler(' Old Password does not matched', 400));
     }
-    if (newPassword !== confirmNewPassword) {
+    if (newPassword !== confirmPassword) {
         return next(new ErrorHandler('Password miss-Matched', 401));
     }
     user.password = newPassword;

@@ -1,6 +1,12 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { updatepassword } from '../../slices/userSlice/userSlice';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const UpdatePassword = () => {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const location = useLocation();
     const [formData, setFormData] = useState({
         oldPassword: '',
         newPassword: '',
@@ -14,11 +20,13 @@ const UpdatePassword = () => {
     };
     const handleSubmit = (e) => {
         e.preventDefault();
-        setFormData({
-            oldPassword: '',
-            newPassword: '',
-            confirmPassword: '',
-        });
+        const passwordData = new FormData();
+        passwordData.append("oldPassword", formData.oldPassword);
+        passwordData.append("newPassword", formData.newPassword);
+        passwordData.append("confirmPassword", formData.confirmPassword);
+        dispatch(updatepassword(passwordData)).then(() => {
+            navigate(location.state.previousLocation)
+        })
     };
     return (
         <div className='border-t fixed top-0 left-0 z-10 inset-0  bg-slate-900 flex flex-col items-center justify-center'>
