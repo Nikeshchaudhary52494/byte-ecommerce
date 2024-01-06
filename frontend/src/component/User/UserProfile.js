@@ -6,6 +6,7 @@ import Loader from '../layout/Loader/Loader';
 import { STATUSES } from '../../store/statuses';
 import { MdEdit, MdLogout } from 'react-icons/md';
 import { RiShoppingBagFill } from "react-icons/ri";
+import { BsArrowReturnLeft } from "react-icons/bs";
 
 
 
@@ -37,7 +38,7 @@ const UserProfile = () => {
         <div>
             <>
                 {isAuthenticated ? (
-                    <div className='flex justify-center flex-col-reverse items-center bg-slate-800 h-screen'>
+                    <div className='flex justify-center fixed inset-0 z-10  flex-col-reverse items-center bg-slate-800 h-screen'>
                         <div className='w-[80%] max-w-lg p-5  bg-slate-700 rounded-md '>
                             <div className=' rounded-md flex justify-between items-center bg-slate-600 m-2 p-2'>
                                 <div className='w-24 h-24 rounded-full m-2 overflow-hidden'>
@@ -51,22 +52,27 @@ const UserProfile = () => {
                             </div>
                             {fields.map((field, index) => (
                                 <div key={index} className=' bg-slate-600 text-white rounded-md m-2 p-2'>
-                                    <p className='m-2 flex justify-between'>{field.label} <Link state={{ previousLocation: location.pathname }} to="/user/updatepassword"> <MdEdit className={`${field.label === "Password" ? `text-blue-500` : `hidden`}`} /></Link></p>
+                                    <p className='m-2 flex justify-between font-bold '>{field.label} <Link state={location.pathname} to="/user/updatepassword"> <MdEdit className={`${field.label === "Password" ? `text-blue-500` : `hidden`}`} /></Link></p>
                                     <div className='flex justify-between items-center'>
                                         <p className='m-2'>{field.value}</p>
                                     </div>
                                 </div>
                             ))}
                         </div>
-                        <div className=' w-[80%] flex gap-10 max-w-lg '>
+                        <div className=' w-[80%] flex justify-between flex-row-reverse gap-10 max-w-lg '>
                             <button onClick={() => {
                                 dispatch(logoutUser());
                             }}
-                                className='flex items-center my-2 gap-2 p-2 bg-red-300 rounded-md'>Logout <MdLogout /></button>
+                                className='flex items-center my-2 gap-2 p-2 bg-red-400 rounded-md'>Logout <MdLogout /></button>
                             <button
-                                className='flex items-center my-2 gap-2 p-2 bg-green-300 rounded-md'
+                                className='flex items-center  my-2 gap-2 p-2 bg-green-400 rounded-md'
                                 onClick={() => navigate("/myorders")}
                             >My orders <RiShoppingBagFill /></button>
+                        </div>
+                        <div className='flex  w-full'>
+                            <button
+                                onClick={() => navigate(location.state)}
+                                className='text-white hidden md:block text-3xl pl-5'><BsArrowReturnLeft /></button>
                         </div>
                     </div>
                 ) : (
