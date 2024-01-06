@@ -9,9 +9,6 @@ import SingleOrder from '../../User/SingleOrder';
 const ManageSingleOrder = () => {
     const dispatch = useDispatch();
     const { order, status } = useSelector((state) => state.orders.singleOrderData);
-    const { address, pinCode, state, phoneNumber, country } = order?.shippingInfo || {};
-    const paymentStatus = order?.paymentInfo?.status;
-    const { orderItems } = order || {};
     const { id } = useParams();
 
     const [selectedOrderStatus, setSelectedOrderStatus] = useState(order?.orderStatus || '');
@@ -45,7 +42,9 @@ const ManageSingleOrder = () => {
 
     return (
         <div className="min-h-screen bg-slate-900 flex md:flex-row flex-col-reverse">
-            <SingleOrder />
+            <div className='w-[70%]'>
+                <SingleOrder />
+            </div>
             <div className='border-l border-s-slate-700 p-10'>
                 <p className='text-cyan-500 font-bold text-3xl mb-3'>Update Order Status:</p>
                 <select

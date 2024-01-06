@@ -6,12 +6,12 @@ const productSlice = createSlice({
     name: 'products',
     initialState: {
         data: [],
+        productDetails: {},
         status: STATUSES.IDLE,
         productreviewsData: [],
+        error: null,
     },
-    reducers: {
-
-    },
+    reducers: {},
     extraReducers: (builder) => {
         builder
             .addCase(fetchProducts.pending, (state, action) => {
@@ -24,6 +24,16 @@ const productSlice = createSlice({
             .addCase(fetchProducts.rejected, (state, action) => {
                 state.status = STATUSES.ERROR;
             })
+            .addCase(getProductDetails.pending, (state, action) => {
+                state.status = STATUSES.LOADING;
+            })
+            .addCase(getProductDetails.fulfilled, (state, action) => {
+                state.productDetails = action.payload;
+                state.status = STATUSES.IDLE;
+            })
+            .addCase(getProductDetails.rejected, (state, action) => {
+                state.status = STATUSES.ERROR;
+            })
             .addCase(getProductReviews.pending, (state, action) => {
                 state.status = STATUSES.LOADING;
             })
@@ -32,6 +42,17 @@ const productSlice = createSlice({
                 state.status = STATUSES.IDLE;
             })
             .addCase(getProductReviews.rejected, (state, action) => {
+                state.status = STATUSES.ERROR;
+            })
+            .addCase(addReview.pending, (state, action) => {
+                state.status = STATUSES.LOADING;
+            }).addCase(addReview.fulfilled, (state, action) => {
+                state.isReviewAdded = true;
+                state.error = null;
+                state.status = STATUSES.IDLE;
+            })
+            .addCase(addReview.rejected, (state, action) => {
+                state.error = action.error.message;
                 state.status = STATUSES.ERROR;
             })
     },
@@ -55,6 +76,14 @@ export const fetchProducts2 = createAsyncThunk('products/fetch',
         }
     },
 );
+export const getProductDetails = createAsyncThunk('productDetails/fetch', async ({ id }) => {
+    try {
+        const response = await axios.get(`/api/v1/product/${id}`);
+        return response.data.product;
+    } catch (error) {
+        throw error.response.data;
+    }
+});
 export const getProductReviews = createAsyncThunk('products/getProductsreviews', async ({ productId }) => {
     try {
         const response = await axios.get(`/api/v1/reviews?productId=${productId}`);
@@ -78,3 +107,17 @@ export const deleteProduct = createAsyncThunk('products/deleteproduct', async ({
         throw error.response.data;
     }
 })
+export const addReview = createAsyncThunk(
+    'products/addReview',
+    async ({ rating, comment, productId }) => {
+        try {
+            await axios.put('/api/v1/review', {
+                rating,
+                comment,
+                productId,
+            });
+        } catch (error) {
+            throw error.response.data;
+        }
+    }
+);

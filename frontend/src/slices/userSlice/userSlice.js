@@ -6,6 +6,7 @@ const initialState = {
   user: { role: "user" },
   isAuthenticated: false,
   status: STATUSES.IDLE,
+  error: null,
 };
 
 const setLoadingState = (state) => {
@@ -46,8 +47,12 @@ export const updateUserProfile = createAsyncThunk("user/updateuserprofile", asyn
   return response.data.user;
 });
 export const updatepassword = createAsyncThunk('user/updatepassword', async (passwordData) => {
-  const response = await axios.put("/api/v1/password/update", passwordData);
-  return response.data.user;
+  try {
+    const response = await axios.put("/api/v1/password/update", passwordData);
+    return response.data.user;
+  } catch (error) {
+    throw error.response.data;
+  }
 });
 export const forgotPassword = createAsyncThunk("user/forgetpassword", async ({ email }) => {
   await axios.post("/api/v1/password/forgot", { email });
@@ -65,7 +70,15 @@ const userSlice = createSlice({
       .addCase(registerUser.pending, setLoadingState)
       .addCase(registerUser.fulfilled, handleAuthFulfilled)
       .addCase(updatepassword.pending, setLoadingState)
-      .addCase(updatepassword.fulfilled, handleAuthFulfilled)
+      .addCase(updatepassword.fulfilled, (state, action) => {
+        state.isPasswordUpdated = true;
+        state.status = STATUSES.IDLE;
+        state.error = null;
+      })
+      .addCase(updatepassword.rejected, (state, action) => {
+        state.error = action.error;
+        state.status = STATUSES.ERROR;
+      })
       .addCase(loginUser.pending, setLoadingState)
       .addCase(loginUser.fulfilled, handleAuthFulfilled)
       .addCase(loadUser.fulfilled, handleAuthFulfilled)

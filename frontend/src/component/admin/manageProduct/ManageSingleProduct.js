@@ -1,21 +1,21 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { fetchProductDetails } from '../../../slices/productSlice/productDetailsSlice';
 import EditProduct from './EditProduct';
+import { getProductDetails } from '../../../slices/productSlice/productsSlice';
 
 const ManageSingleProduct = () => {
     const dispatch = useDispatch();
-    const { data } = useSelector((state) => state.productDetails);
+    const { productDetails } = useSelector((state) => state.products);
     const { id } = useParams();
-    const { name, price, description, rating, createdAt, category } = data;
+    const { name, price, description, rating, createdAt, category } = productDetails;
 
     useEffect(() => {
-        dispatch(fetchProductDetails({ id }));
+        dispatch(getProductDetails({ id }));
     }, [dispatch, id]);
 
     return (
-        <div className='flex min-h-screen flex-col lg:flex-row gap-10 bg-slate-900 justify-center p-10'>
+        <div className='flex min-h-screen flex-col md:flex-row gap-10 bg-slate-900 justify-center p-10'>
             <div className='bg-slate-800 p-8 rounded-lg shadow-md'>
                 <div className='flex justify-between items-center '>
                     <h3 className='text-3xl text-cyan-500 font-bold mb-6'>Product Details</h3>

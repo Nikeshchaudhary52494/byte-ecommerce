@@ -1,7 +1,6 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { STATUSES } from '../../store/statuses';
-import { fetchProductDetails } from "../../slices/productSlice/productDetailsSlice";
 import { addToCart } from "../../slices/cartSlice/cartSlice.js"
 import { useParams } from "react-router-dom";
 import Loader from "../layout/Loader/Loader";
@@ -9,22 +8,22 @@ import Carousel from "react-material-ui-carousel"
 import ReactStars from "react-rating-stars-component"
 import ReviewCard from "./review/ReviewCard.js"
 import AddReview from "./review/AddReview.js";
-import { AiOutlineClose } from "react-icons/ai";
+import { toast } from 'react-toastify';
+import { getProductDetails } from "../../slices/productSlice/productsSlice.js";
 const ProductDetails = () => {
   const [toggle, setToggle] = useState(false);
   const [numberOfProduct, setNumberOfProduct] = useState(1);
   const { id } = useParams();
   const dispatch = useDispatch();
-  const { data: product, status } = useSelector((state) => state.productDetails);
+  const { productDetails: product, status } = useSelector((state) => state.products);
   const { user } = useSelector((state) => state.user);
   useEffect(() => {
-    dispatch(fetchProductDetails({ id: id }));
+    dispatch(getProductDetails({ id: id }));
   }, [dispatch, id]);
 
   const addProduct = (userId, productId, quantity) => {
     dispatch(addToCart({ userId, productId, quantity }));
   }
-
 
 
   if (status === STATUSES.LOADING) {
@@ -90,7 +89,9 @@ const ProductDetails = () => {
             </div>
             <button
               className="w-40 h-[40px] bg-cyan-500 rounded-3xl my-4 active:bg-cyan-600 duration-500"
-              onClick={() => addProduct(user._id, product._id, numberOfProduct)}
+              onClick={() => {
+                addProduct(user._id, product._id, numberOfProduct);
+              }}
               disabled={product.stock < 1}
             >Add to Cart</button>
           </div>

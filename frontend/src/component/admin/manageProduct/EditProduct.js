@@ -6,11 +6,13 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { STATUSES } from '../../../store/statuses';
 import Loader from '../../layout/Loader/Loader';
 const EditProduct = () => {
-    const { data, status } = useSelector((state) => state.productDetails);
-    const { _id, name, price, description, category, stock } = data;
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    console.log(data);
+
+    const { productDetails, status } = useSelector((state) => state.products);
+    const { _id, name, price, description, category, stock } = productDetails;
+
+    const [image, setImage] = useState(null);
     const [formData, setFormData] = useState({
         name: name,
         description: description,
@@ -18,6 +20,7 @@ const EditProduct = () => {
         category: category,
         stock: stock,
     });
+
     useEffect(() => {
         setFormData({
             name: name,
@@ -26,9 +29,8 @@ const EditProduct = () => {
             category: category,
             stock: stock,
         });
-    }, [data]);
-    console.log(formData);
-    const [image, setImage] = useState(null);
+    }, [productDetails]);
+
     const handleInputChange = (e) => {
         setFormData({
             ...formData,

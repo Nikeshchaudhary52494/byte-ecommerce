@@ -17,8 +17,7 @@ exports.createProduct = catchAsyncErrors(async (req, res, next) => {
     }],
     user: req.user.id,
   };
-  console.log("hell22o");
-  console.log(`this is my productData${productData}`);
+
   const product = await Product.create(productData);
   res.status(201).json({
     success: true,
@@ -27,8 +26,7 @@ exports.createProduct = catchAsyncErrors(async (req, res, next) => {
 });
 
 // Get All product
-exports.getAllProducts = catchAsyncErrors(async (req, res) => {      //Passing fuction to catchAsyncError
-  const resultPerPage = 8;
+exports.getAllProducts = catchAsyncErrors(async (req, res) => { 
   const productCount = await Product.countDocuments();
   const apiFeature = new ApiFeatures(Product.find(), req.query)
     .search()

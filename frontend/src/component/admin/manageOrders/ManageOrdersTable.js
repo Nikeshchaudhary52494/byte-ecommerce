@@ -12,7 +12,7 @@ const ManageOrdersTable = () => {
     const dispatch = useDispatch();
 
     const handleEditClick = (orderId) => {
-        navigate(`/user/admin/order/${orderId}`);
+        navigate(`/admin/order/${orderId}`);
     };
 
     const handleDeleteClick = (orderId) => {

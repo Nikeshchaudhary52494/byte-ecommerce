@@ -1,8 +1,12 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { addReview } from '../../../slices/reviewSlice/reviewSlice';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { addReview } from '../../../slices/productSlice/productsSlice';
+import { toast } from 'react-toastify';
 
 const AddReview = ({ toggle, setToggle, productId }) => {
+    const dispatch = useDispatch();
+    const { error, isReviewAdded } = useSelector((state) => state.products)
+
     const [review, setReview] = useState({
         comment: '',
         rating: 0,
@@ -11,12 +15,20 @@ const AddReview = ({ toggle, setToggle, productId }) => {
     const handleInputChange = (e) => {
         setReview({ ...review, [e.target.name]: e.target.value });
     };
-    const dispatch = useDispatch();
 
     const handleSubmit = (e) => {
         e.preventDefault();
         dispatch(addReview({ rating, comment, productId }))
     };
+    useEffect(() => {
+        if (error) {
+            toast.error(error);
+        }
+        if (isReviewAdded) {
+            toast.success("Review added successfully");
+            // dispatch(fetchProductDetails(productId))
+        }
+    }, [isReviewAdded, error])
 
     return (
         <>
