@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import { getSingleOrder, updateOrderStatus } from '../../../slices/orderSlice/orderSlice';
 import { STATUSES } from '../../../store/statuses';
 import Loader from '../../layout/Loader/Loader';
+import SingleOrder from '../../User/SingleOrder';
 
 const ManageSingleOrder = () => {
     const dispatch = useDispatch();
@@ -44,33 +45,7 @@ const ManageSingleOrder = () => {
 
     return (
         <div className="min-h-screen bg-slate-900 flex md:flex-row flex-col-reverse">
-            <div className="flex gap-20 flex-col md:w-[70%] text-white p-10 overflow-y-auto">
-                <div>
-                    <p className="text-3xl font-bold text-cyan-500">Shipping Info:</p>
-                    <p>{`Address: ${address} | ${state} | ${country}`}</p>
-                    <p>{`PinCode: ${pinCode}`}</p>
-                    <p>{`Phone Number: ${phoneNumber}`}</p>
-                </div>
-                <div>
-                    <p className="text-3xl font-bold text-cyan-500">Payment:</p>
-                    <p>{`Payment Status: ${paymentStatus}`}</p>
-                </div>
-                <div>
-                    <p className="text-3xl font-bold text-cyan-500">Order Status:</p>
-                    <p>{order?.orderStatus}</p>
-                </div>
-                <div>
-                    <p className="text-3xl font-bold text-cyan-500">Items:</p>
-                    {orderItems && orderItems.map((item) => (
-                        <div className='flex flex-col lg:flex-row gap-2 lg:gap-10 rounded-md bg-slate-800 p-2 border-2 my-1' key={item.product}>
-                            <p className='text-white '>{item.name}</p>
-                            <p className='text-white'>{item.quantity}</p>
-                            <p className='text-white'>{item.product}</p>
-                            <p className='text-white'>{item.price}</p>
-                        </div>
-                    ))}
-                </div>
-            </div>
+            <SingleOrder />
             <div className='border-l border-s-slate-700 p-10'>
                 <p className='text-cyan-500 font-bold text-3xl mb-3'>Update Order Status:</p>
                 <select

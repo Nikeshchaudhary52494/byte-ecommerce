@@ -5,6 +5,7 @@ import { loadUser, logoutUser } from '../../slices/userSlice/userSlice';
 import Loader from '../layout/Loader/Loader';
 import { STATUSES } from '../../store/statuses';
 import { MdEdit, MdLogout } from 'react-icons/md';
+import { RiShoppingBagFill } from "react-icons/ri";
 
 
 
@@ -57,11 +58,15 @@ const UserProfile = () => {
                                 </div>
                             ))}
                         </div>
-                        <div className=' w-[80%] max-w-lg '>
+                        <div className=' w-[80%] flex gap-10 max-w-lg '>
                             <button onClick={() => {
                                 dispatch(logoutUser());
                             }}
-                                className='flex items-center my-2 gap-2 p-2 bg-blue-500 rounded-md'>Logout <MdLogout /></button>
+                                className='flex items-center my-2 gap-2 p-2 bg-red-300 rounded-md'>Logout <MdLogout /></button>
+                            <button
+                                className='flex items-center my-2 gap-2 p-2 bg-green-300 rounded-md'
+                                onClick={() => navigate("/myorders")}
+                            >My orders <RiShoppingBagFill /></button>
                         </div>
                     </div>
                 ) : (

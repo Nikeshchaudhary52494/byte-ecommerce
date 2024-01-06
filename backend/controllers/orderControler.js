@@ -46,7 +46,7 @@ exports.getSingleOrder = catchAsyncErrors(async (req, res, next) => {
 });
 
 // get order of logedin user
-exports.myOrder = catchAsyncErrors(async (req, res, next) => {
+exports.myOrders = catchAsyncErrors(async (req, res, next) => {
   const orders = await Order.find({ user: req.user._id });
 
   res.status(200).json({

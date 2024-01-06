@@ -28,6 +28,8 @@ import PaymentSucessfull from "./component/Cart/PaymentSucessfull.js";
 import UpdatePassword from "./component/User/UpdatePassword.js";
 import ForgetPassword from "./component/User/ForgetPassword.js";
 import ResetPassword from "./component/User/ResetPassword.js";
+import Myorders from "./component/User/Myorders.js";
+import SingleOrder from "./component/User/SingleOrder.js";
 
 
 function App() {
@@ -54,6 +56,8 @@ function App() {
           <Route path="updatepassword" element={<UpdatePassword />} />
           <Route path="password/forget" element={<ForgetPassword />} />
         </Route>
+        <Route path="myorders" element={<Myorders />} />
+        <Route path="order/:id" element={<SingleOrder />} />
         <Route path="password/reset/:token" element={<ResetPassword />} />
         <Route path='admin'>
           <Route path="dashbord" element={<Dashbord />} />
