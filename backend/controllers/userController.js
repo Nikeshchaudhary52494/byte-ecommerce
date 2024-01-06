@@ -2,7 +2,7 @@ const ErrorHandler = require("../utils/errorhandler")
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const User = require("../models/userModel");
 const { sendToken } = require("../utils/jwtToken");
-const { sendEail } = require("../utils/sendEmail");
+const { sendEmail } = require("../utils/sendEmail");
 const crypto = require("crypto")
 const cloudinary = require("cloudinary");
 
@@ -11,17 +11,54 @@ exports.registerUser = catchAsyncErrors(async (req, res, next) => {
     const image = req.files.image;
     const myCloud = await cloudinary.uploader.upload(image.tempFilePath);
     const { name, email, password } = req.body;
+    const verificationToken = crypto.randomBytes(20).toString('hex');
+    const verificationLink = `http://localhost:3000/verify/${verificationToken}`;
+    const message = `Click on the following link to verify your email: ${verificationLink}`;
     const user = await User.create({
         name,
         email,
         password,
+        verificationToken,
+        verified: false,
         avatar: {
             public_id: myCloud.public_id,
             url: myCloud.secure_url,
         }
-    })
-    sendToken(user, 201, res);
-})
+    });
+    try {
+        await sendEmail({
+            email,
+            subject: "Byte ecommerce verification link",
+            message,
+        });
+        res.status(200).json({
+            success: true,
+            message: `Email sent to ${user.email} ${message} successfully`
+        });
+    } catch (error) {
+        if (user) {
+            await User.findByIdAndDelete(user._id);
+            await cloudinary.uploader.destroy(user.avatar.public_id);
+        }
+        return next(new ErrorHandler(error.message, 500));
+    }
+});
+
+exports.verifyUser = catchAsyncErrors(async (req, res, next) => {
+    const token = req.params.token;
+    const user = await User.findOne({
+        verificationToken: token
+    });
+    if (!user) {
+        return next(new ErrorHandler('Invalid Token. Please check and try again.', 400));
+    }
+    if (user.verified) {
+        return next(new ErrorHandler('User is already verified.', 400));
+    }
+    user.verified = true;
+    await user.save();
+    sendToken(user, 200, res);
+});
 
 // Login User
 exports.loginUser = catchAsyncErrors(async (req, res, next) => {
@@ -36,6 +73,9 @@ exports.loginUser = catchAsyncErrors(async (req, res, next) => {
     const user = await User.findOne({ email: email }).select("+password");
     if (!user) {
         return next(new ErrorHandler('inValid Email and Password', 401));
+    }
+    if (!user.verified) {
+        return next(new ErrorHandler('Please verify your account before logging in.', 401));
     }
     const isPasswordMatched = await user.comparePassword(password);
 
@@ -81,7 +121,7 @@ exports.forgotPassword = catchAsyncErrors(async (req, res, next) => {
     const messgae = `your password reset token is:- \n\n ${resetPasswordUrl} \n if you have not requested this email then,please ignore it`
 
     try {
-        await sendEail({
+        await sendEmail({
             email: user.email,
             subject: "Ecommerce Password recovery",
             messgae,
@@ -106,7 +146,6 @@ exports.resetPassword = catchAsyncErrors(async (req, res, next) => {
         .createHash("sha256")
         .update(req.params.token)
         .digest("hex");
-    console.log(`${resetPasswordToken}`);
     const user = await User.findOne({
         resetPasswordToken,
         resetPasswordExpire: { $gt: Date.now() },

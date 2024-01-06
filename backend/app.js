@@ -3,6 +3,8 @@ const app = express();
 const cookieParser = require("cookie-parser");
 const ErrorMiddleware = require("./middleware/error");
 const fileUpload = require("express-fileupload");
+// const cryptoRandomString = require("crypto-random-string");
+
 app.use(express.json());
 app.use(cookieParser());
 app.use(fileUpload({ useTempFiles: true }));
