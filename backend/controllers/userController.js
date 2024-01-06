@@ -5,11 +5,13 @@ const { sendToken } = require("../utils/jwtToken");
 const { sendEmail } = require("../utils/sendEmail");
 const crypto = require("crypto")
 const cloudinary = require("cloudinary");
+const getDataUri = require("../utils/dataUri");
 
 // Regiser a User
 exports.registerUser = catchAsyncErrors(async (req, res, next) => {
     const image = req.files.image;
-    const myCloud = await cloudinary.uploader.upload(image.tempFilePath);
+    const fileUri = getDataUri(image);
+    const myCloud = await cloudinary.uploader.upload(fileUri.content);
     const { name, email, password } = req.body;
     const verificationToken = crypto.randomBytes(20).toString('hex');
     const verificationLink = `http://localhost:3000/verify/${verificationToken}`;

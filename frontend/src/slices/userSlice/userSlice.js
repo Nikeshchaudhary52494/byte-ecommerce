@@ -20,7 +20,7 @@ const handleAuthFulfilled = (state, action) => {
 };
 
 export const registerUser = createAsyncThunk("user/register", async (userData) => {
-
+  console.log(userData)
   const response = await axios.post("/api/v1/register", userData, {
     headers: {
       'Content-Type': 'multipart/form-data',

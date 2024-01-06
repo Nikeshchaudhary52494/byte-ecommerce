@@ -7,7 +7,7 @@ const fileUpload = require("express-fileupload");
 
 app.use(express.json());
 app.use(cookieParser());
-app.use(fileUpload({ useTempFiles: true }));
+app.use(fileUpload());
 
 const product = require("./routes/productRoute");
 const user = require("./routes/userRoute");
