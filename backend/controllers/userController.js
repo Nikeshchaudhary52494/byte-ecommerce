@@ -198,19 +198,21 @@ exports.updateUserPassword = catchAsyncErrors(async (req, res, next) => {
 // Update User Profile
 exports.updateUserProfile = catchAsyncErrors(async (req, res, next) => {
     const image = req.files?.avatar;
+    console.log(req.body)
     let newUserData;
     const { name, email, oldAvatarUrl, oldAvatarPublicId } = req.body;
     if (image) {
-        cloudinary.uploader.upload_stream(async (error, result) => {
-            newUserData = {
-                name,
-                email,
-                avatar: {
-                    public_id: result.public_id,
-                    url: result.secure_url,
-                }
+        const fileUri = getDataUri(image);
+        const myCloud = await cloudinary.uploader.upload(fileUri.content);
+        newUserData = {
+            name,
+            email,
+            avatar: {
+                public_id: myCloud.public_id,
+                url: myCloud.secure_url,
             }
-        })
+        }
+        await cloudinary.uploader.destroy(oldAvatarPublicId);
     } else {
         newUserData = {
             name,

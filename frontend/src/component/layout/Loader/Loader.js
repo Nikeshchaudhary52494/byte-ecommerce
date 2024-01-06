@@ -1,13 +1,14 @@
 import React from "react";
-import {InfinitySpin } from "react-loader-spinner";
+import { InfinitySpin } from "react-loader-spinner";
 
 const Loader = () => {
   return (
     <>
-     <InfinitySpin class="text-blue-400"
-  width='200'
-  color='#00BCD4'
-/>
+      <InfinitySpin
+        class="text-blue-500"
+        width='200'
+        color='#00BCD4'
+      />
     </>
   );
 };

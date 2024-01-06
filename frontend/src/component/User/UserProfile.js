@@ -24,12 +24,12 @@ const UserProfile = () => {
         { label: 'Password', value: '*********' },
     ];
     if (status === STATUSES.LOADING) {
-        return <div className="w-full grid place-content-center h-[80vh] ">
-            <Loader />
-        </div>
-
+        return (
+            <div >
+                <Loader />
+            </div>
+        )
     }
-
     if (status === STATUSES.ERROR) {
         return <h2>Something went wrong!</h2>;
     }
@@ -44,8 +44,8 @@ const UserProfile = () => {
                                     <img className='w-full h-full object-cover' src={user.avatar.url} alt="user profile" />
                                 </div>
                                 <Link className='text-white text-2xl'
+                                    state={location.pathname}
                                     to="/user/updateprofile">
-
                                     <MdEdit />
                                 </Link>
                             </div>

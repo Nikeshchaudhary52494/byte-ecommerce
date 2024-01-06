@@ -4,10 +4,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Loader from '../layout/Loader/Loader';
 import { STATUSES } from '../../store/statuses';
-import { loadUser, updateUserProfile } from '../../slices/userSlice/userSlice';
+import { loadUser, resetIsProfileUpdated, updateUserProfile } from '../../slices/userSlice/userSlice';
+import { toast } from "react-toastify";
 
 const UpdateUserProfile = () => {
-    const { user: data, status } = useSelector((state) => state.user);
+    const { user: data, status, isProfileUpdated, error } = useSelector((state) => state.user);
     const { email, name, avatar } = data;
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -58,14 +59,22 @@ const UpdateUserProfile = () => {
         formData.append('avatar', user.avatar);
         formData.append('oldAvatarUrl', user.oldAvatarUrl);
         formData.append('oldAvatarPublicId', user.oldAvatarPunlicId);
-        dispatch(updateUserProfile(formData)).then(() => {
-            navigate(location.state.previousLocation);
-        })
+        dispatch(updateUserProfile(formData));
     };
+    useEffect(() => {
+        if (error)
+            toast.error(error);
+        if (isProfileUpdated) {
+            toast.success("Profile updated successfully");
+            dispatch(resetIsProfileUpdated());
+            navigate(location.state);
+        }
+    }, [error, isProfileUpdated])
+
 
     if (status === STATUSES.LOADING) {
         return (
-            <div className="w-full grid place-content-center h-[80vh] ">
+            <div className="w-full grid place-content-center inset-0 fixed z-10 top-0 bg-slate-900 ">
                 <Loader />
             </div>
         );
@@ -76,13 +85,13 @@ const UpdateUserProfile = () => {
     }
 
     return (
-        <div className='grid bg-slate-900 h-[100vh]  fixed z-20 top-0 left-0 w-[100vw] place-content-center'>
-            <div className="bg-slate-800 p-10 rounded-lg text-white">
+        <div className='flex bg-slate-900 overflow-auto h-screen fixed z-10 top-0 left-0 w-screen justify-center items-center'>
+            <div className="bg-slate-800 px-5 py-10 rounded-lg text-white">
                 <h3 className="text-xl mb-4 text-cyan-500 font-bold">Edit Profile Details</h3>
                 <form className="flex gap-4 text-black flex-col" onSubmit={handleSubmit}>
                     <input
                         required
-                        className="w-[300px] outline-none p-2 rounded-md"
+                        className="w-[300px] outline-none p-3 rounded-md"
                         type="email"
                         name="email"
                         placeholder="Email"
@@ -91,7 +100,7 @@ const UpdateUserProfile = () => {
                     />
                     <input
                         required
-                        className="w-[300px] outline-none p-2 rounded-md"
+                        className="w-[300px] outline-none p-3 rounded-md"
                         type="text"
                         name="name"
                         placeholder="Name"
@@ -122,9 +131,8 @@ text-white py-2 px-4  rounded-md">
                         type="submit"
                         value="Update"
                         whileTap={{ scale: 0.9 }}
-                        whileHover={{ scale: 1.1 }}
-                        transition={{ duration: 0.5 }}
-                        className="w-[300px] text-white font-bold p-2 hover:bg-teal-700 bg-teal-600 rounded-lg"
+                        transition={{ duration: 0.4 }}
+                        className="w-[300px] text-white font-bold p-3 hover:bg-teal-700 bg-teal-600 rounded-lg"
                     />
                 </form>
             </div>

@@ -64,7 +64,11 @@ export const resetPassword = createAsyncThunk("user/resetpassword", async ({ tok
 const userSlice = createSlice({
   name: "user",
   initialState,
-  reducers: {},
+  reducers: {
+    resetIsProfileUpdated: (state, action) => {
+      state.isProfileUpdated = null;
+    }
+  },
   extraReducers: (builder) => {
     builder
       .addCase(registerUser.pending, setLoadingState)
@@ -83,7 +87,16 @@ const userSlice = createSlice({
       .addCase(loginUser.fulfilled, handleAuthFulfilled)
       .addCase(loadUser.fulfilled, handleAuthFulfilled)
       .addCase(updateUserProfile.pending, setLoadingState)
-      .addCase(updateUserProfile.fulfilled, handleAuthFulfilled)
+      .addCase(updateUserProfile.fulfilled, (state, action) => {
+        state.status = STATUSES.IDLE;
+        state.user = action.payload;
+        state.isProfileUpdated = true;
+        state.error = null;
+      })
+      .addCase(updateUserProfile.rejected, (state, action) => {
+        state.status = STATUSES.ERROR
+        state.error = action.error.message;
+      })
       .addCase(logoutUser.fulfilled, (state) => {
         state.user = { role: "user" };
         state.isAuthenticated = false;
@@ -94,3 +107,4 @@ const userSlice = createSlice({
 });
 
 export default userSlice.reducer;
+export const { resetIsProfileUpdated } = userSlice.actions;
