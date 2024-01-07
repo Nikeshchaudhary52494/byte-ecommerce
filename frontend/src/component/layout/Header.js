@@ -47,7 +47,7 @@ const Header = () => {
                       alt="user profile" />
                   </div>
                 ) : (
-                  <Link to="/user/login" state={{ previousLocation: location.pathname }}>
+                  <Link to="/user/login" state={location.pathname}>
                     <div className="flex items-center text-xl  h-10 cursor-pointer">
                       <AiOutlineUser />
                       <span>Login</span>

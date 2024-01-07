@@ -9,25 +9,27 @@ const getDataUri = require("../utils/dataUri");
 
 // Regiser a User
 exports.registerUser = catchAsyncErrors(async (req, res, next) => {
-    const image = req.files.image;
-    const fileUri = getDataUri(image);
-    const myCloud = await cloudinary.uploader.upload(fileUri.content);
-    const { name, email, password } = req.body;
-    const verificationToken = crypto.randomBytes(20).toString('hex');
-    const verificationLink = `http://localhost:3000/verify/${verificationToken}`;
-    const message = `Click on the following link to verify your email: ${verificationLink}`;
-    const user = await User.create({
-        name,
-        email,
-        password,
-        verificationToken,
-        verified: false,
-        avatar: {
-            public_id: myCloud.public_id,
-            url: myCloud.secure_url,
-        }
-    });
+    let myCloud;
     try {
+        const image = req.files.image;
+        const fileUri = getDataUri(image);
+        myCloud = await cloudinary.uploader.upload(fileUri.content);
+        const { name, email, password } = req.body;
+        const verificationToken = crypto.randomBytes(20).toString('hex');
+        const verificationLink = `http://localhost:3000/verify/${verificationToken}`;
+        const message = `Click on the following link to verify your email: ${verificationLink}`;
+        const user = await User.create({
+            name,
+            email,
+            password,
+            verificationToken,
+            verified: false,
+            avatar: {
+                public_id: myCloud.public_id,
+                url: myCloud.secure_url,
+            }
+        });
+
         await sendEmail({
             email,
             subject: "Byte ecommerce verification link",
@@ -38,10 +40,7 @@ exports.registerUser = catchAsyncErrors(async (req, res, next) => {
             message: `Email sent to ${user.email} ${message} successfully`
         });
     } catch (error) {
-        if (user) {
-            await User.findByIdAndDelete(user._id);
-            await cloudinary.uploader.destroy(user.avatar.public_id);
-        }
+        await cloudinary.uploader.destroy(myCloud.public_id);
         return next(new ErrorHandler(error.message, 500));
     }
 });

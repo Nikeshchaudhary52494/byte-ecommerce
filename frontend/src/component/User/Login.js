@@ -4,17 +4,17 @@ import { motion } from 'framer-motion'
 import Logo from "../images/byte.png"
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { loginUser } from '../../slices/userSlice/userSlice'
-import { getAllCartProducts } from '../../slices/cartSlice/cartSlice'
+import { loginUser, resetError } from '../../slices/userSlice/userSlice'
+import { toast } from "react-toastify"
 
 
 
 const Login = () => {
   const location = useLocation();
-  const { isAuthenticated } = useSelector((state) => state.user);
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const { isAuthenticated, error } = useSelector((state) => state.user);
 
   const [user, setUser] = useState({
     email: "",
@@ -22,19 +22,27 @@ const Login = () => {
   })
 
   const { email, password } = user;
+
   const userDataChanged = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value })
   }
+
   const submitHandler = async (e) => {
     e.preventDefault()
     dispatch(loginUser(user));
   }
+
   useEffect(() => {
     if (isAuthenticated === true) {
-      dispatch(getAllCartProducts(loginUser._id))
-      navigate(location.state.previousLocation);
+      toast.success("Login successfully");
+      navigate(location.state);
     }
-  }, [isAuthenticated, navigate, location])
+    if (error) {
+      toast.error(error);
+      dispatch(resetError());
+    }
+  }, [isAuthenticated, navigate, location, error, dispatch])
+
   return (
     <>
       <div class="grid bg-slate-900 h-[100vh]  fixed z-20 top-0 left-0 w-[100vw] place-content-center">
@@ -47,7 +55,7 @@ const Login = () => {
           <form class="flex text-black gap-4 flex-col" onSubmit={submitHandler} >
             <input
               class="w-[300px ] outline-none p-2 m-2 rounded-md"
-              type="text"
+              type="Email"
               required
               name='email'
               placeholder='Email'

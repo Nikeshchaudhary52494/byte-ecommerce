@@ -3,12 +3,13 @@ import { motion } from "framer-motion"
 import { Link, useLocation, useNavigate } from "react-router-dom"
 import demoAvatar from "../images/userProfile.avif"
 import Logo from "../images/byte.png"
-import { registerUser } from '../../slices/userSlice/userSlice'
+import { registerUser, resetError } from '../../slices/userSlice/userSlice'
 import { useDispatch, useSelector } from 'react-redux'
+import { toast } from 'react-toastify'
 
 
 const SignUp = () => {
-    const { isAuthenticated } = useSelector((state) => state.user)
+    const { isVerificationEmailSend, error } = useSelector((state) => state.user)
     const navigate = useNavigate();
     const location = useLocation();
     const dispatch = useDispatch();
@@ -51,10 +52,15 @@ const SignUp = () => {
     };
 
     useEffect(() => {
-        if (isAuthenticated === true) {
-            navigate(location.state.previousLocation);
+        if (isVerificationEmailSend) {
+            toast.success("verification link send");
+            navigate("/user/verify");
         }
-    }, [isAuthenticated, navigate, location])
+        if (error) {
+            toast.error(error);
+            dispatch(resetError());
+        }
+    }, [navigate, location, error, isVerificationEmailSend, dispatch])
     return (
         <>
             <div className="grid bg-slate-900 h-[100vh]  fixed z-20 top-0 left-0 w-[100vw] place-content-center">

@@ -30,6 +30,7 @@ import ForgetPassword from "./component/User/ForgetPassword.js";
 import ResetPassword from "./component/User/ResetPassword.js";
 import Myorders from "./component/User/Myorders.js";
 import SingleOrder from "./component/User/SingleOrder.js";
+import VerifyUser from "./component/User/VerifyMessage.js";
 
 
 function App() {
@@ -55,6 +56,7 @@ function App() {
           <Route path="updateprofile" element={<UpdateUserProfile />} />
           <Route path="updatepassword" element={<UpdatePassword />} />
           <Route path="password/forget" element={<ForgetPassword />} />
+          <Route path="verify" element={<VerifyUser />} />
         </Route>
         <Route path="myorders" element={<Myorders />} />
         <Route path="order/:id" element={<SingleOrder />} />
