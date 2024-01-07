@@ -81,6 +81,9 @@ const userSlice = createSlice({
     },
     resetIspasswordUpdated: (state, action) => {
       state.isPasswordUpdated = null;
+    },
+    resetIsVerificationEmailSend: (state, action) => {
+      state.isVerificationEmailSend = null;
     }
   },
   extraReducers: (builder) => {
@@ -135,4 +138,4 @@ const userSlice = createSlice({
 });
 
 export default userSlice.reducer;
-export const { resetIsProfileUpdated, resetIspasswordUpdated, resetError } = userSlice.actions;
+export const { resetIsProfileUpdated, resetIspasswordUpdated, resetError, resetIsVerificationEmailSend } = userSlice.actions;

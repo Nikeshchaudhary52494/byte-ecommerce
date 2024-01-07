@@ -22,8 +22,8 @@ const NavOptions = ({ toggle, setToggle = () => { } }) => {
       to: "/contactus",
       name: "Contact Us"
     }, {
-      to: "/aboutus",
-      name: "About US"
+      to: "/aboutme",
+      name: "About Me"
     }];
   if (user.role === "admin") {
     navOptions = [{

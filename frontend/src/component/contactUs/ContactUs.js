@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { createMessage, resetIsMessageSend } from '../../slices/contactUsSlice/contactUsSlice';
+import { createMessage, resetError, resetIsMessageSend } from '../../slices/contactUsSlice/contactUsSlice';
 import { toast } from 'react-toastify';
 import { useLocation, useNavigate } from 'react-router-dom';
 const ContactUs = () => {
@@ -8,7 +8,7 @@ const ContactUs = () => {
     const navigate = useNavigate();
     const location = useLocation();
 
-    const { isMessageSend } = useSelector((state) => state.contactUs);
+    const { isMessageSend, error } = useSelector((state) => state.contactUs);
 
     const [message, setMessage] = useState('');
 
@@ -21,7 +21,10 @@ const ContactUs = () => {
             toast.success("Message send");
             dispatch(resetIsMessageSend());
             navigate(location.state);
-
+        }
+        if(error){
+            toast.error(error);
+            dispatch(resetError())
         }
     })
 

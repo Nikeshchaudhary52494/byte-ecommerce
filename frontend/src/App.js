@@ -12,8 +12,6 @@ import { Route, Routes } from "react-router-dom";
 import UserProfile from "./component/User/UserProfile.js"
 import MangeUser from "./component/admin/manageUsers/MangeUsers.js";
 import Manageproduct from "./component/admin/manageProduct/Manageproduct.js";
-import AboutUs from "./component/aboutUs/aboutUs.js";
-import ContactUs from "./component/contactUs/ContactUs.js";
 import AddProduct from "./component/admin/manageProduct/AddProduct.js";
 import ShippingForm from "./component/Cart/ShippingForm.js";
 import ManageOrders from "./component/admin/manageOrders/ManageOrders.js";
@@ -31,6 +29,8 @@ import ResetPassword from "./component/User/ResetPassword.js";
 import Myorders from "./component/User/Myorders.js";
 import SingleOrder from "./component/User/SingleOrder.js";
 import VerifyUser from "./component/User/VerifyMessage.js";
+import AboutMe from "./component/aboutUs/AboutMe.js";
+import ContactUs from "./component/contactUs/ContactUs.js";
 
 
 function App() {
@@ -75,7 +75,7 @@ function App() {
           <Route path="order/:id" element={<ManageSingleOrder />} />
           <Route path="managereviews" element={<ManageReviews />} />
         </Route>
-        <Route path="aboutus" element={<AboutUs />} />
+        <Route path="aboutme" element={<AboutMe />} />
         <Route path="contactus" element={<ContactUs />} />
       </Route>
     </Routes>
