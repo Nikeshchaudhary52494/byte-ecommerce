@@ -18,7 +18,14 @@ class ApiFeatures {
     this.query = this.query.find({ ...keyword });
     return this;
   }
+  condition() {
+    const condition = this.querySrt.condition
+      ? { itemCondition: this.querySrt.condition }
+      : {};
 
+    this.query = this.query.find({ ...condition });
+    return this;
+  }
   // Filter
   filter() {
     const copyQueryStr = { ...this.querySrt };

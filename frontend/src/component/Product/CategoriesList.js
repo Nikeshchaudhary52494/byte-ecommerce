@@ -1,7 +1,7 @@
 import React from 'react'
 import { motion } from "framer-motion"
 import { useDispatch } from 'react-redux'
-import { fetchProducts2 } from '../../slices/productSlice/productsSlice';
+import { fetchProducts2, setCategory } from '../../slices/productSlice/productsSlice';
 import { useNavigate } from 'react-router-dom';
 
 const CategoriesList = () => {
@@ -43,6 +43,7 @@ const CategoriesList = () => {
     ]
     const handleCategoryClick = (categoryName) => {
         dispatch(fetchProducts2({ categoryName }));
+        dispatch(setCategory(categoryName));
         navigate("/products")
     };
 

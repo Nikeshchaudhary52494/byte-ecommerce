@@ -7,8 +7,8 @@ const cloudinary = require("cloudinary")
 // create product -- Admin
 exports.createProduct = catchAsyncErrors(async (req, res, next) => {
   const image = req.files.image;
-  console.log("hello");
-  const myCloud = await cloudinary.uploader.upload(image.tempFilePath);
+  const imageUri = getDataUri(image);
+  const myCloud = await cloudinary.uploader.upload(imageUri.content);
   const productData = {
     ...req.body,
     images: [{
@@ -31,6 +31,7 @@ exports.getAllProducts = catchAsyncErrors(async (req, res) => {
   const apiFeature = new ApiFeatures(Product.find(), req.query)
     .search()
     .filter()
+    .condition()
   const products = await apiFeature.query;
   res.status(200).json({
     success: true,
@@ -168,6 +169,7 @@ exports.getProductReviews = catchAsyncErrors(async (req, res, next) => {
 
 // Delete Review
 const mongoose = require('mongoose');
+const getDataUri = require("../utils/dataUri");
 exports.deleteProductReviews = catchAsyncErrors(async (req, res, next) => {
   const productId = req.query.productId;
   const reviewId = req.query.id;

@@ -18,6 +18,12 @@ const productSlice = createSlice({
         },
         resetIsReviewAdded: (state, action) => {
             state.isReviewAdded = null;
+        },
+        setCategory: (state, action) => {
+            state.categoryName = action.payload;
+        },
+        setFilters: (state, action) => {
+            state.filters = action.payload;
         }
     },
     extraReducers: (builder) => {
@@ -83,15 +89,23 @@ export const fetchProducts = createAsyncThunk('products/fetch',
     });
 
 export const fetchProducts2 = createAsyncThunk('products/fetch',
-    async ({ keyword = "", price = [0, 2500], categoryName }) => {
-        if (categoryName) {
-            const { data } = await axios.get(`/api/v1/products?keyword=${keyword}&price[gte]=${price[0]}&price[lte]=${price[1]}&category=${categoryName}`);
-            return data.products;
-        } else {
-            const { data } = await axios.get(`/api/v1/products?keyword=${keyword}&price[gte]=${price[0]}&price[lte]=${price[1]}`);
+    async ({ keyword = "", price = [0, 2500], categoryName, ratings = 0, itemCondition = "" }) => {
+        const link = `/api/v1/products?keyword=${keyword}&price[gte]=${price[0]}&price[lte]=${price[1]}&ratings[gte]=${ratings}`;
+        if (categoryName && itemCondition === "") {
+            const { data } = await axios.get(`${link}&category=${categoryName}`);
             return data.products;
         }
-    },
+        if (categoryName) {
+            const { data } = await axios.get(`${link}&category=${categoryName}&itemCondition=${itemCondition}`);
+            return data.products;
+        }
+        if (itemCondition === "") {
+            const { data } = await axios.get(link);
+            return data.products;
+        }
+        const { data } = await axios.get(`${link}&itemCondition=${itemCondition}`);
+        return data.products;
+    }
 );
 export const getProductDetails = createAsyncThunk('productDetails/fetch', async ({ id }) => {
     try {
@@ -142,4 +156,4 @@ export const addReview = createAsyncThunk(
         }
     }
 );
-export const { resetError, resetIsReviewAdded } = productSlice.actions;
+export const { resetError, resetIsReviewAdded, setCategory, setFilters } = productSlice.actions;

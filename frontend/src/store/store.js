@@ -1,6 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
 import productsReducer from '../slices/productSlice/productsSlice';
-import filterReducer from '../slices/filterSlice/filterSlice'
 import userReducer from "../slices/userSlice/userSlice"
 import cartReducer from "../slices/cartSlice/cartSlice"
 import adminReducer from "../slices/adminSlice/adminSlice"
@@ -9,7 +8,6 @@ import contactUsReducer from "../slices/contactUsSlice/contactUsSlice"
 const store = configureStore({
     reducer: {
         products: productsReducer,
-        filter: filterReducer,
         user: userReducer,
         cart: cartReducer,
         admin: adminReducer,

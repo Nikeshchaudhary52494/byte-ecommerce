@@ -1,19 +1,16 @@
 import React, { useEffect, useState } from "react";
 import Loader from "../layout/Loader/Loader";
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { STATUSES } from '../../store/statuses';
-import { fetchProducts2 } from '../../slices/productSlice/productsSlice';
 import ProductCard from "../layout/ProductCard";
-import { useParams } from "react-router-dom";
 import { FaFilter } from "react-icons/fa"
 import ProductFilter from "./productFilter.js";
+
 const Products = () => {
 
-    const dispatch = useDispatch();
     const { data: products, status } = useSelector((state) => state.products);
-    const price = useSelector((state) => state.filter);
-    const { category } = useParams();
     const [toggleFilter, setToggleFilter] = useState(false);
+
     useEffect(() => {
         const handleScroll = (event) => {
             if (toggleFilter) {
@@ -31,10 +28,6 @@ const Products = () => {
             <Loader />
         </div>
 
-    }
-
-    if (status === STATUSES.ERROR) {
-        return <h2>Something went wrong!</h2>;
     }
 
     return (
