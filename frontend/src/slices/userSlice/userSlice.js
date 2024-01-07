@@ -65,8 +65,15 @@ const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
+    resetError: (state, action) => {
+      state.error = null;
+      state.status = STATUSES.IDLE
+    },
     resetIsProfileUpdated: (state, action) => {
       state.isProfileUpdated = null;
+    },
+    resetIspasswordUpdated: (state, action) => {
+      state.isPasswordUpdated = null;
     }
   },
   extraReducers: (builder) => {
@@ -107,4 +114,4 @@ const userSlice = createSlice({
 });
 
 export default userSlice.reducer;
-export const { resetIsProfileUpdated } = userSlice.actions;
+export const { resetIsProfileUpdated, resetIspasswordUpdated, resetError } = userSlice.actions;

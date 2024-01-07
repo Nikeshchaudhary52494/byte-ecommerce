@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { updatepassword } from '../../slices/userSlice/userSlice';
+import { resetError, resetIspasswordUpdated, updatepassword } from '../../slices/userSlice/userSlice';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { STATUSES } from '../../store/statuses';
+import { FaArrowLeft } from "react-icons/fa";
+
 const UpdatePassword = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -32,19 +33,28 @@ const UpdatePassword = () => {
     useEffect(() => {
         if (error) {
             toast.error(error.message);
+            dispatch(resetError());
         }
         if (isPasswordUpdated) {
             toast.success("Password updated successfully");
+            dispatch(resetIspasswordUpdated());
+            navigate(location.state);
         }
     }, [dispatch, error, isPasswordUpdated]);
+
     return (
-        <div className='border-t fixed top-0 left-0 z-10 inset-0  bg-slate-900 flex flex-col items-center justify-center'>
-            <div className=' flex flex-col justify-center items-center bg-slate-800 p-10 rounded-md'>
-                <p className='text-white text-3xl font-bold'>Update Password</p>
+        <div className='flex bg-slate-900 overflow-auto h-screen fixed z-10 top-0 left-0 w-screen justify-center items-center'>
+            <button
+                onClick={() => navigate(location.state)}
+                className='text-white fixed top-10 left-5 hidden sm:block text-xl pl-5'>
+                <FaArrowLeft />
+            </button>
+            <div className="bg-slate-800 px-5 py-10 rounded-lg">
+                <h3 className="text-xl mb-4 text-cyan-500 font-bold">Update Password</h3>
                 <form className='flex gap-4 text-black flex-col' onSubmit={handleSubmit}>
                     <input
                         required
-                        className='w-[300px] outline-none p-2 m-2 rounded-md'
+                        className='w-[300px] outline-none p-3 rounded-md'
                         type='password'
                         name='oldPassword'
                         placeholder='Old Password'
@@ -54,7 +64,7 @@ const UpdatePassword = () => {
 
                     <input
                         required
-                        className='w-[300px] outline-none p-2 m-2 rounded-md'
+                        className='w-[300px] outline-none p-3 rounded-md'
                         type='password'
                         name='newPassword'
                         placeholder='New Password'
@@ -64,7 +74,7 @@ const UpdatePassword = () => {
 
                     <input
                         required
-                        className='w-[300px] outline-none p-2 m-2 rounded-md'
+                        className='w-[300px] outline-none p-3 rounded-md'
                         type='password'
                         name='confirmPassword'
                         placeholder='Confirm Password'
@@ -74,7 +84,7 @@ const UpdatePassword = () => {
 
                     <button
                         type='submit'
-                        className='w-[300px] m-2 h-[40px] hover:bg-teal-700 bg-teal-600 rounded-lg'
+                        className='w-[300px] p-3 text-white font-bold active:bg-teal-700 bg-teal-600 rounded-lg'
                     >
                         Update Password
                     </button>

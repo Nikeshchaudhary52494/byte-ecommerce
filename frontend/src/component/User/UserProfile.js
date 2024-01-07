@@ -6,7 +6,7 @@ import Loader from '../layout/Loader/Loader';
 import { STATUSES } from '../../store/statuses';
 import { MdEdit, MdLogout } from 'react-icons/md';
 import { RiShoppingBagFill } from "react-icons/ri";
-import { BsArrowReturnLeft } from "react-icons/bs";
+import { FaArrowLeft } from 'react-icons/fa';
 
 
 
@@ -38,9 +38,9 @@ const UserProfile = () => {
         <div>
             <>
                 {isAuthenticated ? (
-                    <div className='flex justify-center fixed inset-0 z-10  flex-col-reverse items-center bg-slate-800 h-screen'>
-                        <div className='w-[80%] max-w-lg p-5  bg-slate-700 rounded-md '>
-                            <div className=' rounded-md flex justify-between items-center bg-slate-600 m-2 p-2'>
+                    <div className='flex justify-center fixed inset-0 z-10  flex-col-reverse items-center bg-slate-900 h-screen'>
+                        <div className='w-[80%] max-w-lg bg-slate-800 p-2 rounded-lg'>
+                            <div className=' rounded-md flex justify-between items-center bg-slate-700 my-2 p-2'>
                                 <div className='w-24 h-24 rounded-full m-2 overflow-hidden'>
                                     <img className='w-full h-full object-cover' src={user.avatar.url} alt="user profile" />
                                 </div>
@@ -51,8 +51,8 @@ const UserProfile = () => {
                                 </Link>
                             </div>
                             {fields.map((field, index) => (
-                                <div key={index} className=' bg-slate-600 text-white rounded-md m-2 p-2'>
-                                    <p className='m-2 flex justify-between font-bold '>{field.label} <Link state={location.pathname} to="/user/updatepassword"> <MdEdit className={`${field.label === "Password" ? `text-blue-500` : `hidden`}`} /></Link></p>
+                                <div key={index} className=' bg-slate-700 text-white rounded-md my-2 p-2'>
+                                    <p className='m-2 flex justify-between font-bold '>{field.label} <Link state={location.pathname} to="/user/updatepassword"> <MdEdit className={`${field.label === "Password" ? `text-xl` : `hidden`}`} /></Link></p>
                                     <div className='flex justify-between items-center'>
                                         <p className='m-2'>{field.value}</p>
                                     </div>
@@ -72,7 +72,7 @@ const UserProfile = () => {
                         <div className='flex  w-full'>
                             <button
                                 onClick={() => navigate(location.state)}
-                                className='text-white hidden md:block text-3xl pl-5'><BsArrowReturnLeft /></button>
+                                className='text-white hidden sm:block text-xl pl-5'><FaArrowLeft /></button>
                         </div>
                     </div>
                 ) : (
