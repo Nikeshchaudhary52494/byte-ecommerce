@@ -8,7 +8,7 @@ import CategoriesPage from "./component/Product/CategoryPage.js"
 import Login from "./component/User/Login.js"
 import SignUp from "./component/User/SignUp.js"
 import Dashbord from "./component/admin/Dashbord.js";
-import { Route, Router, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import UserProfile from "./component/User/UserProfile.js"
 import MangeUser from "./component/admin/manageUsers/MangeUsers.js";
 import Manageproduct from "./component/admin/manageProduct/Manageproduct.js";

@@ -41,7 +41,7 @@ const Header = () => {
               {
 
                 isAuthenticated ? (
-                  <div onClick={() => navigate("/user/profile")} className='w-10 h-10 rounded-full overflow-hidden'>
+                  <div onClick={() => navigate("/user/profile", { state: location.pathname })} className='w-10 h-10 rounded-full overflow-hidden'>
                     <img
                       className='w-full h-full object-cover' src={user.avatar.url}
                       alt="user profile" />
@@ -89,7 +89,7 @@ const Header = () => {
           <SearchBar />
         </div>
 
-      </nav>
+      </nav >
 
     </>
   );

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addReview } from '../../../slices/productSlice/productsSlice';
+import { addReview, getProductDetails, resetError, resetIsReviewAdded } from '../../../slices/productSlice/productsSlice';
 import { toast } from 'react-toastify';
 
 const AddReview = ({ toggle, setToggle, productId }) => {
@@ -19,16 +19,19 @@ const AddReview = ({ toggle, setToggle, productId }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         dispatch(addReview({ rating, comment, productId }))
+
     };
     useEffect(() => {
         if (error) {
             toast.error(error);
+            dispatch(resetError())
         }
         if (isReviewAdded) {
             toast.success("Review added successfully");
-            // dispatch(fetchProductDetails(productId))
+            dispatch(resetIsReviewAdded());
+            dispatch(getProductDetails({ id: productId }));
         }
-    }, [isReviewAdded, error])
+    }, [isReviewAdded, error, dispatch, productId])
 
     return (
         <>

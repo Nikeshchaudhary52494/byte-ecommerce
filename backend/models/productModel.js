@@ -51,6 +51,10 @@ const productSchema = new mongoose.Schema({
                 ref: "User",
                 required: true
             },
+            avatar: {
+                required: true,
+                type: String
+            },
             name: {
                 type: String,
                 required: true,

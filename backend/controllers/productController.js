@@ -26,7 +26,7 @@ exports.createProduct = catchAsyncErrors(async (req, res, next) => {
 });
 
 // Get All product
-exports.getAllProducts = catchAsyncErrors(async (req, res) => { 
+exports.getAllProducts = catchAsyncErrors(async (req, res) => {
   const productCount = await Product.countDocuments();
   const apiFeature = new ApiFeatures(Product.find(), req.query)
     .search()
@@ -47,6 +47,23 @@ exports.getAdminProducts = catchAsyncErrors(async (req, res, next) => {
     products,
   });
 });
+
+exports.updatedProductStock = catchAsyncErrors(async (req, res, next) => {
+  let product = await Product.findById(req.params.id);
+  if (!product) {
+    return res.status(500).json({
+      success: false,
+      message: "Product not found",
+    });
+  }
+  product.stock = req.body.newStock;
+  await product.save({ validateBeforeSave: false });
+  res.status(200).json({
+    success: true,
+    message: "Product stock updated successfully",
+    product,
+  });
+})
 
 // Update product --Admin
 exports.updateProduct = catchAsyncErrors(async (req, res, next) => {
@@ -103,6 +120,7 @@ exports.createProductReview = catchAsyncErrors(async (req, res, next) => {
   const review = {
     user: req.user._id,
     name: req.user.name,
+    avatar: req.user.avatar.url,
     rating: Number(rating),
     comment,
   };

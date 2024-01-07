@@ -8,8 +8,17 @@ const contactUsSlice = createSlice({
     initialState: {
         data: [],
         status: STATUSES.IDLE,
+        error: null
     },
-    reducers: {},
+    reducers: {
+        resetError: (state, action) => {
+            state.error = null;
+            state.status = STATUSES.IDLE
+        },
+        resetIsMessageSend: (state, action) => {
+            state.isMessageSend = null;
+        },
+    },
     extraReducers: (builder) => {
         builder
             .addCase(getAllMessages.pending, (state) => {
@@ -20,6 +29,17 @@ const contactUsSlice = createSlice({
                 state.data = action.payload.data;
             })
             .addCase(getAllMessages.rejected, (state, action) => {
+                state.status = STATUSES.ERROR;
+                state.error = action.error.message;
+            })
+            .addCase(createMessage.pending, (state) => {
+                state.status = STATUSES.LOADING;
+            })
+            .addCase(createMessage.fulfilled, (state, action) => {
+                state.status = STATUSES.IDLE;
+                state.isMessageSend = true;
+            })
+            .addCase(createMessage.rejected, (state, action) => {
                 state.status = STATUSES.ERROR;
                 state.error = action.error.message;
             })
@@ -50,3 +70,4 @@ export const deleteMessageById = createAsyncThunk('contactUs/deleteMessageById',
 });
 
 export default contactUsSlice.reducer;
+export const { resetError, resetIsMessageSend } = contactUsSlice.actions;

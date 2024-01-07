@@ -5,13 +5,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getAllCartProducts } from '../../slices/cartSlice/cartSlice';
 const Cart = () => {
     const { isAuthenticated, user } = useSelector((state) => state.user)
-    const dispatch = useDispatch();
-    useEffect(() => {
-        if (isAuthenticated == true)
-            dispatch(getAllCartProducts(user._id));
 
-    })
+    const dispatch = useDispatch();
     const location = useLocation()
+
+    useEffect(() => {
+        if (isAuthenticated === true)
+            dispatch(getAllCartProducts(user._id));
+    })
+
     return (
         <>
             {isAuthenticated ? (
@@ -24,7 +26,7 @@ const Cart = () => {
                         Missing Cart items?
                     </h3>
                     <p>Login to see items you added previously</p>
-                    <Link to="/user/login" state={{ previousLocation: location.pathname }}>
+                    <Link to="/user/login" state={location.pathname}>
                         <button class="bg-orange-600 m-4 w-[200px] h-10 rounded-sm">
                             Login
                         </button>

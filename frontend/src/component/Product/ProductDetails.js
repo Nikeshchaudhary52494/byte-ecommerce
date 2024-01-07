@@ -9,22 +9,42 @@ import ReactStars from "react-rating-stars-component"
 import ReviewCard from "./review/ReviewCard.js"
 import AddReview from "./review/AddReview.js";
 import { toast } from 'react-toastify';
-import { getProductDetails } from "../../slices/productSlice/productsSlice.js";
+import { getProductDetails, updatedProductStock } from "../../slices/productSlice/productsSlice.js";
 const ProductDetails = () => {
-  const [toggle, setToggle] = useState(false);
-  const [numberOfProduct, setNumberOfProduct] = useState(1);
-  const { id } = useParams();
-  const dispatch = useDispatch();
+
   const { productDetails: product, status } = useSelector((state) => state.products);
   const { user } = useSelector((state) => state.user);
+
+  const { id } = useParams();
+  const dispatch = useDispatch();
+
+  const [toggle, setToggle] = useState(false);
+  const [numberOfProduct, setNumberOfProduct] = useState(1);
+
+  const options = {
+    edit: false,
+    color: "rgba(20,20,20,0.1)",
+    activeColor: "tomato",
+    size: window.innerWidth < 600 ? 20 : 25,
+    value: product.ratings,
+    isHalf: true,
+  };
+
+  const newStock = product.stock - numberOfProduct;
+  const handelAddToCart = (userId, productId, quantity) => {
+    if (product.stock < 1) {
+      toast.error("Item is out of stock");
+    } else {
+      toast.success("Product added to cart");
+      dispatch(addToCart({ userId, productId, quantity }));
+      dispatch(updatedProductStock({ productId, newStock }));
+      setNumberOfProduct(1);
+    }
+  }
+
   useEffect(() => {
     dispatch(getProductDetails({ id: id }));
   }, [dispatch, id]);
-
-  const addProduct = (userId, productId, quantity) => {
-    dispatch(addToCart({ userId, productId, quantity }));
-  }
-
 
   if (status === STATUSES.LOADING) {
     return <div className="w-full grid place-content-center h-[80vh] ">
@@ -32,19 +52,6 @@ const ProductDetails = () => {
     </div>
 
   }
-
-  if (status === STATUSES.ERROR) {
-    return <h2>Something went wrong!</h2>;
-  }
-
-  const options = {
-    edit: false,
-    color: "rgba(20,20,20,0.1)",
-    activeColor: "tomato",
-    size: window.innerWidth < 600 ? 20 : 25,
-    value: product.rating,
-    isHalf: true,
-  };
 
   return (
     < >
@@ -62,7 +69,7 @@ const ProductDetails = () => {
         </div>
 
         {/* Details section */}
-        <div className=" p-5 scrollbar  w-3/4 md:w-1/2">
+        <div className=" p-5 scrollbar border shadow-lg  w-3/4 md:w-1/2">
           <h2 className="text-2xl" >{product.name}</h2>
           <p className="text-sm font-thin text-slate-600 border-b border-slate-400 mb-4 pb-4">#{product._id}</p>
           <ReactStars {...options} />
@@ -74,25 +81,32 @@ const ProductDetails = () => {
             <div className="flex items-center ">
               <button
                 className="p-4 w-5 h-[40px] grid place-content-center active:bg-slate-500 bg-slate-400 rounded-l-lg "
-                onClick={() => setNumberOfProduct((prevCount) => prevCount - 1)}
+                onClick={() => {
+                  if (numberOfProduct > 1) {
+                    setNumberOfProduct((prevCount) => prevCount - 1);
+                  }
+                }}
               >-</button>
               <input
                 className="border-y-2 h-[40px] text-center w-24 border-slate-400 outline-none  "
                 value={numberOfProduct}
                 type="text"
-                style={{ pointerEvents: "none" }}
               />
               <button
                 className="p-4 w-5 h-[40px] active:bg-slate-500 bg-slate-400 rounded-r-lg grid place-content-center "
-                onClick={() => setNumberOfProduct((prevCount) => prevCount + 1)}
+                onClick={() => {
+                  if (numberOfProduct < product.stock)
+                    setNumberOfProduct((prevCount) => prevCount + 1);
+                  else
+                    toast.error("No more items left");
+                }}
               >+</button>
             </div>
             <button
               className="w-40 h-[40px] bg-cyan-500 rounded-3xl my-4 active:bg-cyan-600 duration-500"
               onClick={() => {
-                addProduct(user._id, product._id, numberOfProduct);
+                handelAddToCart(user._id, product._id, numberOfProduct);
               }}
-              disabled={product.stock < 1}
             >Add to Cart</button>
           </div>
           <p className="border-b border-slate-400 mb-4 pb-4 font-bold">Status: <span className={`font-normal ${product.stock < 1 ? `text-red-400` : 'text-green-400'}`}>{`${product.stock < 1 ? `Out of Stock` : `Only ${product.stock} Unit left`}`}</span> </p>
@@ -104,7 +118,7 @@ const ProductDetails = () => {
         </div>
       </div >
 
-      <div className=" w-3/4  max-w-3xl flex p-4 lg:px-12  flex-col  mx-auto items-center justify-between sm:flex-row ">
+      <div className=" w-3/4  max-w-3xl flex p-4 lg:px-12  flex-col gap-2 border-y border-dashed mt-32 mb-10 mx-auto items-center justify-between sm:flex-row ">
         <h3 className="text-2xl text-center font-medium " >Reviews</h3>
 
         <button className="text-white  font-medium w-[200px] h-[40px] bg-blue-200 rounded-lg" onClick={() => setToggle(!toggle)}> Add Review</button>
@@ -112,11 +126,11 @@ const ProductDetails = () => {
           <AddReview toggle={toggle} setToggle={setToggle} productId={product._id} />
         </div>
       </div>
-      {/* Review section */}
 
+      {/* Review section */}
       {
         product.reviews && product.reviews[0] ? (
-          <div className="flex flex-col gap-10 items-center justify-center p-4 ">
+          <div className="flex flex-col mb-20 gap-5 items-center justify-center p-4 ">
             {product.reviews && product.reviews.map((review) =>
               <ReviewCard review={review} />
             )}

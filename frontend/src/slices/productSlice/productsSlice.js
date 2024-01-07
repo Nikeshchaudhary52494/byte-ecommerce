@@ -11,7 +11,15 @@ const productSlice = createSlice({
         productreviewsData: [],
         error: null,
     },
-    reducers: {},
+    reducers: {
+        resetError: (state, action) => {
+            state.status = STATUSES.IDLE;
+            state.error = null
+        },
+        resetIsReviewAdded: (state, action) => {
+            state.isReviewAdded = null;
+        }
+    },
     extraReducers: (builder) => {
         builder
             .addCase(fetchProducts.pending, (state, action) => {
@@ -34,6 +42,16 @@ const productSlice = createSlice({
             .addCase(getProductDetails.rejected, (state, action) => {
                 state.status = STATUSES.ERROR;
             })
+            .addCase(updatedProductStock.pending, (state, action) => {
+                state.status = STATUSES.LOADING;
+            })
+            .addCase(updatedProductStock.fulfilled, (state, action) => {
+                state.productDetails = action.payload;
+                state.status = STATUSES.IDLE;
+            })
+            .addCase(updatedProductStock.rejected, (state, action) => {
+                state.status = STATUSES.ERROR;
+            })
             .addCase(getProductReviews.pending, (state, action) => {
                 state.status = STATUSES.LOADING;
             })
@@ -48,7 +66,6 @@ const productSlice = createSlice({
                 state.status = STATUSES.LOADING;
             }).addCase(addReview.fulfilled, (state, action) => {
                 state.isReviewAdded = true;
-                state.error = null;
                 state.status = STATUSES.IDLE;
             })
             .addCase(addReview.rejected, (state, action) => {
@@ -84,6 +101,10 @@ export const getProductDetails = createAsyncThunk('productDetails/fetch', async 
         throw error.response.data;
     }
 });
+export const updatedProductStock = createAsyncThunk('products/updateproductstock', async ({ newStock, productId }) => {
+    const response = await axios.put(`/api/v1/product/updatestock/${productId}`, { newStock });
+    return response.data.product;
+})
 export const getProductReviews = createAsyncThunk('products/getProductsreviews', async ({ productId }) => {
     try {
         const response = await axios.get(`/api/v1/reviews?productId=${productId}`);
@@ -121,3 +142,4 @@ export const addReview = createAsyncThunk(
         }
     }
 );
+export const { resetError, resetIsReviewAdded } = productSlice.actions;
