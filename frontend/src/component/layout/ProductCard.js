@@ -4,7 +4,7 @@ import ReactStarts from "react-rating-stars-component";
 
 
 const ProductCard = ({ product }) => {
-  
+
   const options = {
     edit: false,
     color: "rgba(20,20,20,0.1)",
@@ -15,20 +15,17 @@ const ProductCard = ({ product }) => {
   };
 
   return (
-    <Link
-      to={`/product/${product._id}`}
-      class="flex flex-col hover:-translate-y-1 duration-500 shadow-md m-4 "
-    >
-      <div class="w-[250px] p-4 h-[400px]">
-        <p class="h-3/4">
-          <img src={product.images[0].url} alt={product.name} />
-        </p>
-        <p class="font-medium text-xl">{product.name}</p>
-        <div class="flex items-center gap-2">
-          <ReactStarts {...options} />
-          <span>{product.numberOfReviews}</span>
+    <Link to={`/product/${product._id}`} >
+      <div className="w-[250px] p-4 flex justify-between flex-col hover:-translate-y-1 duration-500 shadow-md m-4 h-[400px]">
+        <img className="max-h-[270px] object-cover" src={product.images[0].url} alt={product.name} />
+        <div>
+          <p className="font-medium text-xl">{product.name}</p>
+          <div className="flex items-center gap-2">
+            <ReactStarts {...options} />
+            <span>{product.numberOfReviews}</span>
+          </div>
+          <span className="text-orange-500 font-bold">{`$${product.price}`}</span>
         </div>
-        <span class="text-orange-500 font-bold">{`$${product.price}`}</span>
       </div>
     </Link>
   );

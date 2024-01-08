@@ -1,37 +1,48 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from "framer-motion";
-import { useDispatch } from 'react-redux';
-import { createProduct, getAdminProducts } from '../../../slices/adminSlice/adminSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { createProduct, getAdminProducts, resetIsProductAdded } from '../../../slices/adminSlice/adminSlice';
 import { useNavigate } from 'react-router-dom';
+import { STATUSES } from '../../../store/statuses';
+import Loader from '../../layout/Loader/Loader';
+import { toast } from 'react-toastify';
 const AddProductForm = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    const { status, isProductAdded } = useSelector((state) => state.admin)
+
     const [formData, setFormData] = useState({
         name: '',
         description: '',
-        price: 0,
-        category: '',
-        stock: 1,
+        price: null,
+        category: null,
+        stock: null,
+        itemCondition: null,
     });
-    const [image, setImage] = useState(null);
-    const [productPreview, setProductPreview] = useState("https://ov12-engine.flamingtext.com/netfu/tmp28014/coollogo_com-3966664.png");
+    const [images, setImages] = useState();
+    const [imagesPreview, setImagesPreview] = useState([]);
     const handleInputChange = (e) => {
         setFormData({
             ...formData,
             [e.target.name]: e.target.value,
         });
     };
-    const handleImageChange = (e) => {
-        const reader = new FileReader();
-
-        reader.onload = () => {
-            if (reader.readyState === 2) {
-                setProductPreview(reader.result);
-                setImage(e.target.files[0]);
-            }
-        };
-        reader.readAsDataURL(e.target.files[0]);
-    };
+    const categories = [
+        "Laptop",
+        "Phone",
+        "Watches",
+        "Fashion",
+        "Households",
+        "Sound",
+        "Toys",
+        "Furniture",
+        "Books"
+    ];
+    const itemCondition = [
+        "New",
+        "Renewed"
+    ]
     const handleSubmit = async (e) => {
         e.preventDefault();
         const productData = new FormData();
@@ -40,24 +51,54 @@ const AddProductForm = () => {
         productData.append('price', formData.price);
         productData.append('category', formData.category);
         productData.append('stock', formData.stock);
-        productData.append('image', image);
-        dispatch(createProduct({ productData })).then(() => {
-            dispatch(getAdminProducts())
-            navigate("/admin/manageproduct");
-        })
+        productData.append('itemCondition', formData.itemCondition);
+        for (const image of images) {
+            productData.append('images', image);
+        }
+        dispatch(createProduct(productData));
+    };
+    const createProductImagesChange = (e) => {
+        const files = Array.from(e.target.files);
+        setImages(files);
+        setImagesPreview([]);
+        files.forEach((file) => {
+            const reader = new FileReader();
+            reader.onload = () => {
+                if (reader.readyState === 2) {
+                    setImagesPreview((old) => [...old, reader.result]);
+                }
+            };
+            reader.readAsDataURL(file);
+        });
     };
 
+    useEffect(() => {
+        if (isProductAdded) {
+            toast.success("New Product Added");
+            dispatch(resetIsProductAdded());
+            dispatch(getAdminProducts());
+            navigate("/admin/manageproduct");
+        }
+    })
+
+    if (status === STATUSES.LOADING) {
+        return <div className="w-full grid place-content-center h-[80vh] ">
+            <Loader />
+        </div>
+
+    }
+
     return (
-        <div className="grid bg-slate-900 h-[100vh] fixed z-20 top-0 left-0 w-[100vw] place-content-center">
-            <div className="bg-slate-800 p-10 rounded-lg text-white">
+        <div className="flex overflow-auto bg-slate-900 h-screen fixed z-20 top-0 left-0 w-screen items-center justify-center">
+            <div className="bg-slate-800 p-5 rounded-sm text-white border">
                 <h3 className="text-xl mb-4 text-cyan-500 font-bold">Add Product</h3>
                 <form
-                    className="flex gap-4 text-black flex-col"
+                    className="flex gap-3  text-black flex-col"
                     onSubmit={handleSubmit}
                 >
                     <input
                         required
-                        className="w-[300px] outline-none p-2 rounded-md"
+                        className="w-[300px] outline-none p-2 rounded-sm"
                         type="text"
                         name="name"
                         placeholder="Name"
@@ -66,7 +107,7 @@ const AddProductForm = () => {
                     />
                     <textarea
                         required
-                        className="w-[300px] outline-none p-2 rounded-md"
+                        className="w-[300px] outline-none p-2 rounded-sm"
                         name="description"
                         placeholder="Description"
                         value={formData.description}
@@ -74,58 +115,67 @@ const AddProductForm = () => {
                     />
                     <input
                         required
-                        className="w-[300px] outline-none p-2  rounded-md"
+                        className="w-[300px] outline-none p-2  rounded-sm"
                         type="number"
                         name="price"
                         placeholder="Price"
                         value={formData.price}
                         onChange={handleInputChange}
                     />
-                    <input
-                        required
-                        className="w-[300px] outline-none p-2  rounded-md"
-                        type="text"
-                        name="category"
-                        placeholder="Category"
-                        value={formData.category}
+                    <select className='p-2 rounded-sm outline-none'
                         onChange={handleInputChange}
-                    />
+                        required
+                        name='category'>
+                        <option value="">Choose Category</option>
+                        {categories.map((category) => (
+                            <option key={category} value={category}>
+                                {category}
+                            </option>
+                        ))}
+                    </select>
+                    <select className='p-2 rounded-sm outline-none'
+                        onChange={handleInputChange}
+                        required
+                        name='itemCondition'>
+                        <option value="">Item Condition</option>
+                        {itemCondition.map((condition) => (
+                            <option key={condition} value={condition}>
+                                {condition}
+                            </option>
+                        ))}
+                    </select>
                     <input
                         required
-                        className="w-[300px] outline-none p-2  rounded-md"
+                        className="w-[300px] outline-none p-2  rounded-sm"
                         type="number"
                         name="stock"
                         placeholder="Stock"
                         value={formData.stock}
                         onChange={handleInputChange}
                     />
-                    <div className='flex justify-between border rounded-md bg-slate-700 p-2 items-center'>
-
-                        <div className='w-14 h-14 rounded-full overflow-hidden'>
-                            <img className='object-cover w-full h-full'
-                                src={productPreview}
-                                alt="Product" />
-                        </div>
-                        <label for="fileInput" class="cursor-pointer bg-blue-500 
-text-white py-2 px-4  rounded-md">
-                            <span class="hidden md:inline">Choose File</span>
-                            <span class="md:hidden">Upload</span>
-                        </label>
-                        <input
-                            required
-                            id='fileInput'
-                            className='hidden '
-                            type="file"
-                            name="image"
-                            accept="image/*"
-                            onChange={handleImageChange} />
+                    <label className='bg-blue-500 p-2 rounded-sm' htmlFor="fileInput">
+                        Choose Images
+                    </label>
+                    <input
+                        id='fileInput'
+                        className='hidden'
+                        required
+                        type="file"
+                        name="images"
+                        accept="image/*"
+                        multiple
+                        onChange={createProductImagesChange}
+                    />
+                    <div className='border overflow-x-scroll h-16 flex gap-1 items-center px-1 rounded-sm bg-slate-700 w-[300px]'>
+                        {imagesPreview.map((image, index) => (
+                            <img className='h-14 w-14 object-cover' key={index} src={image} alt="Product Preview" />
+                        ))}
                     </div>
                     <motion.input
                         type="submit"
                         whileTap={{ scale: 0.9 }}
-                        whileHover={{ scale: 1.1 }}
                         transition={{ duration: 0.5 }}
-                        className="w-[300px]  h-[40px] hover:bg-teal-700 bg-teal-600 rounded-lg"
+                        className="w-[300px]  p-2 text-white hover:bg-teal-700 bg-teal-600 rounded-sm"
                     />
                 </form>
             </div>

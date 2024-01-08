@@ -6,18 +6,22 @@ const cloudinary = require("cloudinary")
 
 // create product -- Admin
 exports.createProduct = catchAsyncErrors(async (req, res, next) => {
-  const image = req.files.image;
-  const imageUri = getDataUri(image);
-  const myCloud = await cloudinary.uploader.upload(imageUri.content);
-  const productData = {
-    ...req.body,
-    images: [{
+  const uploadedFiles = req.files.images;
+  const fileArray = Array.isArray(uploadedFiles) ? uploadedFiles : [uploadedFiles];
+  const uploadedImages = [];
+  for (const file of fileArray) {
+    const fileUri = getDataUri(file);
+    const myCloud = await cloudinary.uploader.upload(fileUri.content, { folder: 'uploads' });
+    uploadedImages.push({
       public_id: myCloud.public_id,
       url: myCloud.url,
-    }],
+    });
+  }
+  const productData = {
+    ...req.body,
+    images: uploadedImages,
     user: req.user.id,
   };
-
   const product = await Product.create(productData);
   res.status(201).json({
     success: true,

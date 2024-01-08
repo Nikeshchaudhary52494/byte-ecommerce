@@ -8,7 +8,11 @@ const adminSlice = createSlice({
         productsData: [],
         status: STATUSES.IDLE,
     },
-    reducers: {},
+    reducers: {
+        resetIsProductAdded: (state, acion) => {
+            state.isProductAdded = null;
+        }
+    },
     extraReducers: (builder) => {
         builder
             .addCase(getAllUsers.pending, (state, action) => {
@@ -30,6 +34,17 @@ const adminSlice = createSlice({
                 state.productsData = action.payload;
             })
             .addCase(getAdminProducts.rejected, (state, action) => {
+                state.status = STATUSES.ERROR;
+                state.error = action.error.message;
+            })
+            .addCase(createProduct.pending, (state, action) => {
+                state.status = STATUSES.LOADING;
+            })
+            .addCase(createProduct.fulfilled, (state, action) => {
+                state.status = STATUSES.IDLE;
+                state.isProductAdded = true;
+            })
+            .addCase(createProduct.rejected, (state, action) => {
                 state.status = STATUSES.ERROR;
                 state.error = action.error.message;
             })
@@ -58,7 +73,7 @@ export const updateUserRole = createAsyncThunk('admin/updateuserrole', async ({ 
         throw error.response.data;
     }
 });
-export const createProduct = createAsyncThunk('admin/createproducts', async ({ productData }) => {
+export const createProduct = createAsyncThunk('admin/createproducts', async (productData) => {
     try {
         await axios.post('/api/v1/admin/product/new', productData);
     } catch (error) {
@@ -74,3 +89,4 @@ export const updatedProduct = createAsyncThunk('admin/updateproduct', async ({ _
     }
 })
 export default adminSlice.reducer;
+export const { resetIsProductAdded } = adminSlice.actions;
