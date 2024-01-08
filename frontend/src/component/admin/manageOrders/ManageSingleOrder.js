@@ -1,31 +1,38 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { getSingleOrder, updateOrderStatus } from '../../../slices/orderSlice/orderSlice';
+import { getSingleOrder } from '../../../slices/orderSlice/orderSlice';
 import { STATUSES } from '../../../store/statuses';
 import Loader from '../../layout/Loader/Loader';
 import SingleOrder from '../../User/SingleOrder';
+import { resetIsOrderStatusUpdated, updateOrderStatus } from '../../../slices/adminSlice/adminSlice';
+import { toast } from 'react-toastify';
 
 const ManageSingleOrder = () => {
     const dispatch = useDispatch();
     const { order, status } = useSelector((state) => state.orders.singleOrderData);
+    const { error, isOrderStatusUpdated } = useSelector((state) => state.admin);
     const { id } = useParams();
 
     const [selectedOrderStatus, setSelectedOrderStatus] = useState(order?.orderStatus || '');
 
     useEffect(() => {
         dispatch(getSingleOrder(id));
-    }, [dispatch, id]);
+        if (isOrderStatusUpdated) {
+            toast.success("Order status updated");
+            dispatch(resetIsOrderStatusUpdated());
+        }
+        if (error) {
+            toast.error(error);
+        }
+    }, [dispatch, id, isOrderStatusUpdated, error]);
 
     const handleOrderStatusChange = (e) => {
         setSelectedOrderStatus(e.target.value);
     };
 
     const handleSubmit = () => {
-        console.log({ id, selectedOrderStatus });
-        dispatch(updateOrderStatus({ id, selectedOrderStatus })).then(() => {
-            dispatch(getSingleOrder(id));
-        });
+        dispatch(updateOrderStatus({ id, selectedOrderStatus }));
     };
 
     if (status === STATUSES.LOADING) {
@@ -34,10 +41,6 @@ const ManageSingleOrder = () => {
                 <Loader />
             </div>
         );
-    }
-
-    if (status === STATUSES.ERROR) {
-        return <h2>Something went wrong!</h2>;
     }
 
     return (

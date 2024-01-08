@@ -94,16 +94,7 @@ export const deleteOrder = createAsyncThunk('orders/deleteOrder', async (orderId
         throw error.response.data;
     }
 })
-export const updateOrderStatus = createAsyncThunk(
-    'order/updateOrderStatus',
-    async ({ id, selectedOrderStatus }) => {
-        try {
-            const response = await axios.put(`/api/v1/admin/order/${id}`, { selectedOrderStatus });
-            return response.data;
-        } catch (error) {
-            throw error.response.data;
-        }
-    });
+
 export const createNewOrder = createAsyncThunk("order/createnewOrder", async ({ orderData }) => {
     try {
         const response = await axios.post(`/api/v1/order/new`, orderData);

@@ -11,6 +11,12 @@ const adminSlice = createSlice({
     reducers: {
         resetIsProductAdded: (state, acion) => {
             state.isProductAdded = null;
+        },
+        resetIsOrderStatusUpdated: (state, action) => {
+            state.isOrderStatusUpdated = null;
+        },
+        resetIsProductUpdated: (state, action) => {
+            state.isProducUpdated = null;
         }
     },
     extraReducers: (builder) => {
@@ -45,6 +51,28 @@ const adminSlice = createSlice({
                 state.isProductAdded = true;
             })
             .addCase(createProduct.rejected, (state, action) => {
+                state.status = STATUSES.ERROR;
+                state.error = action.error.message;
+            })
+            .addCase(updateOrderStatus.pending, (state, action) => {
+                state.status = STATUSES.LOADING;
+            })
+            .addCase(updateOrderStatus.fulfilled, (state, action) => {
+                state.status = STATUSES.IDLE;
+                state.isOrderStatusUpdated = true;
+            })
+            .addCase(updateOrderStatus.rejected, (state, action) => {
+                state.status = STATUSES.ERROR;
+                state.error = action.error.message;
+            })
+            .addCase(updatedProduct.pending, (state, action) => {
+                state.status = STATUSES.LOADING;
+            })
+            .addCase(updatedProduct.fulfilled, (state, action) => {
+                state.status = STATUSES.IDLE;
+                state.isProducUpdated = true;
+            })
+            .addCase(updatedProduct.rejected, (state, action) => {
                 state.status = STATUSES.ERROR;
                 state.error = action.error.message;
             })
@@ -88,5 +116,15 @@ export const updatedProduct = createAsyncThunk('admin/updateproduct', async ({ _
         throw error.response.data;
     }
 })
+export const updateOrderStatus = createAsyncThunk(
+    'order/updateOrderStatus',
+    async ({ id, selectedOrderStatus }) => {
+        try {
+            const response = await axios.put(`/api/v1/admin/order/${id}`, { selectedOrderStatus });
+            return response.data;
+        } catch (error) {
+            throw error.response.data;
+        }
+    });
 export default adminSlice.reducer;
-export const { resetIsProductAdded } = adminSlice.actions;
+export const { resetIsProductAdded, resetIsOrderStatusUpdated, resetIsProductUpdated } = adminSlice.actions;

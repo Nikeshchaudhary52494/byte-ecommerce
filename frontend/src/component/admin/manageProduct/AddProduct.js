@@ -57,7 +57,7 @@ const AddProductForm = () => {
         }
         dispatch(createProduct(productData));
     };
-    const createProductImagesChange = (e) => {
+    const productImagesChange = (e) => {
         const files = Array.from(e.target.files);
         setImages(files);
         setImagesPreview([]);
@@ -164,7 +164,7 @@ const AddProductForm = () => {
                         name="images"
                         accept="image/*"
                         multiple
-                        onChange={createProductImagesChange}
+                        onChange={productImagesChange}
                     />
                     <div className='border overflow-x-scroll h-16 flex gap-1 items-center px-1 rounded-sm bg-slate-700 w-[300px]'>
                         {imagesPreview.map((image, index) => (

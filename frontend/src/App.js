@@ -19,7 +19,7 @@ import ManageSingleUser from "./component/admin/manageUsers/ManageSingleUser.js"
 import ManageSingleOrder from "./component/admin/manageOrders/ManageSingleOrder.js";
 import ManageReviews from "./component/admin/manageReviews/ManageReviews.js";
 import ManageSingleProduct from "./component/admin/manageProduct/ManageSingleProduct.js";
-import EditProduct from "./component/admin/manageProduct/EditProduct.js";
+import EditProduct from "./component/admin/manageProduct/UpdateProduct.js";
 import UpdateUserProfile from "./component/User/UpdateUserProfile.js";
 import ShippingInfo from "./component/Cart/ShippingInfo.js";
 import PaymentSucessfull from "./component/Cart/PaymentSucessfull.js";

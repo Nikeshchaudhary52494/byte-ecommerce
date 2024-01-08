@@ -29,10 +29,6 @@ const Dashbord = () => {
             <Loader />
         </div>
     }
-    if (status === STATUSES.ERROR) {
-        return <h2>Something went wrong!</h2>;
-    }
-
     return (
         <>
             <div className='bg-slate-800 absolute left-0 top-0 w-screen z-10 overflow-y-auto min-h-screen flex flex-col items-center justify-center'>
@@ -41,32 +37,30 @@ const Dashbord = () => {
                     <h4>Dashboard</h4>
                 </div>
                 <div>
-                    <div className='bg-blue-500 mx-5 p-5 rounded-md mt-10 text-center text-white font-bold'>
+                    <div className='bg-blue-500 mx-5 p-5 rounded-sm mt-10 text-center text-white font-bold'>
                         TotalAmount: {data.totalAmount}
                     </div>
-                    <div className='grid grid-cols-1 w-[90vw] md:grid-cols-2 lg:grid-cols-3 mt-2 mb-10 mx-5 max-w-5xl text-white rounded-md bg-slate-700 p-4 gap-2 '>
-                        <Link to="/admin/manageproduct" className='bg-orange-500 p-2 rounded-md text-center text-white font-bold'>
+                    <div className='grid grid-cols-1 w-[90vw] md:grid-cols-2 lg:grid-cols-3 mt-1 mb-10 mx-5 max-w-5xl text-white rounded-sm  gap-1 '>
+                        <Link to="/admin/manageproduct" className='bg-orange-500 p-2 rounded-sm text-center text-white font-bold'>
                             Manage Product
                         </Link>
-                        <Link to="/admin/manageuser" className='bg-green-600 p-2 rounded-md text-center text-white font-bold'>
+                        <Link to="/admin/manageuser" className='bg-green-600 p-2 rounded-sm text-center text-white font-bold'>
                             Manage Users
                         </Link>
-                        <Link to="/admin/manageorder" className='bg-violet-700 p-2 rounded-md text-center text-white font-bold'>
+                        <Link to="/admin/manageorder" className='bg-violet-700 p-2 rounded-sm text-center text-white font-bold'>
                             Manage Order
                         </Link>
-                        <Link to="/admin/managereviews" className='h-28 flex-grow rounded-md text-3xl justify-center flex items-center bg-blue-800 text-white font-bold'>
+                        <Link to="/admin/managereviews" className='h-28 flex-grow rounded-sm text-3xl justify-center flex items-center bg-blue-800 text-white font-bold'>
                             <MdRateReview /> Review
                         </Link>
-                        <div className='h-28 flex-grow rounded-md flex items-center text-3xl font-bold justify-center bg-violet-500'>
+                        <div className='h-28 flex-grow rounded-sm flex items-center text-3xl font-bold justify-center bg-violet-500'>
                             <IoMdCart /> total order : {ordersLength}
                         </div>
-                        <div className='h-28 flex-grow rounded-md flex items-center text-3xl font-bold justify-center bg-fuchsia-500'>
+                        <div className='h-28 flex-grow rounded-sm flex items-center text-3xl font-bold justify-center bg-fuchsia-500'>
                             <FaUser />
                             Total user : {UserCount}
                         </div >
-                        <div className='h-24 hidden md:flex flex-grow rounded-md lg:hidden items-center bg-violet-500'>
-                        </div>
-                        <div className='lg:col-span-3'>
+                        <div className='lg:col-span-3 md:col-span-2'>
                             <Messages />
                         </div>
                     </div>
