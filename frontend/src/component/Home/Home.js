@@ -35,11 +35,6 @@ const Home = () => {
     return <div className="w-full grid place-content-center h-[80vh] ">
       <Loader />
     </div>
-
-  }
-
-  if (status === STATUSES.ERROR) {
-    return <h2>Something went wrong!</h2>;
   }
 
   return (
@@ -51,7 +46,7 @@ const Home = () => {
         <CategoriesList />
       </div>
 
-      <div className=" min-h-screen md:min-h-[85vh]  flex flex-col dark:text-white dark:bg-slate-900 text-2xl justify-center items-center">
+      <div className=" min-h-screen md:min-h-[85vh]  flex flex-col text-white bg-custom-background text-2xl justify-center items-center">
         <p className="font-mono text-xl">Welcome To Byte Ecommerce</p>
         <h2 className="font-bold text-center m-24 text-3xl">
           <Typed

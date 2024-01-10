@@ -5,12 +5,9 @@ import App from "./App";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import { Provider } from "react-redux";
 import store from "./store/store";
-import { fetchProducts } from "./slices/productSlice/productsSlice";
-import { loadUser } from "./slices/userSlice/userSlice";
 import { ToastContainer } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css";
-store.dispatch(fetchProducts());
-store.dispatch(loadUser());
+
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>

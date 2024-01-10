@@ -16,7 +16,7 @@ const adminSlice = createSlice({
             state.isOrderStatusUpdated = null;
         },
         resetIsProductUpdated: (state, action) => {
-            state.isProducUpdated = null;
+            state.isProductUpdated = null;
         }
     },
     extraReducers: (builder) => {
@@ -70,7 +70,7 @@ const adminSlice = createSlice({
             })
             .addCase(updatedProduct.fulfilled, (state, action) => {
                 state.status = STATUSES.IDLE;
-                state.isProducUpdated = true;
+                state.isProductUpdated = true;
             })
             .addCase(updatedProduct.rejected, (state, action) => {
                 state.status = STATUSES.ERROR;

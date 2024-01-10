@@ -112,7 +112,7 @@ export const createNewOrder = createAsyncThunk("order/createnewOrder", async ({ 
 export const myOrders = createAsyncThunk("orders/myorder", async () => {
     try {
         const response = await axios.get(`/api/v1/orders/me`);
-        return response.data
+        return response.data.orders
     } catch (error) {
         throw error.response.data;
     }

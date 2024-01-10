@@ -1,12 +1,11 @@
 import React, { useEffect } from 'react'
 import { Link, useLocation } from "react-router-dom"
 import LoggedInComponenet from './LoginUserCart';
-import { useDispatch, useSelector } from 'react-redux';
-import { getAllCartProducts } from '../../slices/cartSlice/cartSlice';
+import { useSelector } from 'react-redux';
+
 const Cart = () => {
     const { isAuthenticated, user } = useSelector((state) => state.user)
 
-    const dispatch = useDispatch();
     const location = useLocation()
 
     return (

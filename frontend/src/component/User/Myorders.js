@@ -4,22 +4,16 @@ import { useNavigate } from 'react-router-dom';
 import { useTable } from 'react-table';
 import { myOrders } from '../../slices/orderSlice/orderSlice';
 import { FaList } from 'react-icons/fa';
+import { STATUSES } from '../../store/statuses';
+import Loader from '../layout/Loader/Loader';
 
 const Myorders = () => {
-    const { orders } = useSelector((state) => state.orders.myOrders);
-    const data = orders ? orders : [];
+    const { myOrders: data, status } = useSelector((state) => state.orders);
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const handleViewDetails = (orderId) => {
         navigate(`/order/${orderId}`);
     };
-
-    // const handleDeleteClick = (orderId) => {
-    //     console.log(orderId);
-    //     dispatch(deleteOrder(orderId)).then(() => {
-    //         dispatch(getAllOrders());
-    //     });
-    // };
 
     useEffect(() => {
         dispatch(myOrders());
@@ -30,7 +24,7 @@ const Myorders = () => {
         { Header: 'Status', accessor: 'orderStatus' },
         { Header: 'Total Price', accessor: 'totalPrice' },
         {
-            Header: 'Actions',
+            Header: 'Details',
             accessor: 'actions',
             Cell: ({ row }) => (
                 <div className="flex space-x-2">
@@ -52,9 +46,17 @@ const Myorders = () => {
             rows,
             prepareRow,
         } = useTable({ columns, data });
+
+        if (status === STATUSES.LOADING) {
+            return <div className="w-full grid place-content-center bg-slate-900 h-[80vh] ">
+                <Loader />
+            </div>
+        }
+
         return (
             <>
-                <div className="overflow-x-auto">
+                <div className="overflow-x-auto px-20 pb-20  bg-slate-900">
+                    <h3 className='text-white font-bold text-3xl my-5'>My Orders</h3>
                     <table {...getTableProps()} className="min-w-full bg-white border border-gray-200">
                         <thead>
                             {headerGroups.map(headerGroup => (

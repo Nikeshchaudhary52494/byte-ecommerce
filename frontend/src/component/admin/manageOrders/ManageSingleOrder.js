@@ -11,6 +11,7 @@ import { updatedProductStock } from '../../../slices/productSlice/productsSlice'
 
 const ManageSingleOrder = () => {
     const dispatch = useDispatch();
+
     const { singleOrderData: order, status } = useSelector((state) => state.orders);
     const { error, isOrderStatusUpdated } = useSelector((state) => state.admin);
     const { id } = useParams();
@@ -19,36 +20,33 @@ const ManageSingleOrder = () => {
 
     const handleSubmit = () => {
         dispatch(updateOrderStatus({ id, selectedOrderStatus }));
-        console.log(`button clicked and selelted status is ${selectedOrderStatus}`)
         if (selectedOrderStatus === "Shipped") {
             for (const index in order.orderItems) {
-                console.log("hello");
                 const item = order.orderItems[index];
                 const quantityShipped = item.quantity;
-                console.log({ item, quantityShipped });
                 dispatch(updatedProductStock({ quantityShipped, productId: item.productId }));
             }
         }
     };
 
     useEffect(() => {
+        dispatch(getSingleOrder(id));
         if (isOrderStatusUpdated) {
             toast.success("Order status updated");
             dispatch(resetIsOrderStatusUpdated());
-            // dispatch(updatedProductStock())
         }
         if (error) {
             toast.error(error);
         }
-    }, [dispatch, error, isOrderStatusUpdated]);
+    }, [dispatch, error, id, isOrderStatusUpdated]);
 
-    // if (status === STATUSES.LOADING) {
-    //     return (
-    //         <div className="min-h-screen flex items-center justify-center">
-    //             <Loader />
-    //         </div>
-    //     );
-    // }
+    if (status === STATUSES.LOADING) {
+        return (
+            <div className="min-h-screen flex bg-slate-900 items-center justify-center">
+                <Loader />
+            </div>
+        );
+    }
 
     return (
         <div className="min-h-screen bg-slate-900 flex md:flex-row flex-col-reverse">

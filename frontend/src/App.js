@@ -2,7 +2,7 @@ import Layout from "./component/layout/Layout";
 import Home from "./component/Home/Home.js"
 import ProductDetails from "./component/Product/ProductDetails.js"
 import Cart from "./component/Cart/Cart.js"
-import React from "react";
+import React, { useEffect } from "react";
 import Products from "./component/Product/Products.js"
 import CategoriesPage from "./component/Product/CategoryPage.js"
 import Login from "./component/User/Login.js"
@@ -31,9 +31,16 @@ import SingleOrder from "./component/User/SingleOrder.js";
 import VerifyUser from "./component/User/VerifyMessage.js";
 import AboutMe from "./component/aboutUs/AboutMe.js";
 import ContactUs from "./component/contactUs/ContactUs.js";
-
+import PageNotFound from "./component/layout/PageNotFound.js";
+import store from "./store/store.js";
+import { fetchProducts } from "./slices/productSlice/productsSlice.js";
+import { loadUser } from "./slices/userSlice/userSlice.js";
 
 function App() {
+  useEffect(() => {
+    store.dispatch(fetchProducts());
+    store.dispatch(loadUser());
+  }, []);
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
@@ -77,6 +84,7 @@ function App() {
         </Route>
         <Route path="aboutme" element={<AboutMe />} />
         <Route path="contactus" element={<ContactUs />} />
+        <Route path="*" element={<PageNotFound />} />
       </Route>
     </Routes>
   );

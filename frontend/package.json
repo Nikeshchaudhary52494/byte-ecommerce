@@ -31,7 +31,8 @@
     "react-typed": "^1.2.0",
     "recharts": "^2.9.3",
     "tailwindcss": "^3.3.3",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "webfontloader": "^1.6.28"
   },
   "scripts": {
     "start": "react-scripts start",

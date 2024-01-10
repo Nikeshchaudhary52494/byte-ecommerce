@@ -3,8 +3,6 @@ import { motion } from "framer-motion";
 import { useDispatch, useSelector } from 'react-redux';
 import { getAdminProducts, resetIsProductUpdated, updatedProduct } from '../../../slices/adminSlice/adminSlice';
 import { useNavigate } from 'react-router-dom';
-import { STATUSES } from '../../../store/statuses';
-import Loader from '../../layout/Loader/Loader';
 import { toast } from 'react-toastify';
 const UpdateProduct = () => {
     const dispatch = useDispatch();
@@ -93,13 +91,7 @@ const UpdateProduct = () => {
             navigate("/admin/manageproduct");
 
         }
-    }, [productDetails, name, description, price, category, isProductUpdated, itemCondition, dispatch, stock]);
-
-    if (status === STATUSES.LOADING) {
-        return <div className="w-full grid place-content-center h-[80vh] ">
-            <Loader />
-        </div>
-    }
+    }, [productDetails, navigate, name, description, price, category, isProductUpdated, itemCondition, dispatch, stock]);
 
     return (
         <div className="bg-slate-800 p-10 rounded-lg text-white">

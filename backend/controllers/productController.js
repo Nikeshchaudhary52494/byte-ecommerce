@@ -64,7 +64,7 @@ exports.updatedProductStock = catchAsyncErrors(async (req, res, next) => {
       message: "Product not found",
     });
   }
-  product.stock = quantityShipped;
+  product.stock = product.stock - quantityShipped;
   await product.save({ validateBeforeSave: false });
   res.status(200).json({
     success: true,

@@ -4,16 +4,25 @@ import { useParams } from 'react-router-dom';
 import EditProduct from './UpdateProduct';
 import { getProductDetails } from '../../../slices/productSlice/productsSlice';
 import { MdStar } from 'react-icons/md';
+import { STATUSES } from '../../../store/statuses';
+import Loader from '../../layout/Loader/Loader';
 
 const ManageSingleProduct = () => {
     const dispatch = useDispatch();
-    const { productDetails } = useSelector((state) => state.products);
+    const { productDetails, status } = useSelector((state) => state.products);
     const { id } = useParams();
     const { name, price, description, rating, createdAt, category, images, stock } = productDetails;
 
     useEffect(() => {
         dispatch(getProductDetails({ id }));
     }, [dispatch, id]);
+
+    if (status === STATUSES.LOADING) {
+        return <div className="w-full grid place-content-center h-[80vh] ">
+            <Loader />
+        </div>
+    }
+
 
     return (
         <div className='flex min-h-screen flex-col md:flex-row gap-10 bg-slate-900 justify-center p-10'>

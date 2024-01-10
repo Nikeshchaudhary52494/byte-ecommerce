@@ -10,3 +10,27 @@ html {
    width: 0;
    height: 0;
 }
+
+.bg-custom-background {
+   background-image: linear-gradient(rgba(15, 23, 42, 1), rgba(39, 46, 53, 0)), url('../src/component/images/laptopbg.jpg');
+   background-size: cover;
+   background-position: center;
+   height: 100vh;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+
+.spin {
+   animation: spin 5s infinite linear;
+}
+
+@keyframes spin {
+   from {
+      transform: rotate(0deg);
+   }
+
+   to {
+      transform: rotate(360deg);
+   }
+}
