@@ -1,9 +1,10 @@
 import { ImBin } from 'react-icons/im';
+import { useNavigate } from 'react-router-dom';
 
 const CartItemCard = ({ product, removeProductFromCart }) => {
-
+    const navigate = useNavigate();
     return (
-        <div className='flex justify-between px-4 my-2 border bg-slate-800 w-full rounded-md py-2 items-center'>
+        <div onClick={() => navigate(`/product/${product.productId}`)} className='flex justify-between px-4 my-2 border bg-slate-800 w-full rounded-md py-2 items-center'>
             <div className='flex gap-10'>
                 <div className='bg-white p-2 rounded-md'>
                     <img className='h-14' src={product.image} alt='product img' />

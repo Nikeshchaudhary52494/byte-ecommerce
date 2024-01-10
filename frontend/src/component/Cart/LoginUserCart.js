@@ -18,6 +18,12 @@ const LoginUserCart = () => {
     const removeProductFromCart = (productId) => {
         dispatch(removeFromCart({ productId }));
     }
+    const handelCheckout = () => {
+        const storedShippingData = localStorage.getItem('shippingData');
+        if (!storedShippingData)
+            navigate("/cart/checkout");
+        navigate("/cart/shippingInfo");
+    }
 
     useEffect(() => {
         dispatch(getAllCartProducts());
@@ -51,7 +57,7 @@ const LoginUserCart = () => {
                     {data.length > 0 ?
                         <div className='text-right p-5'>
                             <p>Total price: <span className='text-orange-500 font-bold text-xl'>${totalPrice}</span></p>
-                            <button onClick={() => navigate("/cart/checkout")} className='bg-orange-400 p-2'>CheckOut</button>
+                            <button onClick={handelCheckout} className='bg-orange-400 p-2'>CheckOut</button>
                         </div>
                         : <div className='text-center h-44 font-bold'>
                             <p className='italic  text-blue-500'>No Product Added To cart</p>

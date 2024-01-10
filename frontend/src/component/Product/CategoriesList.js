@@ -29,16 +29,19 @@ const CategoriesList = () => {
         categoryName: "Watches"
     },
     {
-        imgAddress: "https://rukminim2.flixcart.com/flap/128/128/image/ab7e2b022a4587dd.jpg?q=100",
+        imgAddress: "https://img.freepik.com/premium-photo/white-leather-sofa-white-background-isolated-3d-illustration_356060-3780.jpg",
         categoryName: "Furnitures"
     },
     {
         imgAddress: "https://rukminim2.flixcart.com/flap/128/128/image/dff3f7adcf3a90c6.png?q=100",
-        categoryName: "Toys"
+        categoryName: "Toys & kids"
     },
     {
-        imgAddress: "https://rukminim2.flixcart.com/image/416/416/xif0q/cycle/t/a/g/hustler-single-speed-26-18-5-cradiac-108-single-speed-original-imagqtzqpmgyejaw.jpeg?q=70",
-        categoryName: "bicylces"
+        imgAddress: "https://www.headphonezone.in/cdn/shop/products/Headphone-Zone-Sony-WH-XB910N-Blue-01.jpg?v=1656404563&width=800",
+        categoryName: "Sound"
+    }, {
+        imgAddress: "https://clipart-library.com/img/1163422.jpg",
+        categoryName: "Books"
     }
     ]
     const handleCategoryClick = (categoryName) => {
@@ -55,7 +58,7 @@ const CategoriesList = () => {
                     whileHover={{ scale: 1.3 }}
                     onClick={() => handleCategoryClick(category.categoryName)}
                     className="w-[100px] mt-1 p-1 bg-white border sm:border-none rounded-lg flex items-center justify-center flex-col h-[100px]" >
-                    <img className="h-[75%]"
+                    <img className="h-[75%] object-cover"
                         src={category.imgAddress}
                         alt={category.categoryName} />
                     <p>{category.categoryName}</p>

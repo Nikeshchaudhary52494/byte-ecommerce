@@ -37,7 +37,7 @@ const AddProductForm = () => {
         "Sound",
         "Toys",
         "Furniture",
-        "Books"
+        "Books",
     ];
     const itemCondition = [
         "New",

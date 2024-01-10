@@ -55,7 +55,7 @@ const Myorders = () => {
 
         return (
             <>
-                <div className="overflow-x-auto px-20 pb-20  bg-slate-900">
+                <div className="overflow-x-auto px-20 pb-20 min-h-screen bg-slate-900">
                     <h3 className='text-white font-bold text-3xl my-5'>My Orders</h3>
                     <table {...getTableProps()} className="min-w-full bg-white border border-gray-200">
                         <thead>

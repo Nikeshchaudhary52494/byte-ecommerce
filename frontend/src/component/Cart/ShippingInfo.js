@@ -1,17 +1,19 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { clearCart, getAllCartProducts } from '../../slices/cartSlice/cartSlice';
+import { clearCart } from '../../slices/cartSlice/cartSlice';
 import { createNewOrder, resetIsOrderCreated } from '../../slices/orderSlice/orderSlice';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { dialogActionsClasses } from '@mui/material';
+
 
 const ShippingInfo = () => {
     const storedShippingData = localStorage.getItem('shippingData');
     const parsedShippingData = JSON.parse(storedShippingData);
+    const { address, country, state, pinCode, phoneNumber } = parsedShippingData;
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { data, status } = useSelector((state) => state.cart);
+    const { data } = useSelector((state) => state.cart);
     const { isOrderCreated } = useSelector((state) => state.orders)
     const handelPay = () => {
         const orderData = {
@@ -40,26 +42,25 @@ const ShippingInfo = () => {
                     <h3 className='text-3xl text-cyan-500 font-bold mb-6'>Shipping Information</h3>
                     <div className='text-xl text-white'>
                         <p className='mb-4'>
-                            <span className='text-cyan-500 font-bold'>Address:</span> <span>{parsedShippingData.address}</span>
+                            <span className='text-cyan-500 font-bold'>Address:</span> <span>{address} | {state} | {country} </span>
                         </p>
                         <p className='mb-4'>
-                            <span className='text-cyan-500 font-bold'>State:</span> <span>{parsedShippingData.state}</span>
+                            <span className='text-cyan-500 font-bold'>Pin Code:</span><span> {pinCode}</span>
                         </p>
                         <p className='mb-4'>
-                            <span className='text-cyan-500 font-bold'>Country:</span><span> {parsedShippingData.country}</span>
-                        </p>
-                        <p className='mb-4'>
-                            <span className='text-cyan-500 font-bold'>Pin Code:</span><span> {parsedShippingData.pinCode}</span>
-                        </p>
-                        <p className='mb-4'>
-                            <span className='text-cyan-500 font-bold'>Phone Number:</span><span> {parsedShippingData.phoneNumber}</span>
+                            <span className='text-cyan-500 font-bold'>Phone Number:</span><span> {phoneNumber}</span>
                         </p>
                     </div>
-                    <div>
+                    <div className='flex justify-between'>
                         <button
                             onClick={handelPay}
                             className='bg-green-500 p-2 active:bg-green-600 w-40 rounded-md'>
                             PAY
+                        </button>
+                        <button
+                            onClick={() => navigate("/cart/checkout")}
+                            className='bg-blue-500 p-2 active:bg-blue-600 w-40 rounded-md'>
+                            Edit
                         </button>
                     </div>
                 </div>

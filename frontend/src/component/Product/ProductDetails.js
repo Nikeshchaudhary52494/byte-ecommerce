@@ -12,6 +12,7 @@ import { toast } from 'react-toastify';
 import { getProductDetails } from "../../slices/productSlice/productsSlice.js";
 const ProductDetails = () => {
 
+  const { isAuthenticated } = useSelector((state) => state.user);
   const { productDetails: product, status } = useSelector((state) => state.products);
   const { user } = useSelector((state) => state.user);
 
@@ -31,6 +32,10 @@ const ProductDetails = () => {
   };
 
   const handelAddToCart = (userId, productId, quantity) => {
+    if (!isAuthenticated) {
+      toast.error("Login to add to cart");
+      return;
+    }
     if (product.stock < 1) {
       toast.error("Item is out of stock");
     } else {
@@ -55,6 +60,24 @@ const ProductDetails = () => {
       setNumberOfProduct((prevCount) => prevCount - 1);
     }
   }
+  const handelAddReview = () => {
+    if (!isAuthenticated) {
+      toast.error("Login to add review");
+      return;
+    }
+    setToggle(!toggle);
+  }
+
+  const handleDoubleClick = () => {
+    navigator.clipboard.writeText(product._id)
+      .then(() => {
+        toast.success(`Product ID ${product._id} copied to clipboard!`);
+      })
+      .catch((err) => {
+        toast.error('Unable to copy to clipboard');
+      });
+  };
+
   useEffect(() => {
     dispatch(getProductDetails({ id: id }));
   }, [dispatch, id]);
@@ -84,7 +107,7 @@ const ProductDetails = () => {
         {/* Details section */}
         <div className=" p-5 scrollbar border shadow-lg  w-3/4 md:w-1/2">
           <h2 className="text-2xl" >{product.name}</h2>
-          <p className="text-sm font-thin text-slate-600 border-b border-slate-400 mb-4 pb-4">#{product._id}</p>
+          <p onDoubleClick={handleDoubleClick} className="text-sm font-thin text-slate-600 border-b border-slate-400 mb-4 pb-4">#{product._id}</p>
           <ReactStars {...options} />
           <p className="border-b border-slate-400 mb-4 pb-4" >({product.numberOfReviews} Reviews)</p>
           <h2 className="text-orange-500 text-3xl font-bold">${product.price} <br /><p className="text-sm font-thin text-slate-600 border-b border-slate-400 mb-4 pb-4" > Including all taxes</p> </h2>
@@ -125,7 +148,7 @@ const ProductDetails = () => {
       <div className=" w-3/4  max-w-3xl flex p-4 lg:px-12  flex-col gap-2 border-y border-dashed mt-32 mb-10 mx-auto items-center justify-between sm:flex-row ">
         <h3 className="text-2xl text-center font-medium " >Reviews</h3>
 
-        <button className="text-white  font-medium w-[200px] h-[40px] bg-blue-200 rounded-lg" onClick={() => setToggle(!toggle)}> Add Review</button>
+        <button className="text-white  font-medium w-[200px] h-[40px] bg-blue-200 rounded-lg" onClick={handelAddReview}> Add Review</button>
         <div className={`inset-0 z-10 fixed flex justify-center items-center bg-black backdrop-filter bg-opacity-50 backdrop-blur-md ${toggle ? `block` : `hidden`}`}>
           <AddReview toggle={toggle} setToggle={setToggle} productId={product._id} />
         </div>

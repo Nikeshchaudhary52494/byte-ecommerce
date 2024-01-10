@@ -2,7 +2,7 @@ import Layout from "./component/layout/Layout";
 import Home from "./component/Home/Home.js"
 import ProductDetails from "./component/Product/ProductDetails.js"
 import Cart from "./component/Cart/Cart.js"
-import React, { useEffect } from "react";
+import React, { Component, useEffect } from "react";
 import Products from "./component/Product/Products.js"
 import CategoriesPage from "./component/Product/CategoryPage.js"
 import Login from "./component/User/Login.js"
@@ -34,7 +34,9 @@ import ContactUs from "./component/contactUs/ContactUs.js";
 import PageNotFound from "./component/layout/PageNotFound.js";
 import store from "./store/store.js";
 import { fetchProducts } from "./slices/productSlice/productsSlice.js";
-import { loadUser } from "./slices/userSlice/userSlice.js";
+import { loadUser, updateUserProfile } from "./slices/userSlice/userSlice.js";
+import ProtectedRoute from "./component/Route/ProtectedRoute.js";
+import ManageUsers from "./component/admin/manageUsers/MangeUsers.js";
 
 function App() {
   useEffect(() => {
@@ -49,8 +51,8 @@ function App() {
         <Route path="product/:id" element={<ProductDetails />} />
         <Route path="cart" >
           <Route index element={<Cart />} />
-          <Route path="checkout" element={<ShippingForm />} />
-          <Route path="shippinginfo" element={<ShippingInfo />} />
+          <Route path="checkout" element={<ProtectedRoute Component={ShippingForm} />} />
+          <Route path="shippinginfo" element={<ProtectedRoute Component={ShippingInfo} />} />
           <Route path="orderplaced" element={<PaymentSucessfull />} />
         </Route>
         <Route path="products/:keyword" element={<Products />} />
@@ -59,31 +61,31 @@ function App() {
         < Route path="user" >
           <Route path="login" element={<Login />} />
           <Route path="signup" element={<SignUp />} />
-          <Route path="profile" element={<UserProfile />} />
-          <Route path="updateprofile" element={<UpdateUserProfile />} />
-          <Route path="updatepassword" element={<UpdatePassword />} />
+          <Route path="profile" element={<ProtectedRoute Component={UserProfile} />} />
+          <Route path="updateprofile" element={<ProtectedRoute Component={updateUserProfile} />} />
+          <Route path="updatepassword" element={<ProtectedRoute Component={UpdatePassword} />} />
           <Route path="password/forget" element={<ForgetPassword />} />
           <Route path="verify" element={<VerifyUser />} />
         </Route>
-        <Route path="myorders" element={<Myorders />} />
-        <Route path="order/:id" element={<SingleOrder />} />
-        <Route path="password/reset/:token" element={<ResetPassword />} />
+        <Route path="myorders" element={<ProtectedRoute Component={Myorders} />} />
+        <Route path="order/:id" element={<ProtectedRoute Component={SingleOrder} />} />
+        <Route path="password/reset/:token" element={<ProtectedRoute Component={ResetPassword} />} />
         <Route path='admin'>
-          <Route path="dashbord" element={<Dashbord />} />
-          <Route path="manageuser" element={<MangeUser />} />
-          <Route path="user/:id" element={<ManageSingleUser />} />
+          <Route path="dashbord" element={<ProtectedRoute Component={Dashbord} adminOnly={true} />} />
+          <Route path="manageuser" element={<ProtectedRoute Component={MangeUser} adminOnly={true} />} />
+          <Route path="user/:id" element={<ProtectedRoute Component={ManageSingleUser} adminOnly={true} />} />
           <Route path="manageproduct">
-            <Route index element={<Manageproduct />} />
-            <Route path="addproduct" element={<AddProduct />} />
-            <Route path="editproduct" element={<EditProduct />} />
+            <Route index element={<ProtectedRoute Component={Manageproduct} adminOnly={true} />} />
+            <Route path="addproduct" element={<ProtectedRoute Component={AddProduct} adminOnly={true} />} />
+            <Route path="editproduct" element={<ProtectedRoute Component={EditProduct} adminOnly={true} />} />
           </Route>
-          <Route path="product/:id" element={<ManageSingleProduct />} />
-          <Route path="manageorder" element={<ManageOrders />} />
-          <Route path="order/:id" element={<ManageSingleOrder />} />
-          <Route path="managereviews" element={<ManageReviews />} />
+          <Route path="product/:id" element={<ProtectedRoute Component={ManageSingleProduct} adminOnly={true} />} />
+          <Route path="manageorder" element={<ProtectedRoute Component={ManageOrders} adminOnly={true} />} />
+          <Route path="order/:id" element={<ProtectedRoute Component={ManageSingleOrder} adminOnly={true} />} />
+          <Route path="managereviews" element={<ProtectedRoute Component={ManageReviews} adminOnly={true} />} />
         </Route>
         <Route path="aboutme" element={<AboutMe />} />
-        <Route path="contactus" element={<ContactUs />} />
+        <Route path="contactus" element={<ProtectedRoute Component={ContactUs} />} />
         <Route path="*" element={<PageNotFound />} />
       </Route>
     </Routes>

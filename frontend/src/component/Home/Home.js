@@ -3,7 +3,6 @@ import { BsMouse } from "react-icons/bs";
 import Typed from "react-typed";
 import MetaData from "../layout/MetaData";
 import Loader from "../layout/Loader/Loader";
-// import { useAlert } from "react-alert";
 import { useDispatch, useSelector } from 'react-redux';
 import { STATUSES } from '../../store/statuses';
 import { fetchProducts } from '../../slices/productSlice/productsSlice';
@@ -11,17 +10,12 @@ import ProductCard from "../layout/ProductCard";
 import CategoriesList from "../Product/CategoriesList";
 import Footer from "../layout/Footer";
 import { useNavigate } from "react-router-dom";
-// import { loadUser } from "../../slices/userSlice/userSlice";
-// import { getAllCartProducts } from "../../slices/cartSlice/cartSlice";
-
-
 
 
 const Home = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // accessing store data using useSelector of products Slice
 
   const { data: products, status } = useSelector((state) => state.products);
 
@@ -42,7 +36,7 @@ const Home = () => {
       <MetaData title="BYTE ECOMMERCE" />
 
       {/* Categories at the Top */}
-      <div className="md:flex gap-5 my-1 p-1 place-content-center hidden" >
+      <div className="md:flex overflow-x-auto gap-5 my-1 p-1 place-content-center hidden" >
         <CategoriesList />
       </div>
 
