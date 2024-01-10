@@ -10,9 +10,10 @@ const cartSlice = createSlice({
     },
     reducers: {
         addShippingData: (state, action) => {
-            console.log(action.payload)
             state.shippingData = { ...action.payload };
-            console.log(state);
+        },
+        resetIsProductRemovedFromCart: (state, action) => {
+            state.isProductRemovedFromCart = null;
         },
     },
     extraReducers: (builder) => {
@@ -47,11 +48,20 @@ const cartSlice = createSlice({
             })
             .addCase(removeFromCart.fulfilled, (state, action) => {
                 state.status = STATUSES.IDLE;
-                state.data = action.payload;
+                state.isProductRemovedFromCart = true;
             })
             .addCase(removeFromCart.rejected, (state, action) => {
                 state.status = STATUSES.ERROR;
                 state.error = action.error.message;
+            })
+            .addCase(clearCart.pending, (state) => {
+                state.status = STATUSES.LOADING;
+            })
+            .addCase(clearCart.fulfilled, (state, action) => {
+                state.status = STATUSES.IDLE;
+            })
+            .addCase(clearCart.rejected, (state, action) => {
+                state.status = STATUSES.ERROR;
             })
     },
 });
@@ -66,7 +76,7 @@ export const addToCart = createAsyncThunk("cart/addToCart", async ({ userId, pro
 export const removeFromCart = createAsyncThunk("cart/removeFromCart", async ({ userId, productId }) => {
     try {
         const response = await axios.delete(`/api/v1/cart/remove/${productId}`, { data: { userId, productId } });
-        return response.data.cart.products;
+        return response.data.cart;
     } catch (error) {
         throw error.response.data;
     }
@@ -74,10 +84,17 @@ export const removeFromCart = createAsyncThunk("cart/removeFromCart", async ({ u
 export const getAllCartProducts = createAsyncThunk("cart/getAllCartProducts", async () => {
     try {
         const response = await axios.get(`/api/v1/cart`);
-        return response.data;
+        return response.data.cart;
     } catch (error) {
         throw error.response.data;
     }
 });
+export const clearCart = createAsyncThunk("cart/clearcart", async () => {
+    try {
+        await axios.delete("/api/v1/cart");
+    } catch (error) {
+        throw error.response.data;
+    }
+})
 export default cartSlice.reducer;
-export const { addShippingData } = cartSlice.actions;
+export const { addShippingData, resetIsProductRemovedFromCart } = cartSlice.actions;

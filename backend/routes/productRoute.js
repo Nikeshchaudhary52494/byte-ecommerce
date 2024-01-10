@@ -31,7 +31,7 @@ router
   .delete(isAuthenticatedUser, authorizeRole("admin"), deleteProduct);
 
 router.route("/product/:id").get(getProduct);
-router.route("/product/updatestock/:id").put(isAuthenticatedUser, updatedProductStock);
+router.route("/product/updatestock").put(isAuthenticatedUser, updatedProductStock);
 router.route("/review").put(isAuthenticatedUser, createProductReview);
 
 router

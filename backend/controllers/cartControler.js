@@ -27,12 +27,24 @@ exports.addProduct = catchAsyncErrors(async (req, res, next) => {
     });
 });
 
+exports.clearCart = catchAsyncErrors(async (req, res, next) => {
+    const userId = req.user._id;
+    const cart = await Cart.findOne({ userId });
+    if (cart) {
+        cart.products = [];
+        await cart.save();
+    }
+    res.status(200).json({
+        success: true,
+        message: 'Cart cleared successfully',
+    });
+});
 
 
 // remove product
 exports.removeProduct = catchAsyncErrors(async (req, res, next) => {
+    userId = req.user._id;
     const {
-        userId,
         productId
     } = req.body;
     const cart = await Cart.findOne({ userId });
@@ -51,7 +63,6 @@ exports.removeProduct = catchAsyncErrors(async (req, res, next) => {
     res.status(200).json({
         success: true,
         message: 'Product removed from the cart successfully',
-        cart,
     });
 });
 // get getCartProducts
@@ -62,16 +73,9 @@ exports.getCartProducts = catchAsyncErrors(async (req, res, next) => {
         if (!cart) {
             return next(new ErrorHandler('Cart not found for the specified user', 404));
         }
-        let totalPrice = 0;
-        cart.products.forEach(cartProduct => {
-            const { productId, quantity } = cartProduct;
-            const { price } = productId;
-            totalPrice += price * quantity;
-        });
         const cartProducts = cart.products.map(cartProduct => {
             const { productId, quantity } = cartProduct;
             const { _id, name, price, images } = productId;
-
             return {
                 productId: _id,
                 name,
@@ -83,8 +87,7 @@ exports.getCartProducts = catchAsyncErrors(async (req, res, next) => {
 
         res.status(200).json({
             success: true,
-            cartProducts: cartProducts,
-            totalPrice: totalPrice
+            cart: cartProducts,
         });
     } catch (error) {
         console.error('Error retrieving cart products:', error);

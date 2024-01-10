@@ -5,9 +5,9 @@ import { getSingleOrder } from '../../slices/orderSlice/orderSlice';
 
 const SingleOrder = () => {
     const dispatch = useDispatch();
-    const { order, status } = useSelector((state) => state.orders.singleOrderData);
-    const { address, pinCode, state, phoneNumber, country } = order?.shippingInfo || {};
-    const paymentStatus = order?.paymentInfo?.status;
+    const { singleOrderData: order } = useSelector((state) => state.orders);
+    const { address, pinCode, state, phoneNumber, country } = order.shippingInfo || {};
+    const paymentStatus = order?.paymentInfo;
     const { orderItems } = order || {};
     const { id } = useParams();
     useEffect(() => {
@@ -15,7 +15,7 @@ const SingleOrder = () => {
     }, [dispatch, id]);
     return (
         <div className='bg-slate-900'>
-            <div className="flex gap-20 flex-col md:w-[70%] text-white p-10 overflow-y-auto">
+            <div className="flex gap-10 flex-col md:w-[70%] text-white p-10 overflow-y-auto">
                 <div>
                     <p className="text-3xl font-bold text-cyan-500">Shipping Info:</p>
                     <p>{`Address: ${address} | ${state} | ${country}`}</p>
@@ -34,10 +34,13 @@ const SingleOrder = () => {
                     <p className="text-3xl font-bold text-cyan-500">Items:</p>
                     {orderItems && orderItems.map((item) => (
                         <div className='flex flex-col lg:flex-row gap-2 lg:gap-10 rounded-md bg-slate-800 p-2 border-2 my-1' key={item.product}>
+                            <img className='w-20 h-20 object-cover' src={item.image} alt="product" />
                             <p className='text-white '>{item.name}</p>
-                            <p className='text-white'>{item.quantity}</p>
+                            {/* <p className='text-white'>{item.quantity}</p> */}
                             <p className='text-white'>{item.product}</p>
-                            <p className='text-white'>{item.price}</p>
+                            <p className='text-white'>
+                                {item.price} * {item.quantity} = {item.price * item.quantity}
+                            </p>
                         </div>
                     ))}
                 </div>

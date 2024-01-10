@@ -54,14 +54,17 @@ exports.getAdminProducts = catchAsyncErrors(async (req, res, next) => {
 });
 
 exports.updatedProductStock = catchAsyncErrors(async (req, res, next) => {
-  let product = await Product.findById(req.params.id);
+  console.log(`this is body content${req.body}`)
+  const { quantityShipped, productId } = req.body;
+  console.log({ quantityShipped, productId });
+  let product = await Product.findById(productId);
   if (!product) {
     return res.status(500).json({
       success: false,
       message: "Product not found",
     });
   }
-  product.stock = req.body.newStock;
+  product.stock = quantityShipped;
   await product.save({ validateBeforeSave: false });
   res.status(200).json({
     success: true,
@@ -86,6 +89,7 @@ exports.updateProduct = catchAsyncErrors(async (req, res, next) => {
     }
     req.body.images = uploadedImages;
   }
+  console.log(req.params.id);
   let product = await Product.findById(req.params.id);
   if (!product) {
     return res.status(500).json({

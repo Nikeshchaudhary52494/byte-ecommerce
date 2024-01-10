@@ -9,7 +9,7 @@ import ReactStars from "react-rating-stars-component"
 import ReviewCard from "./review/ReviewCard.js"
 import AddReview from "./review/AddReview.js";
 import { toast } from 'react-toastify';
-import { getProductDetails, updatedProductStock } from "../../slices/productSlice/productsSlice.js";
+import { getProductDetails } from "../../slices/productSlice/productsSlice.js";
 const ProductDetails = () => {
 
   const { productDetails: product, status } = useSelector((state) => state.products);
@@ -30,18 +30,31 @@ const ProductDetails = () => {
     isHalf: true,
   };
 
-  const newStock = product.stock - numberOfProduct;
   const handelAddToCart = (userId, productId, quantity) => {
     if (product.stock < 1) {
       toast.error("Item is out of stock");
     } else {
       toast.success("Product added to cart");
       dispatch(addToCart({ userId, productId, quantity }));
-      dispatch(updatedProductStock({ productId, newStock }));
       setNumberOfProduct(1);
     }
   }
-
+  const handelCountIncrease = () => {
+    if (numberOfProduct < product.stock) {
+      if (numberOfProduct < 4) {
+        setNumberOfProduct((prevCount) => prevCount + 1);
+      } else {
+        toast.error("only 4 product can be added");
+      }
+    }
+    else
+      toast.error("No more items left");
+  }
+  const handelCountDecrease = () => {
+    if (numberOfProduct > 1) {
+      setNumberOfProduct((prevCount) => prevCount - 1);
+    }
+  }
   useEffect(() => {
     dispatch(getProductDetails({ id: id }));
   }, [dispatch, id]);
@@ -81,11 +94,7 @@ const ProductDetails = () => {
             <div className="flex items-center ">
               <button
                 className="p-4 w-5 h-[40px] grid place-content-center active:bg-slate-500 bg-slate-400 rounded-l-lg "
-                onClick={() => {
-                  if (numberOfProduct > 1) {
-                    setNumberOfProduct((prevCount) => prevCount - 1);
-                  }
-                }}
+                onClick={handelCountDecrease}
               >-</button>
               <input
                 className="border-y-2 h-[40px] text-center w-24 border-slate-400 outline-none  "
@@ -94,12 +103,7 @@ const ProductDetails = () => {
               />
               <button
                 className="p-4 w-5 h-[40px] active:bg-slate-500 bg-slate-400 rounded-r-lg grid place-content-center "
-                onClick={() => {
-                  if (numberOfProduct < product.stock)
-                    setNumberOfProduct((prevCount) => prevCount + 1);
-                  else
-                    toast.error("No more items left");
-                }}
+                onClick={handelCountIncrease}
               >+</button>
             </div>
             <button

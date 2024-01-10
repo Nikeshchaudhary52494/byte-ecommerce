@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllCartProducts } from '../../slices/cartSlice/cartSlice';
-import { createNewOrder } from '../../slices/orderSlice/orderSlice';
+import { clearCart, getAllCartProducts } from '../../slices/cartSlice/cartSlice';
+import { createNewOrder, resetIsOrderCreated } from '../../slices/orderSlice/orderSlice';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { dialogActionsClasses } from '@mui/material';
 
 const ShippingInfo = () => {
     const storedShippingData = localStorage.getItem('shippingData');
@@ -10,23 +12,27 @@ const ShippingInfo = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { data, status } = useSelector((state) => state.cart);
+    const { isOrderCreated } = useSelector((state) => state.orders)
     const handelPay = () => {
         const orderData = {
             shippingInfo: parsedShippingData,
-            orderItems: data.cartProducts,
+            orderItems: data,
             paymentInfo: "complate",
             itemsPrice: data?.totalPrice,
             shippingPrice: 5,
             totalPrice: data?.totalPrice + 5,
         }
         console.log({ orderData });
-        dispatch(createNewOrder({ orderData })).then(() => {
-            navigate("/cart/orderplaced");
-        })
+        dispatch(createNewOrder({ orderData }));
     }
     useEffect(() => {
-        dispatch(getAllCartProducts());
-    }, [dispatch])
+        if (isOrderCreated) {
+            dispatch(resetIsOrderCreated());
+            dispatch(clearCart());
+            navigate("/cart/orderplaced");
+            toast.success("Order placed");
+        }
+    }, [dispatch, isOrderCreated, navigate])
     return (
         <>
             <div className='inset-0 fixed top-0 z-10 justify-center pt-20 px-10 bg-slate-900'>

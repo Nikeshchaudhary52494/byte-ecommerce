@@ -9,11 +9,6 @@ const Cart = () => {
     const dispatch = useDispatch();
     const location = useLocation()
 
-    useEffect(() => {
-        if (isAuthenticated === true)
-            dispatch(getAllCartProducts(user._id));
-    })
-
     return (
         <>
             {isAuthenticated ? (

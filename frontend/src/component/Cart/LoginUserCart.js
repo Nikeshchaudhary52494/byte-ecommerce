@@ -1,20 +1,32 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllCartProducts } from '../../slices/cartSlice/cartSlice';
+import { getAllCartProducts, removeFromCart, resetIsProductRemovedFromCart } from '../../slices/cartSlice/cartSlice';
 import CartItemCard from './CartItemCard';
 import { Link, useNavigate } from 'react-router-dom';
 import { STATUSES } from '../../store/statuses';
 import Loader from '../layout/Loader/Loader';
+import { toast } from 'react-toastify';
 
 const LoginUserCart = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { data, status } = useSelector((state) => state.cart);
-    const { cartProducts, totalPrice } = data;
+
+    const { data, status, isProductRemovedFromCart } = useSelector((state) => state.cart);
+
+    const totalPrice = data.reduce((acc, product) => acc + product.price, 0);
+
+    const removeProductFromCart = (productId) => {
+        dispatch(removeFromCart({ productId }));
+    }
 
     useEffect(() => {
         dispatch(getAllCartProducts());
-    }, [dispatch]);
+        if (isProductRemovedFromCart) {
+            toast.success("Product removed");
+            dispatch(resetIsProductRemovedFromCart());
+        }
+    }, [dispatch, isProductRemovedFromCart]);
+
     if (status === STATUSES.LOADING) {
         return <div className="w-full grid place-content-center h-[80vh] ">
             <Loader />
@@ -22,25 +34,21 @@ const LoginUserCart = () => {
 
     }
 
-    if (status === STATUSES.ERROR) {
-        return <h2>Something went wrong!</h2>;
-    }
-
     return (
         <>
             <div className='flex items-start justify-center border-t border-slate-700 bg-slate-800 min-h-screen text-white'>
-                <div className='max-w-[70%] p-2 mt-14 w-full rounded-md bg-slate-700 bg-opacity-20'>
+                <div className='md:max-w-[70%] max-w-[90%] p-2 mt-14 w-full rounded-md bg-slate-700 bg-opacity-20'>
                     <div className='h-24 p-2 text-3xl font-bold rounded-md'>
                         <h4>Shopping Cart</h4>
                     </div>
                     <div className='flex flex-col justify-center items-center my-2 min-h-44 rounded-md p-5'>
                         {
-                            cartProducts?.map((product) => (
-                                <CartItemCard key={product.productId} product={product} />
+                            data.map((product) => (
+                                < CartItemCard key={product.productId} product={product} removeProductFromCart={removeProductFromCart} />
                             ))
                         }
                     </div>
-                    {totalPrice > 0 ?
+                    {data.length > 0 ?
                         <div className='text-right p-5'>
                             <p>Total price: <span className='text-orange-500 font-bold text-xl'>${totalPrice}</span></p>
                             <button onClick={() => navigate("/cart/checkout")} className='bg-orange-400 p-2'>CheckOut</button>

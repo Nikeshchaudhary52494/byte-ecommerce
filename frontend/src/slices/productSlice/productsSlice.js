@@ -52,7 +52,6 @@ const productSlice = createSlice({
                 state.status = STATUSES.LOADING;
             })
             .addCase(updatedProductStock.fulfilled, (state, action) => {
-                state.productDetails = action.payload;
                 state.status = STATUSES.IDLE;
             })
             .addCase(updatedProductStock.rejected, (state, action) => {
@@ -115,9 +114,9 @@ export const getProductDetails = createAsyncThunk('productDetails/fetch', async 
         throw error.response.data;
     }
 });
-export const updatedProductStock = createAsyncThunk('products/updateproductstock', async ({ newStock, productId }) => {
-    const response = await axios.put(`/api/v1/product/updatestock/${productId}`, { newStock });
-    return response.data.product;
+export const updatedProductStock = createAsyncThunk('products/updateproductstock', async ({ quantityShipped, productId }) => {
+    console.log({ quantityShipped, productId })
+    const response = await axios.put(`/api/v1/product/updatestock`, { quantityShipped, productId });
 })
 export const getProductReviews = createAsyncThunk('products/getProductsreviews', async ({ productId }) => {
     try {

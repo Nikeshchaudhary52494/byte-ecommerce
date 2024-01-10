@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { STATUSES } from "../../store/statuses";
 import axios from "axios";
+import cartSlice from "../cartSlice/cartSlice";
 
 const orderSlice = createSlice({
     name: "orders",
@@ -10,7 +11,11 @@ const orderSlice = createSlice({
         myOrders: [],
         singleOrderData: []
     },
-    reducers: {},
+    reducers: {
+        resetIsOrderCreated: (state, action) => {
+            state.isOrderCreated = null;
+        }
+    },
     extraReducers: (builder) => {
         builder
             .addCase(getAllOrders.pending, (state, action) => {
@@ -51,6 +56,7 @@ const orderSlice = createSlice({
             .addCase(createNewOrder.fulfilled, (state, action) => {
                 state.status = STATUSES.IDLE;
                 state.singleOrderData = action.payload;
+                state.isOrderCreated = true;
             })
             .addCase(createNewOrder.rejected, (state, action) => {
                 state.status = STATUSES.ERROR;
@@ -71,17 +77,17 @@ const orderSlice = createSlice({
 })
 export const getAllOrders = createAsyncThunk('order/getAllOrders', async () => {
     try {
-        const response = await axios.get("/api/v1/admin/orders");
-        return response.data;
+        const { data } = await axios.get("/api/v1/admin/orders");
+        console.log(data);
+        return data;
     } catch (error) {
-        console.log(error);
         throw error.response.data;
     }
 });
 export const getSingleOrder = createAsyncThunk('orders/getSingleOrder', async (orderId) => {
     try {
         const response = await axios.get(`/api/v1/order/${orderId}`);
-        return response.data
+        return response.data.order
     } catch (error) {
         throw error.response.data;
     }
@@ -112,3 +118,4 @@ export const myOrders = createAsyncThunk("orders/myorder", async () => {
     }
 })
 export default orderSlice.reducer;
+export const { resetIsOrderCreated } = orderSlice.actions;
