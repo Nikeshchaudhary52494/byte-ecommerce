@@ -57,8 +57,8 @@ const CategoriesList = () => {
                     key={category.categoryName}
                     whileHover={{ scale: 1.3 }}
                     onClick={() => handleCategoryClick(category.categoryName)}
-                    className="w-[100px] mt-1 p-1 bg-white border sm:border-none rounded-lg flex items-center justify-center flex-col h-[100px]" >
-                    <img className="h-[75%] object-cover"
+                    className="w-[100px] mt-1 p-1 shadow-lg cursor-pointer bg-white border sm:border-none rounded-lg flex items-center justify-center flex-col h-[100px]" >
+                    <img className="h-[75%]"
                         src={category.imgAddress}
                         alt={category.categoryName} />
                     <p>{category.categoryName}</p>

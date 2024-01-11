@@ -165,6 +165,7 @@ const UpdateProduct = () => {
                     className="w-[300px] hidden outline-none p-2  rounded-md"
                     type="file"
                     name="image"
+                    multiple
                     accept="image/*"
                     onChange={productImagesChange}
                 />

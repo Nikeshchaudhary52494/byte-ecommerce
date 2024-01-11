@@ -62,7 +62,7 @@ function App() {
           <Route path="login" element={<Login />} />
           <Route path="signup" element={<SignUp />} />
           <Route path="profile" element={<ProtectedRoute Component={UserProfile} />} />
-          <Route path="updateprofile" element={<ProtectedRoute Component={updateUserProfile} />} />
+          <Route path="updateprofile" element={<ProtectedRoute Component={UpdateUserProfile} />} />
           <Route path="updatepassword" element={<ProtectedRoute Component={UpdatePassword} />} />
           <Route path="password/forget" element={<ForgetPassword />} />
           <Route path="verify" element={<VerifyUser />} />

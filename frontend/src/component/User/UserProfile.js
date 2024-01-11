@@ -31,9 +31,7 @@ const UserProfile = () => {
             </div>
         )
     }
-    if (status === STATUSES.ERROR) {
-        return <h2>Something went wrong!</h2>;
-    }
+
     return (
         <div>
             <>
@@ -62,6 +60,7 @@ const UserProfile = () => {
                         <div className=' w-[80%] flex justify-between flex-row-reverse gap-10 max-w-lg '>
                             <button onClick={() => {
                                 dispatch(logoutUser());
+                                localStorage.removeItem('shippingData');
                             }}
                                 className='flex items-center my-2 gap-2 p-2 bg-red-400 rounded-md'>Logout <MdLogout /></button>
                             <button
