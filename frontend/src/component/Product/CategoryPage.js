@@ -4,7 +4,7 @@ import CategoriesList from './CategoriesList'
 const CategoryPage = () => {
     return (
         <>
-            <div className='grid place-content-center w-[70%] mx-auto my-5 grid-cols-3 sm:grid-cols-4'> 
+            <div className='flex flex-wrap px-5 justify-center mt-10 gap-2'>
                 <CategoriesList />
             </div>
         </>

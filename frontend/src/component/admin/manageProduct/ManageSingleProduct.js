@@ -1,14 +1,17 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import EditProduct from './UpdateProduct';
 import { getProductDetails } from '../../../slices/productSlice/productsSlice';
 import { MdStar } from 'react-icons/md';
 import { STATUSES } from '../../../store/statuses';
 import Loader from '../../layout/Loader/Loader';
+import BackButton from '../../layout/BackButton';
 
 const ManageSingleProduct = () => {
     const dispatch = useDispatch();
+    const location = useLocation();
+
     const { productDetails, status } = useSelector((state) => state.products);
     const { id } = useParams();
     const { name, price, description, rating, createdAt, category, images, stock } = productDetails;

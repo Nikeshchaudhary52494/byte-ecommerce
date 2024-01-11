@@ -4,6 +4,7 @@ import { resetError, resetIspasswordUpdated, updatepassword } from '../../slices
 import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { FaArrowLeft } from "react-icons/fa";
+import BackButton from '../layout/BackButton';
 
 const UpdatePassword = () => {
     const dispatch = useDispatch();
@@ -44,11 +45,7 @@ const UpdatePassword = () => {
 
     return (
         <div className='flex bg-slate-900 overflow-auto h-screen fixed z-10 top-0 left-0 w-screen justify-center items-center'>
-            <button
-                onClick={() => navigate(location.state)}
-                className='text-white fixed top-10 left-5 hidden sm:block text-xl pl-5'>
-                <FaArrowLeft />
-            </button>
+            <BackButton locationState={location.state} />
             <div className="bg-slate-800 px-5 py-10 rounded-lg">
                 <h3 className="text-xl mb-4 text-cyan-500 font-bold">Update Password</h3>
                 <form className='flex gap-4 text-black flex-col' onSubmit={handleSubmit}>

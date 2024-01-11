@@ -22,7 +22,8 @@ const LoginUserCart = () => {
         const storedShippingData = localStorage.getItem('shippingData');
         if (!storedShippingData)
             navigate("/cart/checkout");
-        navigate("/cart/shippingInfo");
+        else
+            navigate("/cart/shippingInfo");
     }
 
     useEffect(() => {

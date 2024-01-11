@@ -28,6 +28,15 @@ export const registerUser = createAsyncThunk("user/register", async (userData) =
   }
 });
 
+export const verifyUser = createAsyncThunk("user/verify", async ({ token }) => {
+  try {
+    const response = await axios.get(`/api/v1/verify/${token}`);
+    return response.data.user;
+  } catch (error) {
+    throw error.response.data;
+  }
+})
+
 export const loginUser = createAsyncThunk("user/login", async (userData) => {
   try {
     const response = await axios.post("/api/v1/login", userData);
@@ -84,6 +93,9 @@ const userSlice = createSlice({
     },
     resetIsVerificationEmailSend: (state, action) => {
       state.isVerificationEmailSend = null;
+    },
+    resetIsVerified: (state, action) => {
+      state.isVerified = null;
     }
   },
   extraReducers: (builder) => {
@@ -96,6 +108,17 @@ const userSlice = createSlice({
       .addCase(registerUser.rejected, (state, action) => {
         state.error = action.error.message;
         state.status = STATUSES.ERROR
+      })
+      .addCase(verifyUser.pending, setLoadingState)
+      .addCase(verifyUser.fulfilled, (state, action) => {
+        state.isVerified = true;
+        state.user = action.payload;
+        state.isAuthenticated = true;
+        state.status = STATUSES.IDLE;
+      })
+      .addCase(verifyUser.rejected, (state, action) => {
+        state.error = action.error;
+        state.status = STATUSES.ERROR;
       })
       .addCase(updatepassword.pending, setLoadingState)
       .addCase(updatepassword.fulfilled, (state, action) => {
@@ -138,4 +161,10 @@ const userSlice = createSlice({
 });
 
 export default userSlice.reducer;
-export const { resetIsProfileUpdated, resetIspasswordUpdated, resetError, resetIsVerificationEmailSend } = userSlice.actions;
+export const {
+  resetIsProfileUpdated,
+  resetIspasswordUpdated,
+  resetError,
+  resetIsVerificationEmailSend,
+  resetIsVerified
+} = userSlice.actions;

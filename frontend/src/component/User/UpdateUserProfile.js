@@ -6,6 +6,7 @@ import Loader from '../layout/Loader/Loader';
 import { STATUSES } from '../../store/statuses';
 import { loadUser, resetIsProfileUpdated, updateUserProfile } from '../../slices/userSlice/userSlice';
 import { toast } from "react-toastify";
+import BackButton from '../layout/BackButton';
 
 const UpdateUserProfile = () => {
     const { user: data, status, isProfileUpdated, error } = useSelector((state) => state.user);
@@ -86,6 +87,7 @@ const UpdateUserProfile = () => {
 
     return (
         <div className='flex bg-slate-900 overflow-auto h-screen fixed z-10 top-0 left-0 w-screen justify-center items-center'>
+            <BackButton locationState={location.state} />
             <div className="bg-slate-800 px-5 py-10 rounded-lg text-white">
                 <h3 className="text-xl mb-4 text-cyan-500 font-bold">Edit Profile Details</h3>
                 <form className="flex gap-4 text-black flex-col" onSubmit={handleSubmit}>

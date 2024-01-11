@@ -36,9 +36,10 @@ const Home = () => {
       <MetaData title="BYTE ECOMMERCE" />
 
       {/* Categories at the Top */}
-      <div className="md:flex overflow-x-auto gap-5 my-1 p-1 place-content-center hidden" >
+      <div className="space-x-4 hidden pl-4 md:flex justify-center overflow-x-auto">
         <CategoriesList />
       </div>
+
 
       <div className=" min-h-screen md:min-h-[85vh]  flex flex-col text-white bg-custom-background text-2xl justify-center items-center">
         <p className="font-mono text-xl">Welcome To Byte Ecommerce</p>

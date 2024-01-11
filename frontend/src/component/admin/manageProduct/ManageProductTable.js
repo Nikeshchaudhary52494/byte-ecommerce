@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { MdDelete, MdEdit } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useTable } from 'react-table';
 import { getAdminProducts } from '../../../slices/adminSlice/adminSlice';
 import { deleteProduct } from '../../../slices/productSlice/productsSlice';
@@ -9,9 +9,10 @@ import { deleteProduct } from '../../../slices/productSlice/productsSlice';
 const ManageProductTable = () => {
     const data = useSelector((state) => state.admin.productsData.products || []);
     const navigate = useNavigate();
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
+    const location = useLocation();
     const handleEditClick = (orderId) => {
-        navigate(`/admin/product/${orderId}`);
+        navigate(`/admin/product/${orderId}`, { state: location.state });
     };
     useEffect(() => {
         if (data.length === 0)

@@ -2,7 +2,7 @@ import Layout from "./component/layout/Layout";
 import Home from "./component/Home/Home.js"
 import ProductDetails from "./component/Product/ProductDetails.js"
 import Cart from "./component/Cart/Cart.js"
-import React, { Component, useEffect } from "react";
+import React from "react";
 import Products from "./component/Product/Products.js"
 import CategoriesPage from "./component/Product/CategoryPage.js"
 import Login from "./component/User/Login.js"
@@ -10,7 +10,7 @@ import SignUp from "./component/User/SignUp.js"
 import Dashbord from "./component/admin/Dashbord.js";
 import { Route, Routes } from "react-router-dom";
 import UserProfile from "./component/User/UserProfile.js"
-import MangeUser from "./component/admin/manageUsers/MangeUsers.js";
+import ManageUser from "./component/admin/manageUsers/ManageUsers.js";
 import Manageproduct from "./component/admin/manageProduct/Manageproduct.js";
 import AddProduct from "./component/admin/manageProduct/AddProduct.js";
 import ShippingForm from "./component/Cart/ShippingForm.js";
@@ -32,17 +32,12 @@ import VerifyUser from "./component/User/VerifyMessage.js";
 import AboutMe from "./component/aboutUs/AboutMe.js";
 import ContactUs from "./component/contactUs/ContactUs.js";
 import PageNotFound from "./component/layout/PageNotFound.js";
-import store from "./store/store.js";
-import { fetchProducts } from "./slices/productSlice/productsSlice.js";
-import { loadUser, updateUserProfile } from "./slices/userSlice/userSlice.js";
 import ProtectedRoute from "./component/Route/ProtectedRoute.js";
-import ManageUsers from "./component/admin/manageUsers/MangeUsers.js";
+import VerifyMessage from "./component/User/VerifyMessage.js";
+import VerifyAccount from "./component/User/VerifyAccount.js";
 
 function App() {
-  useEffect(() => {
-    store.dispatch(fetchProducts());
-    store.dispatch(loadUser());
-  }, []);
+
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
@@ -65,14 +60,15 @@ function App() {
           <Route path="updateprofile" element={<ProtectedRoute Component={UpdateUserProfile} />} />
           <Route path="updatepassword" element={<ProtectedRoute Component={UpdatePassword} />} />
           <Route path="password/forget" element={<ForgetPassword />} />
-          <Route path="verify" element={<VerifyUser />} />
+          <Route path="verifymessage" element={<VerifyMessage />} />
+          <Route path="verify/:token" element={<VerifyAccount />} />
         </Route>
         <Route path="myorders" element={<ProtectedRoute Component={Myorders} />} />
         <Route path="order/:id" element={<ProtectedRoute Component={SingleOrder} />} />
         <Route path="password/reset/:token" element={<ProtectedRoute Component={ResetPassword} />} />
         <Route path='admin'>
           <Route path="dashbord" element={<ProtectedRoute Component={Dashbord} adminOnly={true} />} />
-          <Route path="manageuser" element={<ProtectedRoute Component={MangeUser} adminOnly={true} />} />
+          <Route path="manageuser" element={<ProtectedRoute Component={ManageUser} adminOnly={true} />} />
           <Route path="user/:id" element={<ProtectedRoute Component={ManageSingleUser} adminOnly={true} />} />
           <Route path="manageproduct">
             <Route index element={<ProtectedRoute Component={Manageproduct} adminOnly={true} />} />

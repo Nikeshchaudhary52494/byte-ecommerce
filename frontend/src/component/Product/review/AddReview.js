@@ -52,11 +52,10 @@ const AddReview = ({ toggle, setToggle, productId }) => {
                             <textarea
                                 id='comment'
                                 name='comment'
-                                rows='4'
-                                cols='50'
+                                placeholder='Write review'
                                 value={comment}
                                 onChange={handleInputChange}
-                                className='resize-none  outline-none rounded-md p-1'
+                                className='resize-none w-[300px] h-[150px] outline-none rounded-md p-2'
                             />
                         </div>
                         <div className='mb-4'>

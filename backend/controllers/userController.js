@@ -57,8 +57,6 @@ exports.verifyUser = catchAsyncErrors(async (req, res, next) => {
     if (user.verified) {
         return next(new ErrorHandler('User is already verified.', 400));
     }
-    // creating a empty cart after userVerification
-    new Cart({ userId: user._id, products: [] });
     user.verified = true;
     await user.save();
     sendToken(user, 200, res);

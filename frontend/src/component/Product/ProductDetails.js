@@ -105,7 +105,7 @@ const ProductDetails = () => {
         </div>
 
         {/* Details section */}
-        <div className=" p-5 scrollbar border shadow-lg  w-3/4 md:w-1/2">
+        <div className=" p-5 scrollbar border shadow-lg xs:w-3/4 md:w-1/2">
           <h2 className="text-2xl" >{product.name}</h2>
           <p onDoubleClick={handleDoubleClick} className="text-sm font-thin text-slate-600 border-b border-slate-400 mb-4 pb-4">#{product._id}</p>
           <ReactStars {...options} />

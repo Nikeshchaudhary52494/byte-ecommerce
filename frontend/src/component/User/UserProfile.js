@@ -7,8 +7,7 @@ import { STATUSES } from '../../store/statuses';
 import { MdEdit, MdLogout } from 'react-icons/md';
 import { RiShoppingBagFill } from "react-icons/ri";
 import { FaArrowLeft } from 'react-icons/fa';
-
-
+import BackButton from '../layout/BackButton';
 
 const UserProfile = () => {
     const navigate = useNavigate();
@@ -24,6 +23,7 @@ const UserProfile = () => {
         { label: 'Email', value: user.email },
         { label: 'Password', value: '*********' },
     ];
+
     if (status === STATUSES.LOADING) {
         return (
             <div >
@@ -68,11 +68,7 @@ const UserProfile = () => {
                                 onClick={() => navigate("/myorders")}
                             >My orders <RiShoppingBagFill /></button>
                         </div>
-                        <div className='flex  w-full'>
-                            <button
-                                onClick={() => navigate(location.state)}
-                                className='text-white hidden sm:block text-xl pl-5'><FaArrowLeft /></button>
-                        </div>
+                        <BackButton locationState={location.state} />
                     </div>
                 ) : (
                     navigate("/")

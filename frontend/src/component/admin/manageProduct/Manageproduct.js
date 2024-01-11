@@ -6,7 +6,7 @@ const Manageproduct = () => {
   const navigate = useNavigate();
   return (
     <>
-      <div className='bg-slate-900 min-h-screen pb-20'>
+      <div className='bg-slate-900 min-h-screen py-10'>
         <div className='max-w-5xl mx-auto mb-20'>
           <button
             onClick={() => navigate('/admin/manageproduct/addproduct')}
