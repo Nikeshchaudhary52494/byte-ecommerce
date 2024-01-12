@@ -2,7 +2,7 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://byte-ecommerce.onrender.com/",
+  "homepage": "https://btye-ecommerce.vercel.app/",
   "dependencies": {
     "@mui/icons-material": "^5.14.7",
     "@mui/styles": "^5.15.4",
