@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { STATUSES } from "../../store/statuses";
-import axios from "axios";
+import axiosInstance from "../../store/axiosConfig";
 const adminSlice = createSlice({
     name: "admin",
     initialState: {
@@ -80,7 +80,7 @@ const adminSlice = createSlice({
 })
 export const getAllUsers = createAsyncThunk("admin/getAllUsers", async () => {
     try {
-        const response = await axios.get('/api/v1/admin/getAllUser');
+        const response = await axiosInstance.get('/api/v1/admin/getAllUser');
         return response.data;
     } catch (error) {
         throw error.response.data;
@@ -88,7 +88,7 @@ export const getAllUsers = createAsyncThunk("admin/getAllUsers", async () => {
 })
 export const getAdminProducts = createAsyncThunk("admin/products", async () => {
     try {
-        const response = await axios.get('/api/v1/admin/products');
+        const response = await axiosInstance.get('/api/v1/admin/products');
         return response.data;
     } catch (error) {
         throw error.response.data;
@@ -96,14 +96,14 @@ export const getAdminProducts = createAsyncThunk("admin/products", async () => {
 })
 export const updateUserRole = createAsyncThunk('admin/updateuserrole', async ({ userId, role }) => {
     try {
-        await axios.put(`/api/v1/admin/updateuserrole/${userId}`, { role });
+        await axiosInstance.put(`/api/v1/admin/updateuserrole/${userId}`, { role });
     } catch (error) {
         throw error.response.data;
     }
 });
 export const createProduct = createAsyncThunk('admin/createproducts', async (productData) => {
     try {
-        await axios.post('/api/v1/admin/product/new', productData);
+        await axiosInstance.post('/api/v1/admin/product/new', productData);
     } catch (error) {
         throw error.response.data;
     }
@@ -111,7 +111,7 @@ export const createProduct = createAsyncThunk('admin/createproducts', async (pro
 export const updatedProduct = createAsyncThunk('admin/updateproduct', async ({ _id, productData }) => {
     try {
         console.log(_id)
-        await axios.put(`/api/v1/admin/product/${_id}`, productData);
+        await axiosInstance.put(`/api/v1/admin/product/${_id}`, productData);
     } catch (error) {
         throw error.response.data;
     }
@@ -120,7 +120,7 @@ export const updateOrderStatus = createAsyncThunk(
     'order/updateOrderStatus',
     async ({ id, selectedOrderStatus }) => {
         try {
-            const response = await axios.put(`/api/v1/admin/order/${id}`, { selectedOrderStatus });
+            const response = await axiosInstance.put(`/api/v1/admin/order/${id}`, { selectedOrderStatus });
             return response.data;
         } catch (error) {
             throw error.response.data;

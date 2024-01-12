@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { STATUSES } from '../../store/statuses'
-import axios from "axios";
+import axiosInstance from "../../store/axiosConfig";
 
 const productSlice = createSlice({
     name: 'products',
@@ -83,7 +83,7 @@ export default productSlice.reducer;
 
 export const fetchProducts = createAsyncThunk('products/fetch',
     async () => {
-        const { data } = await axios.get(`https://byte-ecommerce-api.onrender.com/api/v1/products`);
+        const { data } = await axiosInstance.get(`/api/v1/products`);
         return data.products;
     });
 
@@ -91,24 +91,24 @@ export const fetchProducts2 = createAsyncThunk('products/fetch',
     async ({ keyword = "", price = [0, 2500], categoryName, ratings = 0, itemCondition = "" }) => {
         const link = `/api/v1/products?keyword=${keyword}&price[gte]=${price[0]}&price[lte]=${price[1]}&ratings[gte]=${ratings}`;
         if (categoryName && itemCondition === "") {
-            const { data } = await axios.get(`${link}&category=${categoryName}`);
+            const { data } = await axiosInstance.get(`${link}&category=${categoryName}`);
             return data.products;
         }
         if (categoryName) {
-            const { data } = await axios.get(`${link}&category=${categoryName}&itemCondition=${itemCondition}`);
+            const { data } = await axiosInstance.get(`${link}&category=${categoryName}&itemCondition=${itemCondition}`);
             return data.products;
         }
         if (itemCondition === "") {
-            const { data } = await axios.get(link);
+            const { data } = await axiosInstance.get(link);
             return data.products;
         }
-        const { data } = await axios.get(`${link}&itemCondition=${itemCondition}`);
+        const { data } = await axiosInstance.get(`${link}&itemCondition=${itemCondition}`);
         return data.products;
     }
 );
 export const getProductDetails = createAsyncThunk('productDetails/fetch', async ({ id }) => {
     try {
-        const response = await axios.get(`/api/v1/product/${id}`);
+        const response = await axiosInstance.get(`/api/v1/product/${id}`);
         return response.data.product;
     } catch (error) {
         throw error.response.data;
@@ -116,11 +116,11 @@ export const getProductDetails = createAsyncThunk('productDetails/fetch', async 
 });
 export const updatedProductStock = createAsyncThunk('products/updateproductstock', async ({ quantityShipped, productId }) => {
     console.log({ quantityShipped, productId })
-    await axios.put(`/api/v1/product/updatestock`, { quantityShipped, productId });
+    await axiosInstance.put(`/api/v1/product/updatestock`, { quantityShipped, productId });
 })
 export const getProductReviews = createAsyncThunk('products/getProductsreviews', async ({ productId }) => {
     try {
-        const response = await axios.get(`/api/v1/reviews?productId=${productId}`);
+        const response = await axiosInstance.get(`/api/v1/reviews?productId=${productId}`);
         return response.data;
     } catch (error) {
         throw error.response.data;
@@ -128,7 +128,7 @@ export const getProductReviews = createAsyncThunk('products/getProductsreviews',
 });
 export const deleteProductReviews = createAsyncThunk('products/deleteProductReviews', async ({ productId, reviewId }) => {
     try {
-        await axios.delete(`/api/v1/reviews?productId=${productId}&id=${reviewId}`);
+        await axiosInstance.delete(`/api/v1/reviews?productId=${productId}&id=${reviewId}`);
     } catch (error) {
         throw error.response.data;
     }
@@ -136,7 +136,7 @@ export const deleteProductReviews = createAsyncThunk('products/deleteProductRevi
 export const deleteProduct = createAsyncThunk('products/deleteproduct', async ({ productId }) => {
     try {
         console.log({ productId });
-        await axios.delete(`/api/v1/admin/product/${productId}`);
+        await axiosInstance.delete(`/api/v1/admin/product/${productId}`);
     } catch (error) {
         throw error.response.data;
     }
@@ -145,7 +145,7 @@ export const addReview = createAsyncThunk(
     'products/addReview',
     async ({ rating, comment, productId }) => {
         try {
-            await axios.put('/api/v1/review', {
+            await axiosInstance.put('/api/v1/review', {
                 rating,
                 comment,
                 productId,

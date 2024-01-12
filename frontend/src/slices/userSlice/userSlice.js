@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import axiosInstance from "../../store/axiosConfig";
 import { STATUSES } from "../../store/statuses";
 
 const initialState = {
@@ -21,7 +21,7 @@ const handleAuthFulfilled = (state, action) => {
 
 export const registerUser = createAsyncThunk("user/register", async (userData) => {
   try {
-    const response = await axios.post("/api/v1/register", userData);
+    const response = await axiosInstance.post("/api/v1/register", userData);
     return response.data.user;
   } catch (error) {
     throw error.response.data;
@@ -30,7 +30,7 @@ export const registerUser = createAsyncThunk("user/register", async (userData) =
 
 export const verifyUser = createAsyncThunk("user/verify", async ({ token }) => {
   try {
-    const response = await axios.get(`/api/v1/verify/${token}`);
+    const response = await axiosInstance.get(`/api/v1/verify/${token}`);
     return response.data.user;
   } catch (error) {
     throw error.response.data;
@@ -39,7 +39,7 @@ export const verifyUser = createAsyncThunk("user/verify", async ({ token }) => {
 
 export const loginUser = createAsyncThunk("user/login", async (userData) => {
   try {
-    const response = await axios.post("/api/v1/login", userData);
+    const response = await axiosInstance.post("/api/v1/login", userData);
     return response.data.user;
   } catch (error) {
     throw error.response.data;
@@ -47,35 +47,35 @@ export const loginUser = createAsyncThunk("user/login", async (userData) => {
 });
 
 export const logoutUser = createAsyncThunk("user/logout", async () => {
-  await axios.get("/api/v1/logout");
+  await axiosInstance.get("/api/v1/logout");
 });
 
 export const loadUser = createAsyncThunk("user/load", async () => {
   try {
-    const response = await axios.get("https://byte-ecommerce-api.onrender.com/api/v1/me");
+    const response = await axiosInstance.get("/api/v1/me");
     return response.data.user;
   } catch (error) {
     throw error.response.data
   }
 });
 export const updateUserProfile = createAsyncThunk("user/updateuserprofile", async (userData) => {
-  const response = await axios.put("/api/v1/me/update", userData);
+  const response = await axiosInstance.put("/api/v1/me/update", userData);
   return response.data.user;
 });
 export const updatepassword = createAsyncThunk('user/updatepassword', async (passwordData) => {
   try {
-    const response = await axios.put("/api/v1/password/update", passwordData);
+    const response = await axiosInstance.put("/api/v1/password/update", passwordData);
     return response.data.user;
   } catch (error) {
     throw error.response.data;
   }
 });
 export const forgotPassword = createAsyncThunk("user/forgetpassword", async ({ email }) => {
-  await axios.post("/api/v1/password/forgot", { email });
+  await axiosInstance.post("/api/v1/password/forgot", { email });
 })
 export const resetPassword = createAsyncThunk("user/resetpassword", async ({ token, passwordData }) => {
   console.log(token)
-  await axios.put(`/api/v1/password/reset/${token}`, passwordData);
+  await axiosInstance.put(`/api/v1/password/reset/${token}`, passwordData);
 })
 const userSlice = createSlice({
   name: "user",

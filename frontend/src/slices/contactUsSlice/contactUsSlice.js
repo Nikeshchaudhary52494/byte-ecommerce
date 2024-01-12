@@ -1,5 +1,4 @@
-import axios from "axios";
-
+import axiosInstance from "../../store/axiosConfig";
 const { createSlice, createAsyncThunk } = require("@reduxjs/toolkit");
 const { STATUSES } = require("../../store/statuses");
 
@@ -61,14 +60,14 @@ const contactUsSlice = createSlice({
 })
 export const createMessage = createAsyncThunk('contactUs/createmessaage', async ({ message }) => {
     try {
-        await axios.post("/api/v1/contactus", { message });
+        await axiosInstance.post("/api/v1/contactus", { message });
     } catch (error) {
         throw error.response.data;
     }
 });
 export const getAllMessages = createAsyncThunk('contactUs/getAllMessages', async () => {
     try {
-        const response = await axios.get("/api/v1/admin/messages");
+        const response = await axiosInstance.get("/api/v1/admin/messages");
         return response.data;
     } catch (error) {
         throw error.response.data;
@@ -77,7 +76,7 @@ export const getAllMessages = createAsyncThunk('contactUs/getAllMessages', async
 
 export const deleteMessageById = createAsyncThunk('contactUs/deleteMessageById', async ({ messageId }) => {
     try {
-        await axios.delete(`/api/v1/admin/message/${messageId}`);
+        await axiosInstance.delete(`/api/v1/admin/message/${messageId}`);
     } catch (error) {
         throw error.response.data;
     }

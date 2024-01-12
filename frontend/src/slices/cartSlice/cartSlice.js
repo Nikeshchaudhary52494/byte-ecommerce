@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { STATUSES } from "../../store/statuses";
-import axios from "axios";
+import axiosInstance from "../../store/axiosConfig";
+
 const cartSlice = createSlice({
     name: "cart",
     initialState: {
@@ -67,7 +68,7 @@ const cartSlice = createSlice({
 });
 export const addToCart = createAsyncThunk("cart/addToCart", async ({ userId, productId, quantity }) => {
     try {
-        const response = await axios.post("/api/v1/cart/add", { userId, productId, quantity });
+        const response = await axiosInstance.post("/api/v1/cart/add", { userId, productId, quantity });
         return response.data.cart.products;
     } catch (error) {
         throw error.response.data;
@@ -75,7 +76,7 @@ export const addToCart = createAsyncThunk("cart/addToCart", async ({ userId, pro
 });
 export const removeFromCart = createAsyncThunk("cart/removeFromCart", async ({ userId, productId }) => {
     try {
-        const response = await axios.delete(`/api/v1/cart/remove/${productId}`, { data: { userId, productId } });
+        const response = await axiosInstance.delete(`/api/v1/cart/remove/${productId}`, { data: { userId, productId } });
         return response.data.cart;
     } catch (error) {
         throw error.response.data;
@@ -83,7 +84,7 @@ export const removeFromCart = createAsyncThunk("cart/removeFromCart", async ({ u
 });
 export const getAllCartProducts = createAsyncThunk("cart/getAllCartProducts", async () => {
     try {
-        const response = await axios.get(`/api/v1/cart`);
+        const response = await axiosInstance.get(`/api/v1/cart`);
         return response.data.cart;
     } catch (error) {
         throw error.response.data;
@@ -91,7 +92,7 @@ export const getAllCartProducts = createAsyncThunk("cart/getAllCartProducts", as
 });
 export const clearCart = createAsyncThunk("cart/clearcart", async () => {
     try {
-        await axios.delete("/api/v1/cart");
+        await axiosInstance.delete("/api/v1/cart");
     } catch (error) {
         throw error.response.data;
     }

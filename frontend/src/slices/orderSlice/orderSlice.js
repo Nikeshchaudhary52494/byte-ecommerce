@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { STATUSES } from "../../store/statuses";
-import axios from "axios";
+import axiosInstance from "../../store/axiosConfig";
 
 const orderSlice = createSlice({
     name: "orders",
@@ -76,7 +76,7 @@ const orderSlice = createSlice({
 })
 export const getAllOrders = createAsyncThunk('order/getAllOrders', async () => {
     try {
-        const { data } = await axios.get("/api/v1/admin/orders");
+        const { data } = await axiosInstance.get("/api/v1/admin/orders");
         console.log(data);
         return data;
     } catch (error) {
@@ -85,7 +85,7 @@ export const getAllOrders = createAsyncThunk('order/getAllOrders', async () => {
 });
 export const getSingleOrder = createAsyncThunk('orders/getSingleOrder', async (orderId) => {
     try {
-        const response = await axios.get(`/api/v1/order/${orderId}`);
+        const response = await axiosInstance.get(`/api/v1/order/${orderId}`);
         return response.data.order
     } catch (error) {
         throw error.response.data;
@@ -94,7 +94,7 @@ export const getSingleOrder = createAsyncThunk('orders/getSingleOrder', async (o
 export const deleteOrder = createAsyncThunk('orders/deleteOrder', async (orderId) => {
     try {
         console.log(orderId)
-        await axios.delete(`/api/v1/admin/order/${orderId}`);
+        await axiosInstance.delete(`/api/v1/admin/order/${orderId}`);
     } catch (error) {
         throw error.response.data;
     }
@@ -102,7 +102,7 @@ export const deleteOrder = createAsyncThunk('orders/deleteOrder', async (orderId
 
 export const createNewOrder = createAsyncThunk("order/createnewOrder", async ({ orderData }) => {
     try {
-        const response = await axios.post(`/api/v1/order/new`, orderData);
+        const response = await axiosInstance.post(`/api/v1/order/new`, orderData);
         return response.data;
     } catch (error) {
         throw error.response.data;
@@ -110,7 +110,7 @@ export const createNewOrder = createAsyncThunk("order/createnewOrder", async ({ 
 })
 export const myOrders = createAsyncThunk("orders/myorder", async () => {
     try {
-        const response = await axios.get(`/api/v1/orders/me`);
+        const response = await axiosInstance.get(`/api/v1/orders/me`);
         return response.data.orders
     } catch (error) {
         throw error.response.data;
