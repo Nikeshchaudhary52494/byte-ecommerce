@@ -52,7 +52,7 @@ export const logoutUser = createAsyncThunk("user/logout", async () => {
 
 export const loadUser = createAsyncThunk("user/load", async () => {
   try {
-    const response = await axios.get("/api/v1/me");
+    const response = await axios.get("https://byte-ecommerce-api.onrender.com/api/v1/me");
     return response.data.user;
   } catch (error) {
     throw error.response.data
