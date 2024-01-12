@@ -1,11 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { BsMouse } from "react-icons/bs";
 import Typed from "react-typed";
 import MetaData from "../layout/MetaData";
 import Loader from "../layout/Loader/Loader";
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { STATUSES } from '../../store/statuses';
-import { fetchProducts } from '../../slices/productSlice/productsSlice';
 import ProductCard from "../layout/ProductCard";
 import CategoriesList from "../Product/CategoriesList";
 import Footer from "../layout/Footer";
@@ -13,16 +12,9 @@ import { useNavigate } from "react-router-dom";
 
 
 const Home = () => {
-
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const { data: products, status } = useSelector((state) => state.products);
-
-  useEffect(() => {
-    dispatch(fetchProducts());
-  }, [dispatch]);
-
 
 
   if (status === STATUSES.LOADING) {
@@ -66,7 +58,7 @@ const Home = () => {
         id="container"
         className="flex mx-auto max-w-[80%] justify-center flex-wrap" >
         {products && products.slice(0, 8).map((product) => (
-          <ProductCard key={product.id} product={product} />
+          <ProductCard key={product._id} product={product} />
         ))}
       </div>
       <div className="flex justify-center   my-5">

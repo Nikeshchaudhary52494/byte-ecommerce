@@ -22,8 +22,8 @@ const SearchBar = () => {
 
     return (
 
-        <form class=" flex justify-center w-full" onSubmit={searchSubmitHandler}>
-            <input class="text-black outline-none h-[40px] pl-5  rounded-md mx-auto w-3/4 md:w-full " type="text" placeholder='Search product ' onChange={(e) => setKeyword(e.target.value)} />
+        <form className=" flex justify-center w-full" onSubmit={searchSubmitHandler}>
+            <input className="text-black outline-none h-[40px] pl-5  rounded-md mx-auto w-3/4 md:w-full " type="text" placeholder='Search product ' onChange={(e) => setKeyword(e.target.value)} />
         </form>
 
     )

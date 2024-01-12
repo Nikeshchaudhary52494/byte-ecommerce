@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllCartProducts, removeFromCart, resetIsProductRemovedFromCart } from '../../slices/cartSlice/cartSlice';
 import CartItemCard from './CartItemCard';

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { IoMdCart } from "react-icons/io";
-import { FaArrowLeftLong, FaUser } from "react-icons/fa6";
-import { MdArrowLeft, MdDashboard } from "react-icons/md";
+import { FaUser } from "react-icons/fa6";
+import { MdDashboard } from "react-icons/md";
 import { Link, useNavigate } from 'react-router-dom'
 import Messages from './Messages';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,7 +11,7 @@ import { STATUSES } from '../../store/statuses';
 import Loader from '../layout/Loader/Loader';
 import { getAllMessages } from '../../slices/contactUsSlice/contactUsSlice';
 import { MdRateReview } from "react-icons/md";
-import { FaArrowLeft, FaHome } from 'react-icons/fa';
+import { FaHome } from 'react-icons/fa';
 
 const Dashbord = () => {
     const navigate = useNavigate();

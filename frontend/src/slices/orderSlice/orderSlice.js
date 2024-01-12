@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { STATUSES } from "../../store/statuses";
 import axios from "axios";
-import cartSlice from "../cartSlice/cartSlice";
 
 const orderSlice = createSlice({
     name: "orders",

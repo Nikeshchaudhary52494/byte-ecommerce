@@ -2,10 +2,9 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { resetPassword } from '../../slices/userSlice/userSlice';
-// import { resetPassword } from '../../slices/userSlice/userSlice';
+
 
 const ResetPassword = () => {
-    // const [email, setEmail] = useState("");
     const [newPassword, setNewPassword] = useState("");
     const [confirmNewPassword, setConfirmNewPassword] = useState("");
     const dispatch = useDispatch();
@@ -26,12 +25,6 @@ const ResetPassword = () => {
         dispatch(resetPassword({ token, passwordData })).then(() => {
             navigate("/user/login");
         })
-        // dispatch(resetPassword({ email, newPassword })).then(() => {
-        //     // Optionally, you can clear the form fields after a successful password reset
-        //     setEmail("");
-        //     setNewPassword("");
-        //     setConfirmNewPassword("");
-        // });
     }
 
     return (

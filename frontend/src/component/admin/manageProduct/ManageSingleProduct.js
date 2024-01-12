@@ -1,16 +1,14 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import EditProduct from './UpdateProduct';
 import { getProductDetails } from '../../../slices/productSlice/productsSlice';
 import { MdStar } from 'react-icons/md';
 import { STATUSES } from '../../../store/statuses';
 import Loader from '../../layout/Loader/Loader';
-import BackButton from '../../layout/BackButton';
 
 const ManageSingleProduct = () => {
     const dispatch = useDispatch();
-    const location = useLocation();
 
     const { productDetails, status } = useSelector((state) => state.products);
     const { id } = useParams();
@@ -55,7 +53,7 @@ const ManageSingleProduct = () => {
                     <p className='text-cyan-500 font-bold mb-4' >Images:</p>
                     <div className='bg-slate-700 px-1 max-w-fit overflow-x-auto flex items-center gap-1 h-16 border rounded mb-4'>
                         {images && images.map((image) => (
-                            <img className='h-14 object-cover w-14'
+                            <img alt='images' className='h-14 object-cover w-14'
                                 src={image.url} />))}
                     </div>
                     <p className='mb-4'>

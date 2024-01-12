@@ -46,7 +46,7 @@ const Products = () => {
                 class="flex mx-auto max-w-[80%] justify-center flex-wrap"
             >
                 {products && products.map((product) => (
-                    <ProductCard product={product} />
+                    <ProductCard key={product._id} product={product} />
                 ))}
             </div>
         </>

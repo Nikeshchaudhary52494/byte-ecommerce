@@ -39,12 +39,12 @@ const ManageReviews = () => {
             </button>
           </form>
         </div>
-    
-          <div className={`mt-5 mb-20  max-w-5xl mx-auto  ${toggle ? 'hidden' : ''}`}>
-            <ManageReviewTable productId={productId} />
-          </div>
+
+        <div className={`mt-5 mb-20  max-w-5xl mx-auto  ${toggle ? 'hidden' : ''}`}>
+          <ManageReviewTable productId={productId} />
         </div>
-      
+      </div>
+
     </>
   );
 };

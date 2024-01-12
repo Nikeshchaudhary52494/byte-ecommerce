@@ -28,7 +28,6 @@ import ForgetPassword from "./component/User/ForgetPassword.js";
 import ResetPassword from "./component/User/ResetPassword.js";
 import Myorders from "./component/User/Myorders.js";
 import SingleOrder from "./component/User/SingleOrder.js";
-import VerifyUser from "./component/User/VerifyMessage.js";
 import AboutMe from "./component/aboutUs/AboutMe.js";
 import ContactUs from "./component/contactUs/ContactUs.js";
 import PageNotFound from "./component/layout/PageNotFound.js";

@@ -116,7 +116,7 @@ export const getProductDetails = createAsyncThunk('productDetails/fetch', async 
 });
 export const updatedProductStock = createAsyncThunk('products/updateproductstock', async ({ quantityShipped, productId }) => {
     console.log({ quantityShipped, productId })
-    const response = await axios.put(`/api/v1/product/updatestock`, { quantityShipped, productId });
+    await axios.put(`/api/v1/product/updatestock`, { quantityShipped, productId });
 })
 export const getProductReviews = createAsyncThunk('products/getProductsreviews', async ({ productId }) => {
     try {

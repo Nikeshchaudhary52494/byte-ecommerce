@@ -17,7 +17,8 @@ const ManageProductTable = () => {
     useEffect(() => {
         if (data.length === 0)
             dispatch(getAdminProducts());
-    }, [dispatch]);
+    }, [dispatch, data.length]);
+
     const handleDeleteClick = (productId) => {
         dispatch(deleteProduct({ productId })).then(() => {
             dispatch(getAdminProducts());

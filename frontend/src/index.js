@@ -1,5 +1,5 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -15,8 +15,10 @@ const loadData = async () => {
   await store.dispatch(loadUser());
 };
 
+const root = createRoot(document.getElementById('root'));
+
 loadData().then(() => {
-  ReactDOM.render(
+  root.render(
     <React.StrictMode>
       <Provider store={store}>
         <Router>
@@ -39,6 +41,5 @@ loadData().then(() => {
         />
       </Provider>
     </React.StrictMode>,
-    document.getElementById('root')
   );
 });

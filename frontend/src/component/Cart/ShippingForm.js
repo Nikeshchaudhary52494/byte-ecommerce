@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { addShippingData } from '../../slices/cartSlice/cartSlice';
 import { useNavigate } from 'react-router-dom';
 
 const ShippingForm = () => {

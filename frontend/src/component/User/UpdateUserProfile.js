@@ -70,7 +70,7 @@ const UpdateUserProfile = () => {
             dispatch(resetIsProfileUpdated());
             navigate(location.state);
         }
-    }, [error, isProfileUpdated])
+    }, [error, isProfileUpdated, navigate, dispatch, location.state])
 
 
     if (status === STATUSES.LOADING) {

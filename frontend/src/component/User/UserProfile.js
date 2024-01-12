@@ -6,7 +6,6 @@ import Loader from '../layout/Loader/Loader';
 import { STATUSES } from '../../store/statuses';
 import { MdEdit, MdLogout } from 'react-icons/md';
 import { RiShoppingBagFill } from "react-icons/ri";
-import { FaArrowLeft } from 'react-icons/fa';
 import BackButton from '../layout/BackButton';
 
 const UserProfile = () => {

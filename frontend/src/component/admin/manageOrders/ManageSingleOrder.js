@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
+import {  useParams } from 'react-router-dom';
 import { getSingleOrder } from '../../../slices/orderSlice/orderSlice';
 import { STATUSES } from '../../../store/statuses';
 import Loader from '../../layout/Loader/Loader';

@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { SiTrustpilot } from "react-icons/si";
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import { useTable } from 'react-table';
 import { getAllUsers, updateUserRole } from '../../../slices/adminSlice/adminSlice';
 
