@@ -17,29 +17,30 @@ const loadData = async () => {
 
 const root = createRoot(document.getElementById('root'));
 
-loadData().then(() => {
-  root.render(
-    <React.StrictMode>
-      <Provider store={store}>
-        <Router>
-          <Routes>
-            <Route path="/*" element={<App />} />
-          </Routes>
-        </Router>
-        <ToastContainer
-          position="bottom-center"
-          limit={1}
-          autoClose={1000}
-          hideProgressBar={false}
-          newestOnTop={true}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="dark"
-        />
-      </Provider>
-    </React.StrictMode>,
-  );
-});
+// loadData().then(() => {
+root.render(
+  <React.StrictMode>
+    <Provider store={store}>
+      <Router>
+        <Routes>
+          <Route path="/*" element={<App />} />
+        </Routes>
+      </Router>
+      <ToastContainer
+        position="bottom-center"
+        limit={1}
+        autoClose={1000}
+        hideProgressBar={false}
+        newestOnTop={true}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
+    </Provider>
+  </React.StrictMode>,
+);
+// }
+// );
