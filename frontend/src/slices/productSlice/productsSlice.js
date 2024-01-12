@@ -83,7 +83,7 @@ export default productSlice.reducer;
 
 export const fetchProducts = createAsyncThunk('products/fetch',
     async () => {
-        const { data } = await axios.get(`/api/v1/products`);
+        const { data } = await axios.get(`https://byte-ecommerce-api.onrender.com/api/v1/products`);
         return data.products;
     });
 
