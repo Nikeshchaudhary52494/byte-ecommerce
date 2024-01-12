@@ -6,10 +6,12 @@ import Logo from "../images/byte.png"
 import { registerUser, resetError, resetIsVerificationEmailSend } from '../../slices/userSlice/userSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
+import Loader from '../layout/Loader/Loader'
+import { STATUSES } from '../../store/statuses'
 
 
 const SignUp = () => {
-    const { isVerificationEmailSend, isAuthenticated, error } = useSelector((state) => state.user)
+    const { isVerificationEmailSend, isAuthenticated, error, status } = useSelector((state) => state.user)
     const navigate = useNavigate();
     const location = useLocation();
     const dispatch = useDispatch();
@@ -65,6 +67,13 @@ const SignUp = () => {
             dispatch(resetError());
         }
     }, [navigate, isAuthenticated, location, error, isVerificationEmailSend, dispatch])
+
+    if (status === STATUSES.LOADING) {
+        return <div className="w-full bg-slate-900 grid place-content-center h-[80vh] ">
+            <Loader />
+        </div>
+    }
+
     return (
         <>
             <div className="grid bg-slate-900 h-[100vh]  fixed z-20 top-0 left-0 w-[100vw] place-content-center">
@@ -126,7 +135,6 @@ const SignUp = () => {
                         <motion.input
                             type="submit"
                             whileTap={{ scale: 0.9 }}
-                            whileHover={{ scale: 1.1 }}
                             transition={{ duration: .5 }}
                             className="w-[300px] m-2 h-[40px] hover:bg-teal-700 bg-teal-600 rounded-lg" />
                     </form>

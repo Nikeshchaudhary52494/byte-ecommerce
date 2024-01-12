@@ -1,5 +1,5 @@
 {
-  "name": "ecomerce",
+  "name": "btye-ecomerce",
   "version": "1.0.0",
   "description": "Full stack Ecomerce web-app",
   "main": "server.js",

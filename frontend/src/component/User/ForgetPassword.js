@@ -15,6 +15,7 @@ const ForgetPassword = () => {
         <div className='p-10 bg-slate-900 min-h-screen'>
             <div className='flex flex-col items-center'>
                 <p className='font-bold text-3xl text-white'>Forget Password</p>
+                <p className='text-cyan-500 my-1'>Enter your registered email</p>
                 <form
                     className='flex flex-col my-10'
                     onSubmit={handleSubmit}>

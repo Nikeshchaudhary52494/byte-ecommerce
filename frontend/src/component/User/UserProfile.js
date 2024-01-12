@@ -60,6 +60,7 @@ const UserProfile = () => {
                             <button onClick={() => {
                                 dispatch(logoutUser());
                                 localStorage.removeItem('shippingData');
+                                navigate("/");
                             }}
                                 className='flex items-center my-2 gap-2 p-2 bg-red-400 rounded-md'>Logout <MdLogout /></button>
                             <button
