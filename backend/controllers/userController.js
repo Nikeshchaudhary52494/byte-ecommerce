@@ -17,7 +17,7 @@ exports.registerUser = catchAsyncErrors(async (req, res, next) => {
         myCloud = await cloudinary.uploader.upload(fileUri.content);
         const { name, email, password } = req.body;
         const verificationToken = crypto.randomBytes(20).toString('hex');
-        const verificationLink = `${req.protocol}://${req.get("host")}/user/verify/${verificationToken}`;
+        const verificationLink = `https://byte-ecommerce.vercel.app/user/verify/${verificationToken}`;
         const message = `Click on the following link to verify your email: ${verificationLink}`;
         const user = await User.create({
             name,
@@ -118,7 +118,7 @@ exports.forgotPassword = catchAsyncErrors(async (req, res, next) => {
     // get resetPasswordToken
     const resetToken = user.getResetPasswordToken();
     await user.save({ validateBeforeSave: false })
-    const resetPasswordUrl = `${req.protocol}://${req.get("host")}/password/reset/${resetToken}`;
+    const resetPasswordUrl = `https://byte-ecommerce.vercel.app/password/reset/${resetToken}`;
 
     const messgae = `your password reset token is:- \n\n ${resetPasswordUrl} \n if you have not requested this email then,please ignore it`
 
