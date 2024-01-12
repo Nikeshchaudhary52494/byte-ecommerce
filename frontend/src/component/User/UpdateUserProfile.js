@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Loader from '../layout/Loader/Loader';
 import { STATUSES } from '../../store/statuses';
-import { loadUser, resetIsProfileUpdated, updateUserProfile } from '../../slices/userSlice/userSlice';
+import { loadUser, resetError, resetIsProfileUpdated, updateUserProfile } from '../../slices/userSlice/userSlice';
 import { toast } from "react-toastify";
 import BackButton from '../layout/BackButton';
 
@@ -63,8 +63,10 @@ const UpdateUserProfile = () => {
         dispatch(updateUserProfile(formData));
     };
     useEffect(() => {
-        if (error)
+        if (error) {
             toast.error(error);
+            dispatch(resetError());
+        }
         if (isProfileUpdated) {
             toast.success("Profile updated successfully");
             dispatch(resetIsProfileUpdated());

@@ -9,7 +9,7 @@ import { toast } from 'react-toastify'
 
 
 const SignUp = () => {
-    const { isVerificationEmailSend, error } = useSelector((state) => state.user)
+    const { isVerificationEmailSend, isAuthenticated, error } = useSelector((state) => state.user)
     const navigate = useNavigate();
     const location = useLocation();
     const dispatch = useDispatch();
@@ -52,6 +52,9 @@ const SignUp = () => {
     };
 
     useEffect(() => {
+        if (isAuthenticated) {
+            navigate("/");
+        }
         if (isVerificationEmailSend) {
             toast.success("verification link send");
             dispatch(resetIsVerificationEmailSend());
@@ -61,7 +64,7 @@ const SignUp = () => {
             toast.error(error);
             dispatch(resetError());
         }
-    }, [navigate, location, error, isVerificationEmailSend, dispatch])
+    }, [navigate, isAuthenticated, location, error, isVerificationEmailSend, dispatch])
     return (
         <>
             <div className="grid bg-slate-900 h-[100vh]  fixed z-20 top-0 left-0 w-[100vw] place-content-center">

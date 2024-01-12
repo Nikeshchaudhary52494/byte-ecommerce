@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 import Logo from "../images/byte.png"
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { loginUser, resetError } from '../../slices/userSlice/userSlice'
+import { loginUser, resetError, resetIsLogin } from '../../slices/userSlice/userSlice'
 import { toast } from "react-toastify"
 
 
@@ -14,7 +14,7 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { isAuthenticated, error } = useSelector((state) => state.user);
+  const { isAuthenticated, error, isLogin } = useSelector((state) => state.user);
 
   const [user, setUser] = useState({
     email: "",
@@ -33,15 +33,19 @@ const Login = () => {
   }
 
   useEffect(() => {
-    if (isAuthenticated === true) {
+    if (isAuthenticated) {
+      navigate("/")
+    }
+    if (isLogin) {
       toast.success("Login successfully");
+      dispatch(resetIsLogin());
       navigate(location.state);
     }
     if (error) {
       toast.error(error);
       dispatch(resetError());
     }
-  }, [isAuthenticated, navigate, location, error, dispatch])
+  }, [navigate, isAuthenticated, isLogin, location, error, dispatch])
 
   return (
     <>
