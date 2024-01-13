@@ -94,12 +94,15 @@ exports.logoutuser = catchAsyncErrors(async (req, res, next) => {
     res.cookie('token', null, {
         expires: new Date(0),
         httpOnly: true,
+        sameSite: 'None',
+        secure: true,
     });
-
-    res.status(200).json({
-        success: true,
-        message: "Logged Out",
-    });
+    res.status(200)
+        .cookie('token', null, { httpOnly: true, expires: new Date(0), secure: true, sameSite: 'None' })
+        .json({
+            success: true,
+            message: "Logged Out",
+        });
 });
 
 
