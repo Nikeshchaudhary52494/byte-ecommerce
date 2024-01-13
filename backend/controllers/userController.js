@@ -91,20 +91,16 @@ exports.loginUser = catchAsyncErrors(async (req, res, next) => {
 
 // logout
 exports.logoutuser = catchAsyncErrors(async (req, res, next) => {
-
     res.cookie('token', null, {
-        expires: new Date(Date.now()),
+        expires: new Date(0),
         httpOnly: true,
-
-    })
+    });
 
     res.status(200).json({
         success: true,
-        message: "Logged Out"
-    })
-
-
-})
+        message: "Logged Out",
+    });
+});
 
 
 // forgot Password

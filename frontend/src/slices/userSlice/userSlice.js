@@ -29,9 +29,7 @@ export const registerUser = createAsyncThunk("user/register", async (userData) =
 });
 export const verifyUser = createAsyncThunk("user/verify", async ({ token }) => {
   try {
-    const response = await axiosInstance.get(`/api/v1/verify/${token}`, {
-      withCredentials: true,
-    });
+    const response = await axiosInstance.get(`/api/v1/verify/${token}`);
 
     return response.data.user;
   } catch (error) {
@@ -41,9 +39,7 @@ export const verifyUser = createAsyncThunk("user/verify", async ({ token }) => {
 
 export const loginUser = createAsyncThunk("user/login", async (userData) => {
   try {
-    const response = await axiosInstance.post("/api/v1/login", userData, {
-      withCredentials: true,
-    });
+    const response = await axiosInstance.post("/api/v1/login", userData);
     return response.data.user;
   } catch (error) {
     throw error.response.data;
@@ -51,16 +47,12 @@ export const loginUser = createAsyncThunk("user/login", async (userData) => {
 });
 
 export const logoutUser = createAsyncThunk("user/logout", async () => {
-  await axiosInstance.get("/api/v1/logout", {
-    withCredentials: true,
-  });
+  await axiosInstance.get("/api/v1/logout");
 });
 
 export const loadUser = createAsyncThunk("user/load", async () => {
   try {
-    const response = await axiosInstance.get("/api/v1/me", {
-      withCredentials: true,
-    });
+    const response = await axiosInstance.get("/api/v1/me");
     return response.data.user;
   } catch (error) {
     throw error.response.data;
