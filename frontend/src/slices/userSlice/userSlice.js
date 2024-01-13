@@ -39,7 +39,9 @@ export const verifyUser = createAsyncThunk("user/verify", async ({ token }) => {
 
 export const loginUser = createAsyncThunk("user/login", async (userData) => {
   try {
-    const response = await axiosInstance.post("/api/v1/login", userData);
+    const response = await axiosInstance.post("/api/v1/login", userData, {
+      withCredentials: true,
+    });
     return response.data.user;
   } catch (error) {
     throw error.response.data;
