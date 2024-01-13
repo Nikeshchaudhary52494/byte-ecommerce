@@ -27,15 +27,17 @@ export const registerUser = createAsyncThunk("user/register", async (userData) =
     throw error.response.data;
   }
 });
-
 export const verifyUser = createAsyncThunk("user/verify", async ({ token }) => {
   try {
-    const response = await axiosInstance.get(`/api/v1/verify/${token}`);
+    const response = await axiosInstance.get(`/api/v1/verify/${token}`, {
+      withCredentials: true,
+    });
+
     return response.data.user;
   } catch (error) {
     throw error.response.data;
   }
-})
+});
 
 export const loginUser = createAsyncThunk("user/login", async (userData) => {
   try {
@@ -49,15 +51,19 @@ export const loginUser = createAsyncThunk("user/login", async (userData) => {
 });
 
 export const logoutUser = createAsyncThunk("user/logout", async () => {
-  await axiosInstance.get("/api/v1/logout");
+  await axiosInstance.get("/api/v1/logout", {
+    withCredentials: true,
+  });
 });
 
 export const loadUser = createAsyncThunk("user/load", async () => {
   try {
-    const response = await axiosInstance.get("/api/v1/me");
+    const response = await axiosInstance.get("/api/v1/me", {
+      withCredentials: true,
+    });
     return response.data.user;
   } catch (error) {
-    throw error.response.data
+    throw error.response.data;
   }
 });
 export const updateUserProfile = createAsyncThunk("user/updateuserprofile", async (userData) => {
