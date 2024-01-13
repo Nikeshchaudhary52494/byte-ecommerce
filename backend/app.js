@@ -9,7 +9,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(fileUpload());
 app.use(cors({
-    origin: `${process.env.FRONTEND_BASE_URL}`, 
+    origin: `https://byte-ecommerce.vercel.app`,
     credentials: true,
 }));
 
