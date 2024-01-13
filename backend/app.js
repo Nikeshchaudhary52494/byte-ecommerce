@@ -8,7 +8,10 @@ const cors = require("cors");
 app.use(express.json());
 app.use(cookieParser());
 app.use(fileUpload());
-app.use(cors());
+app.use(cors({
+    origin: 'https://byte-ecommerce.vercel.app', 
+    credentials: true,
+}));
 
 const product = require("./routes/productRoute");
 const user = require("./routes/userRoute");
