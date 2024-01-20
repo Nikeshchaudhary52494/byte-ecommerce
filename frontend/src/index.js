@@ -28,8 +28,8 @@ loadData().then(() => {
         </Router>
         <ToastContainer
           position="bottom-center"
-          limit={1}
-          autoClose={1000}
+          autoClose={1500}
+          limit={2}
           hideProgressBar={false}
           newestOnTop={true}
           closeOnClick

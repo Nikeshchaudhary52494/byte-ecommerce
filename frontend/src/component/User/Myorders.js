@@ -55,36 +55,38 @@ const Myorders = () => {
 
         return (
             <>
-                <div className="overflow-x-auto px-20 pb-20 min-h-screen bg-slate-900">
-                    <h3 className='text-white font-bold text-3xl my-5'>My Orders</h3>
-                    <table {...getTableProps()} className="min-w-full bg-white border border-gray-200">
-                        <thead>
-                            {headerGroups.map(headerGroup => (
-                                <tr {...headerGroup.getHeaderGroupProps()} className="bg-gray-100">
-                                    {headerGroup.headers.map(column => (
-                                        <th {...column.getHeaderProps()} className="py-2 px-4 border-b border-gray-200 text-start">
-                                            {column.render('Header')}
-                                        </th>
-                                    ))}
-                                </tr>
-                            ))}
-                        </thead>
-                        <tbody {...getTableBodyProps()}>
-                            {rows.map(row => {
-                                prepareRow(row);
-                                const rowClassName = row.original.orderStatus === 'Delivered' ? 'bg-green-200' : '';
-                                return (
-                                    <tr {...row.getRowProps()} className={`border-b border-gray-200 ${rowClassName}`}>
-                                        {row.cells.map(cell => (
-                                            <td {...cell.getCellProps()} className="py-2 px-4">
-                                                {cell.render('Cell')}
-                                            </td>
+                <div className="sm:px-20 px-5 pb-20 min-h-screen bg-slate-900">
+                    <h3 className='text-white font-bold text-3xl py-5'>My Orders</h3>
+                    <div className='overflow-x-auto'>
+                        <table {...getTableProps()} className="min-w-full bg-white border border-gray-200">
+                            <thead>
+                                {headerGroups.map(headerGroup => (
+                                    <tr {...headerGroup.getHeaderGroupProps()} className="bg-gray-100">
+                                        {headerGroup.headers.map(column => (
+                                            <th {...column.getHeaderProps()} className="py-2 px-4 border-b border-gray-200 text-start">
+                                                {column.render('Header')}
+                                            </th>
                                         ))}
                                     </tr>
-                                );
-                            })}
-                        </tbody>
-                    </table>
+                                ))}
+                            </thead>
+                            <tbody {...getTableBodyProps()}>
+                                {rows.map(row => {
+                                    prepareRow(row);
+                                    const rowClassName = row.original.orderStatus === 'Delivered' ? 'bg-green-200' : '';
+                                    return (
+                                        <tr {...row.getRowProps()} className={`border-b border-gray-200 ${rowClassName}`}>
+                                            {row.cells.map(cell => (
+                                                <td {...cell.getCellProps()} className="py-2 px-4">
+                                                    {cell.render('Cell')}
+                                                </td>
+                                            ))}
+                                        </tr>
+                                    );
+                                })}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </>
         )

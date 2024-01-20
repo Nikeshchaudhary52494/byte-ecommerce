@@ -26,7 +26,7 @@ const ManageSingleProduct = () => {
 
 
     return (
-        <div className='flex min-h-screen flex-col md:flex-row gap-10 bg-slate-900 justify-center p-10'>
+        <div className='flex min-h-screen flex-col md:flex-row gap-10 bg-slate-900 justify-center p-5'>
             <div className='bg-slate-800 p-8 rounded-lg md:w-[50%] lg:w-[70%] shadow-md'>
                 <div className='flex justify-between items-center '>
                     <h3 className='text-3xl text-cyan-500 font-bold mb-6'>Product Details</h3>

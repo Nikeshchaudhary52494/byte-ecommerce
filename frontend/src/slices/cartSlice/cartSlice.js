@@ -5,7 +5,10 @@ import axiosInstance from "../../store/axiosConfig";
 const cartSlice = createSlice({
     name: "cart",
     initialState: {
-        data: [],
+        data: {
+            products: [],
+            totalPrice: 0
+        },
         shippingData: null,
         status: STATUSES.IDLE,
     },
@@ -25,7 +28,8 @@ const cartSlice = createSlice({
             })
             .addCase(getAllCartProducts.fulfilled, (state, action) => {
                 state.status = STATUSES.IDLE;
-                state.data = action.payload;
+                state.data.products = action.payload.cart;
+                state.data.totalPrice = action.payload.totalPrice;
             })
             .addCase(getAllCartProducts.rejected, (state, action) => {
                 state.status = STATUSES.ERROR;
@@ -44,9 +48,6 @@ const cartSlice = createSlice({
                 state.error = action.error.message;
             })
             // AddCase for removeFromCart
-            .addCase(removeFromCart.pending, (state) => {
-                state.status = STATUSES.LOADING;
-            })
             .addCase(removeFromCart.fulfilled, (state, action) => {
                 state.status = STATUSES.IDLE;
                 state.isProductRemovedFromCart = true;
@@ -69,7 +70,7 @@ const cartSlice = createSlice({
 export const addToCart = createAsyncThunk("cart/addToCart", async ({ userId, productId, quantity }) => {
     try {
         const response = await axiosInstance.post("/api/v1/cart/add", { userId, productId, quantity });
-        return response.data.cart.products;
+        return response.data.cart;
     } catch (error) {
         throw error.response.data;
     }
@@ -85,7 +86,7 @@ export const removeFromCart = createAsyncThunk("cart/removeFromCart", async ({ u
 export const getAllCartProducts = createAsyncThunk("cart/getAllCartProducts", async () => {
     try {
         const response = await axiosInstance.get(`/api/v1/cart`);
-        return response.data.cart;
+        return response.data;
     } catch (error) {
         throw error.response.data;
     }

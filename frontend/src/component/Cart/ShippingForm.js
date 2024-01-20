@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 const ShippingForm = () => {
-    const dispatch = useDispatch();
     const navigate = useNavigate();
     const [shippingInfo, setShippingInfo] = useState({
         address: '',
@@ -76,7 +74,7 @@ const ShippingForm = () => {
                     <div className="flex flex-col">
                         <label className="text-white">Pin Code:</label>
                         <input
-                            type="number"
+                            type="text"
                             name="pinCode"
                             value={shippingInfo.pinCode}
                             onChange={handleInputChange}
@@ -88,7 +86,7 @@ const ShippingForm = () => {
                     <div className="flex flex-col">
                         <label className="text-white">Phone Number:</label>
                         <input
-                            type="number"
+                            type="text"
                             name="phoneNumber"
                             value={shippingInfo.phoneNumber}
                             onChange={handleInputChange}

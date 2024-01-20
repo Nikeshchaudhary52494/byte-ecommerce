@@ -115,7 +115,6 @@ export const getProductDetails = createAsyncThunk('productDetails/fetch', async 
     }
 });
 export const updatedProductStock = createAsyncThunk('products/updateproductstock', async ({ quantityShipped, productId }) => {
-    console.log({ quantityShipped, productId })
     await axiosInstance.put(`/api/v1/product/updatestock`, { quantityShipped, productId });
 })
 export const getProductReviews = createAsyncThunk('products/getProductsreviews', async ({ productId }) => {
@@ -135,7 +134,6 @@ export const deleteProductReviews = createAsyncThunk('products/deleteProductRevi
 });
 export const deleteProduct = createAsyncThunk('products/deleteproduct', async ({ productId }) => {
     try {
-        console.log({ productId });
         await axiosInstance.delete(`/api/v1/admin/product/${productId}`);
     } catch (error) {
         throw error.response.data;

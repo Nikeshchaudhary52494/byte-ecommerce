@@ -4,7 +4,7 @@ import LoggedInComponenet from './LoginUserCart';
 import { useSelector } from 'react-redux';
 
 const Cart = () => {
-    const { isAuthenticated, user } = useSelector((state) => state.user)
+    const { isAuthenticated} = useSelector((state) => state.user)
 
     const location = useLocation()
 

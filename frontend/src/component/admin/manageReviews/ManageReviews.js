@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import ManageReviewTable from './ManageReviewTable';
 import { useDispatch } from 'react-redux';
 import { getProductReviews } from '../../../slices/productSlice/productsSlice';
+import DashboardNavigation from '../../layout/DashboardNavigation';
 
 const ManageReviews = () => {
   const [productId, setProductId] = useState('');
@@ -17,7 +18,8 @@ const ManageReviews = () => {
 
   return (
     <>
-      <div className='p-10 bg-slate-900 min-h-screen'>
+      <div className='pb-10 bg-slate-900 min-h-screen'>
+        <DashboardNavigation />
         <div className='flex flex-col items-center'>
           <p className='font-bold text-3xl text-white'>View Reviews</p>
           <form

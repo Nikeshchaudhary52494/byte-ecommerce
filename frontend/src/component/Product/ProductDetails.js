@@ -98,7 +98,7 @@ const ProductDetails = () => {
           <div className=" md:w-1/2  mx-auto w-[75%] h-[60%] ">
             <Carousel   >
               {product.images && product.images.map((item, i) => (
-                <img className="min-h-50vh" key={item.url} src={item.url} alt="Product" />
+                <img className="h-[50vh] object-contain" key={item.url} src={item.url} alt="Product" />
               ))}
             </Carousel>
           </div>

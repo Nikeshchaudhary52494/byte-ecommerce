@@ -8,7 +8,6 @@ const ManageReviewTable = ({ productId }) => {
     const reviews = useSelector((state) => state.products.productreviewsData.reviews) || [];
     const dispatch = useDispatch();
     const handleDeleteClick = (reviewId) => {
-        console.log(reviewId);
         dispatch(deleteProductReviews({ productId, reviewId })).then(() => {
             dispatch(getProductReviews({ productId }));
         });

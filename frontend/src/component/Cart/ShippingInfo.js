@@ -14,15 +14,16 @@ const ShippingInfo = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { data } = useSelector((state) => state.cart);
+    const { products, totalPrice } = data;
     const { isOrderCreated } = useSelector((state) => state.orders)
     const handelPay = () => {
         const orderData = {
             shippingInfo: parsedShippingData,
-            orderItems: data,
-            paymentInfo: "complate",
-            itemsPrice: data?.totalPrice,
+            orderItems: products,
+            paymentInfo: "Done",
+            itemsPrice: totalPrice,
             shippingPrice: 5,
-            totalPrice: data?.totalPrice + 5,
+            totalPrice: totalPrice + 5,
         }
         console.log({ orderData });
         dispatch(createNewOrder({ orderData }));
@@ -51,7 +52,7 @@ const ShippingInfo = () => {
                             <span className='text-cyan-500 font-bold'>Phone Number:</span><span> {phoneNumber}</span>
                         </p>
                     </div>
-                    <div className='flex justify-between'>
+                    <div className='flex gap-2 text-white font-bold justify-between'>
                         <button
                             onClick={handelPay}
                             className='bg-green-500 p-2 active:bg-green-600 w-40 rounded-md'>

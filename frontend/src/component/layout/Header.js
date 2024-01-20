@@ -7,14 +7,16 @@ import Logo from "../images/byte.png"
 import {
   AiOutlineMenu,
   AiOutlineClose,
-  AiOutlineUser,
 } from "react-icons/ai";
-import { RiArrowDropDownLine } from "react-icons/ri";
+import { FaUser } from "react-icons/fa";
 const Header = () => {
+
   const location = useLocation();
   const navigate = useNavigate();
+
   const { isAuthenticated, user } = useSelector((state) => state.user)
   const [toggle, setToggle] = useState(false);
+
   useEffect(() => {
     const handleScroll = (event) => {
       if (toggle) {
@@ -26,12 +28,13 @@ const Header = () => {
       document.body.removeEventListener("wheel", handleScroll);
     };
   }, [toggle]);
+  
   return (
     <>
       <nav className="bg-slate-200 dark:bg-slate-800 dark:text-white sticky  top-0 z-10">
         <div className="lg:w-full w-3/4 mx-auto">
           <div className="max-w-5xl p-4 mx-auto flex justify-between items-center ">
-            <img className="w-24" src={Logo} alt="BYTE" />
+            <img onClick={() => navigate("/")} className="w-24 cursor-pointer mr-2" src={Logo} alt="BYTE" />
             <div className=" hidden md:block ">
               <SearchBar />
             </div>
@@ -41,7 +44,7 @@ const Header = () => {
               {
 
                 isAuthenticated ? (
-                  <div onClick={() => navigate("/user/profile", { state: location.pathname })} className='w-10 h-10 rounded-full overflow-hidden'>
+                  <div onClick={() => navigate("/user/profile", { state: location.pathname })} className='w-10 cursor-pointer h-10 rounded-full overflow-hidden'>
                     <img
                       className='w-full h-full object-cover' src={user.avatar.url}
                       alt="user profile" />
@@ -49,9 +52,8 @@ const Header = () => {
                 ) : (
                   <Link to="/user/login" state={location.pathname}>
                     <div className="flex items-center text-xl  h-10 cursor-pointer">
-                      <AiOutlineUser />
-                      <span>Login</span>
-                      <RiArrowDropDownLine />
+                      <FaUser className="text-sm" />
+                      <span className="xs:text-base text-xs">Login</span>
                     </div>
                   </Link>
                 )

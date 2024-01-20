@@ -102,7 +102,7 @@ const UpdateProduct = () => {
     }
 
     return (
-        <div className="bg-slate-800 p-10 rounded-lg text-white">
+        <div className="bg-slate-800 p-5 border rounded-lg text-white">
             <h3 className="text-xl mb-4 text-cyan-500 font-bold text-center">Edit Product Details</h3>
             <form
                 className="flex gap-4 items-center text-black flex-col"
@@ -186,7 +186,7 @@ const UpdateProduct = () => {
                     type="submit"
                     whileTap={{ scale: 0.9 }}
                     transition={{ duration: 0.5 }}
-                    className="w-[300px]  h-[40px] hover:bg-teal-700 bg-teal-600 rounded-lg"
+                    className="w-[300px]  h-[40px] hover:bg-teal-700 bg-teal-600 rounded-sm"
                 />
             </form>
         </div>

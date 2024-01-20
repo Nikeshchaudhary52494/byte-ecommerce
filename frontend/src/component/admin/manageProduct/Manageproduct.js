@@ -1,12 +1,14 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import ManageProductTable from './ManageProductTable';
+import DashboardNavigation from '../../layout/DashboardNavigation';
 
 const Manageproduct = () => {
   const navigate = useNavigate();
   return (
     <>
-      <div className='bg-slate-900 min-h-screen py-10'>
+      <div className='bg-slate-900 min-h-screen pb-10'>
+        <DashboardNavigation />
         <div className='max-w-5xl mx-auto mb-20'>
           <button
             onClick={() => navigate('/admin/manageproduct/addproduct')}

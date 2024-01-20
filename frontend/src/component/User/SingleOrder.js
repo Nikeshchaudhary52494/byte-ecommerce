@@ -14,13 +14,15 @@ const SingleOrder = () => {
     const { id } = useParams();
 
     useEffect(() => {
-        if (order == [])
+        if (order.length === 0) {
             dispatch(getSingleOrder(id));
-    }, [dispatch, id]);
+        }
+    }, [dispatch, id, order]);
+
 
     return (
         <div className='bg-slate-900'>
-            <div className="flex gap-10 flex-col md:w-[70%] text-white p-10 min-h-screen overflow-y-auto">
+            <div className="flex gap-10 flex-col text-white p-10 min-h-screen">
                 <div>
                     <p className="text-3xl font-bold text-cyan-500">Shipping Info:</p>
                     <p>{`Address: ${address} | ${state} | ${country}`}</p>
@@ -35,15 +37,20 @@ const SingleOrder = () => {
                     <p className="text-3xl font-bold text-cyan-500">Order Status:</p>
                     <p>{order?.orderStatus}</p>
                 </div>
-                <div>
-                    <p className="text-3xl font-bold text-cyan-500">Items:</p>
+                <p className="text-3xl font-bold text-cyan-500 ">Items:</p>
+                <div className='flex flex-col gap-2'>
                     {orderItems && orderItems.map((item) => (
-                        <div onClick={() => navigate(`/product/${item.productId}`)} className='flex gap-10 lg:flex-row  rounded-md bg-slate-800 p-1 border-2 my-1' key={item.product}>
-                            <img className='w-20 h-20 object-cover rounded-md ' src={item.image} alt="product" />
+                        <div
+                            onClick={() => navigate(`/product/${item.productId}`)}
+                            key={item.product}
+                            className='flex px-4 pt-2 pb-4 xs:flex-row flex-col gap-10 rounded-md bg-slate-800'>
+                            <div className='bg-white p-2 flex-shrink-0 rounded-md'>
+                                <img className='xs:h-min mx-auto xs:mx-0 xs:w-20 h-40 object-cover' src={item.image} alt='product' />
+                            </div>
                             <div>
-                                <p className='text-white font-bold '>{item.name}</p>
+                                <p className='text-white text-xl'>{item.name}</p>
                                 <p className='text-slate-400 text-xs'>#{item.productId}</p>
-                                <p className=' text-orange-500'>
+                                <p className=' text-orange-500 font-bold'>
                                     ${item.price} <span className='text-white'> x {item.quantity}</span> =  ${item.price * item.quantity}
                                 </p>
                             </div>

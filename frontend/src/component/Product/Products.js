@@ -5,6 +5,7 @@ import { STATUSES } from '../../store/statuses';
 import ProductCard from "../layout/ProductCard";
 import { FaFilter } from "react-icons/fa"
 import ProductFilter from "./productFilter.js";
+import NoProductAvailable from "../layout/NoProductAvailable.js";
 
 const Products = () => {
 
@@ -33,7 +34,7 @@ const Products = () => {
     return (
         <>
             {/* filter option */}
-            <div onClick={() => setToggleFilter(!toggleFilter)} className="bg-blue-600  m-2 fixed flex  gap-5 items-center justify-center text-white rounded-full p-2 sm:px-4 sm:py-2">
+            <div onClick={() => setToggleFilter(!toggleFilter)} className="bg-blue-600  cursor-pointer m-2 fixed flex  gap-5 items-center justify-center text-white rounded-full p-2 sm:px-4 sm:py-2">
                 < FaFilter />
                 <p className=" sm:block hidden">Filters</p>
             </div>
@@ -42,13 +43,13 @@ const Products = () => {
                     <ProductFilter toggleFilter={toggleFilter} setToggleFilter={setToggleFilter} />
                 </div>
             </div>
-            <div
+            {products.length === 0 ? <NoProductAvailable /> : <div
                 class="flex mx-auto max-w-[80%] justify-center flex-wrap"
             >
                 {products && products.map((product) => (
                     <ProductCard key={product._id} product={product} />
                 ))}
-            </div>
+            </div>}
         </>
     )
 }

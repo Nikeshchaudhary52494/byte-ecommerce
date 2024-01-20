@@ -62,7 +62,7 @@ const Home = () => {
         ))}
       </div>
       <div className="flex justify-center   my-5">
-        <button className="p-2  bg-blue-500 rounded-md active:bg-blue-700 text-white font-bold " onClick={() => navigate('/products')}>Show More</button>
+        <button className="p-2  bg-blue-500 rounded-md active:bg-blue-700 text-white font-bold " onClick={() => navigate('/products')}>Load More</button>
       </div>
       <Footer />
     </>

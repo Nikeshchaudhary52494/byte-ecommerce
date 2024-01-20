@@ -73,21 +73,24 @@ exports.getCartProducts = catchAsyncErrors(async (req, res, next) => {
         if (!cart) {
             return next(new ErrorHandler('Cart not found for the specified user', 404));
         }
+        let totalPrice = 0;
         const cartProducts = cart.products.map(cartProduct => {
             const { productId, quantity } = cartProduct;
             const { _id, name, price, images } = productId;
+            totalPrice += price;
             return {
                 productId: _id,
                 name,
                 price,
                 image: images[0].url,
-                quantity
+                quantity,
             };
         });
 
         res.status(200).json({
             success: true,
             cart: cartProducts,
+            totalPrice,
         });
     } catch (error) {
         console.error('Error retrieving cart products:', error);

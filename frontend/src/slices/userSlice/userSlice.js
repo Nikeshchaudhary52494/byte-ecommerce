@@ -74,7 +74,6 @@ export const forgotPassword = createAsyncThunk("user/forgetpassword", async ({ e
   await axiosInstance.post("/api/v1/password/forgot", { email });
 })
 export const resetPassword = createAsyncThunk("user/resetpassword", async ({ token, passwordData }) => {
-  console.log(token)
   await axiosInstance.put(`/api/v1/password/reset/${token}`, passwordData);
 })
 const userSlice = createSlice({

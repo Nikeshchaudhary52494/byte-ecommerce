@@ -18,7 +18,19 @@ exports.registerUser = catchAsyncErrors(async (req, res, next) => {
         const { name, email, password } = req.body;
         const verificationToken = crypto.randomBytes(20).toString('hex');
         const verificationLink = `https://byte-ecommerce.vercel.app/user/verify/${verificationToken}`;
-        const message = `Click on the following link to verify your email: ${verificationLink}`;
+        const message = `Hello,
+
+        Welcome to Byte Ecommerce! To complete your registration, please click on the following link to verify your email:
+        
+        ${verificationLink}
+        
+        This step ensures the security of your account and allows you to access all our features. If you didn't sign up for an account with us, you can safely ignore this email.
+        
+        Thank you for choosing Byte Ecommerce!
+        
+        Best regards,
+        Byte Ecommerce Team`;
+
         const user = await User.create({
             name,
             email,
@@ -52,7 +64,7 @@ exports.verifyUser = catchAsyncErrors(async (req, res, next) => {
         verificationToken: token
     });
     if (!user) {
-        return next(new ErrorHandler('Invalid Token. Please check and try again.', 400));
+        return next(new ErrorHandler('Invalid token. Please check and try again.', 400));
     }
     if (user.verified) {
         return next(new ErrorHandler('User is already verified.', 400));
@@ -68,13 +80,13 @@ exports.loginUser = catchAsyncErrors(async (req, res, next) => {
 
     // checking if user has given password and email both
     if (!email || !password) {
-        return next(new ErrorHandler("please Enter Email and Password", 400))
+        return next(new ErrorHandler("Please enter email and password", 400));
     }
 
     // all the details of the current login user is saved in user
     const user = await User.findOne({ email: email }).select("+password");
     if (!user) {
-        return next(new ErrorHandler('inValid Email and Password', 401));
+        return next(new ErrorHandler('Invalid email and password', 401));
     }
     if (!user.verified) {
         return next(new ErrorHandler('Please verify your account before logging in.', 401));
@@ -82,7 +94,7 @@ exports.loginUser = catchAsyncErrors(async (req, res, next) => {
     const isPasswordMatched = await user.comparePassword(password);
 
     if (!isPasswordMatched) {
-        return next(new ErrorHandler('inValid Email and Password', 401));
+        return next(new ErrorHandler('Invalid email and password', 401));
     }
     sendToken(user, 200, res);
 
@@ -119,13 +131,22 @@ exports.forgotPassword = catchAsyncErrors(async (req, res, next) => {
     await user.save({ validateBeforeSave: false })
     const resetPasswordUrl = `https://byte-ecommerce.vercel.app/password/reset/${resetToken}`;
 
-    const messgae = `your password reset token is:- \n\n ${resetPasswordUrl} \n if you have not requested this email then,please ignore it`
+    const message = `Hello,
+
+    We received a request to reset your password. If you initiated this request, please click on the following link to reset your password:
+    
+    ${resetPasswordUrl}
+
+    If you did not request a password reset, you can safely ignore this email. Your account security is important to us.
+    
+    Best regards,
+    Byte Ecommerce`;
 
     try {
         await sendEmail({
             email: user.email,
             subject: "Ecommerce Password recovery",
-            messgae,
+            message,
         })
 
         res.status(200).json({
@@ -197,7 +218,6 @@ exports.updateUserPassword = catchAsyncErrors(async (req, res, next) => {
 // Update User Profile
 exports.updateUserProfile = catchAsyncErrors(async (req, res, next) => {
     const image = req.files?.avatar;
-    console.log(req.body)
     let newUserData;
     const { name, email, oldAvatarUrl, oldAvatarPublicId } = req.body;
     if (image) {

@@ -16,7 +16,6 @@ const ManageOrdersTable = () => {
     };
 
     const handleDeleteClick = (orderId) => {
-        console.log(orderId);
         dispatch(deleteOrder(orderId)).then(() => {
             dispatch(getAllOrders());
         });

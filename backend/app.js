@@ -8,8 +8,18 @@ const cors = require("cors");
 app.use(express.json());
 app.use(cookieParser());
 app.use(fileUpload());
+
 app.use(cors({
-    origin: `https://byte-ecommerce.vercel.app`,
+    origin: (origin, callback) => {
+        const allowedOrigins = ['http://localhost:3000', 'https://byte-ecommerce.vercel.app'];
+        const isAllowedOrigin = allowedOrigins.includes(origin) || !origin;
+
+        if (isAllowedOrigin) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
     credentials: true,
 }));
 

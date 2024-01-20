@@ -49,8 +49,8 @@ const Login = () => {
 
   return (
     <>
-      <div class="grid bg-slate-900 h-[100vh]  fixed z-20 top-0 left-0 w-[100vw] place-content-center">
-        <div class="bg-slate-800 p-10 rounded-lg text-white">
+      <div className="bg-slate-900 flex flex-col items-center justify-center inset-0 z-10 fixed">
+        <div class="bg-slate-800 px-5 py-10 rounded-lg text-white">
           <div class="px-4" >
             <img className='w-24' src={Logo} alt="Byte logo" />
 
@@ -76,7 +76,6 @@ const Login = () => {
             <motion.input
               type="submit"
               whileTap={{ scale: 0.9 }}
-              whileHover={{ scale: 1.1 }}
               transition={{ duration: .5 }}
               class="w-[300px] m-2 h-[40px] hover:bg-teal-700 text-white bg-teal-600 rounded-lg" />
           </form>
@@ -94,9 +93,11 @@ const Login = () => {
             </Link>
           </div>
         </div>
-        <Link to="/" >
-          <button class="text-white p-2 mt-5"  >Go to Home</button>
-        </Link>
+        <div className='w-full max-w-sm px-4'>
+          <Link to="/" >
+            <button class="text-white  p-2 mt-5"  >Go to Home</button>
+          </Link>
+        </div>
       </div>
     </>
   )

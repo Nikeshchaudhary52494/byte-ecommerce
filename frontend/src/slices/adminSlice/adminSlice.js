@@ -110,7 +110,6 @@ export const createProduct = createAsyncThunk('admin/createproducts', async (pro
 });
 export const updatedProduct = createAsyncThunk('admin/updateproduct', async ({ _id, productData }) => {
     try {
-        console.log(_id)
         await axiosInstance.put(`/api/v1/admin/product/${_id}`, productData);
     } catch (error) {
         throw error.response.data;

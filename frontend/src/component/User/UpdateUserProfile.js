@@ -23,7 +23,6 @@ const UpdateUserProfile = () => {
         oldAvatarPunlicId: ""
     });
     const [avatarPreview, setAvatarPreview] = useState("");
-    console.log(`this is the url${user.oldAvatarUrl}`);
     useEffect(() => {
         if (!user) {
             dispatch(loadUser());

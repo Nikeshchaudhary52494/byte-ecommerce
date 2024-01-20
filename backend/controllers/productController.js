@@ -54,9 +54,7 @@ exports.getAdminProducts = catchAsyncErrors(async (req, res, next) => {
 });
 
 exports.updatedProductStock = catchAsyncErrors(async (req, res, next) => {
-  console.log(`this is body content${req.body}`)
   const { quantityShipped, productId } = req.body;
-  console.log({ quantityShipped, productId });
   let product = await Product.findById(productId);
   if (!product) {
     return res.status(500).json({
@@ -89,7 +87,6 @@ exports.updateProduct = catchAsyncErrors(async (req, res, next) => {
     }
     req.body.images = uploadedImages;
   }
-  console.log(req.params.id);
   let product = await Product.findById(req.params.id);
   if (!product) {
     return res.status(500).json({

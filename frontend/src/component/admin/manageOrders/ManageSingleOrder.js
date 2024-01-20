@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {  useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { getSingleOrder } from '../../../slices/orderSlice/orderSlice';
 import { STATUSES } from '../../../store/statuses';
 import Loader from '../../layout/Loader/Loader';
@@ -50,12 +50,12 @@ const ManageSingleOrder = () => {
 
     return (
         <div className="min-h-screen bg-slate-900 flex md:flex-row flex-col-reverse">
-            <div className='w-[70%]'>
+            <div className='md:w-[70%]'>
                 <SingleOrder />
             </div>
             <div className='border-l border-s-slate-700 p-10'>
                 <p className='text-cyan-500 font-bold text-3xl mb-3'>Update Order Status:</p>
-                <select className='bg-slate-800 text-white p-2 mx-2 rounded'
+                <select className='bg-slate-800 text-white p-2 mr-2 rounded'
                     onChange={(e) => setSelectedOrderStatus(e.target.value)}>
                     <option value="">Choose status</option>
                     {order?.orderStatus === "processing" && (

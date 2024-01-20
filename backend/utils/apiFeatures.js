@@ -8,16 +8,26 @@ class ApiFeatures {
   search() {
     const keyword = this.querySrt.keyword
       ? {
-        name: {
-          $regex: this.querySrt.keyword,
-          $options: "i",
-        },
+        $or: [
+          {
+            name: {
+              $regex: this.querySrt.keyword,
+              $options: "i",
+            },
+          },
+          {
+            category: {
+              $regex: this.querySrt.keyword,
+              $options: "i",
+            },
+          },
+        ],
       }
       : {};
-
     this.query = this.query.find({ ...keyword });
     return this;
   }
+
   condition() {
     const condition = this.querySrt.condition
       ? { itemCondition: this.querySrt.condition }

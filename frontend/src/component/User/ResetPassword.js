@@ -9,16 +9,13 @@ const ResetPassword = () => {
     const [confirmNewPassword, setConfirmNewPassword] = useState("");
     const dispatch = useDispatch();
     const { token } = useParams();
-    console.log(token)
     const navigate = useNavigate();
 
     const handleSubmit = (e) => {
         e.preventDefault();
         if (newPassword !== confirmNewPassword) {
-            console.log("Passwords do not match");
             return;
         }
-        console.log({ newPassword, confirmNewPassword })
         const passwordData = new FormData();
         passwordData.append("password", newPassword);
         passwordData.append("confirmPassword", confirmNewPassword);

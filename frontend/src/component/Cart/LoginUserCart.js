@@ -1,4 +1,4 @@
-import React, { useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllCartProducts, removeFromCart, resetIsProductRemovedFromCart } from '../../slices/cartSlice/cartSlice';
 import CartItemCard from './CartItemCard';
@@ -12,9 +12,7 @@ const LoginUserCart = () => {
     const navigate = useNavigate();
 
     const { data, status, isProductRemovedFromCart } = useSelector((state) => state.cart);
-
-    const totalPrice = data.reduce((acc, product) => acc + product.price, 0);
-
+    const { products, totalPrice } = data;
     const removeProductFromCart = (productId) => {
         dispatch(removeFromCart({ productId }));
     }
@@ -50,12 +48,12 @@ const LoginUserCart = () => {
                     </div>
                     <div className='flex flex-col justify-center items-center my-2 min-h-44 rounded-md p-5'>
                         {
-                            data.map((product) => (
+                            products.map((product) => (
                                 < CartItemCard key={product.productId} product={product} removeProductFromCart={removeProductFromCart} />
                             ))
                         }
                     </div>
-                    {data.length > 0 ?
+                    {products.length > 0 ?
                         <div className='text-right p-5'>
                             <p>Total price: <span className='text-orange-500 font-bold text-xl'>${totalPrice}</span></p>
                             <button onClick={handelCheckout} className='bg-orange-400 p-2'>CheckOut</button>

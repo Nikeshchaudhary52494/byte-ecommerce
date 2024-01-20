@@ -36,15 +36,19 @@ const ProductFilter = ({ toggleFilter, setToggleFilter }) => {
         setRatings(Number(event.target.value));
     };
     const handelSubmit = () => {
-        console.log({ price, ratings, itemCondition });
         dispatch(setFilters({ price, ratings, itemCondition }))
         if (categoryName)
             dispatch(fetchProducts2({ price, ratings, itemCondition, categoryName }))
         else
             dispatch(fetchProducts2({ price, ratings, itemCondition }))
     }
+    const handelReset = () => {
+        setToggleFilter(!toggleFilter);
+        dispatch(setFilters({ price: [0, 2500], ratings: 0, itemCondition: '' }));
+        dispatch(fetchProducts2({ price: [0, 2500], ratings: 0, itemCondition: '', categoryName }));
+    };
     return (
-        <div className='flex items-center flex-col h-screen justify-center'>
+        <div className='flex px-2 items-center flex-col h-screen justify-center'>
             <div className='bg-slate-700 w-full text-white flex flex-col max-w-md rounded-lg p-10'>
                 <p className='text-white'>Price:</p>
                 <Slider
@@ -63,8 +67,8 @@ const ProductFilter = ({ toggleFilter, setToggleFilter }) => {
                         value={itemCondition}
                         onChange={handleItemConditionChange} >
                         <FormControlLabel value="" control={<Radio />} label="Both" />
-                        <FormControlLabel value="new" control={<Radio />} label="New" />
-                        <FormControlLabel value="rewnewed" control={<Radio />} label="Renewed" />
+                        <FormControlLabel value="New" control={<Radio />} label="New" />
+                        <FormControlLabel value="Renewed" control={<Radio />} label="Renewed" />
                     </RadioGroup>
                 </FormControl>
                 <FormControl>
@@ -82,7 +86,10 @@ const ProductFilter = ({ toggleFilter, setToggleFilter }) => {
                     </RadioGroup>
                 </FormControl>
                 {/* Search Button */}
-                <button onClick={() => { setToggleFilter(!toggleFilter); handelSubmit() }} className='bg-green-600 py-2 px-3 w-40 mt-10 rounded-md'>Search</button>
+                <div className='flex gap-2 justify-between'>
+                    <button onClick={() => { setToggleFilter(!toggleFilter); handelSubmit() }} className='bg-green-600 py-2 px-3 w-40 mt-10 rounded-md'>Search</button>
+                    <button onClick={handelReset} className='bg-red-400 py-2 px-3 w-40 mt-10 rounded-md'>Reset</button>
+                </div>
             </div>
         </div>
     );

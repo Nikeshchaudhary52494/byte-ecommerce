@@ -27,14 +27,17 @@ const SignUp = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(user.name)
-        console.log(user.avatar)
-        const formData = new FormData();
-        formData.append('name', user.name);
-        formData.append('email', user.email);
-        formData.append('password', user.password);
-        formData.append('image', user.avatar);
-        dispatch(registerUser(formData));
+        if (user.avatar === null) {
+            toast.error('Please choose a user profile');
+        }
+        else {
+            const formData = new FormData();
+            formData.append('name', user.name);
+            formData.append('email', user.email);
+            formData.append('password', user.password);
+            formData.append('image', user.avatar);
+            dispatch(registerUser(formData));
+        }
     };
 
     const registerDataChange = (e) => {
@@ -60,7 +63,7 @@ const SignUp = () => {
         if (isVerificationEmailSend) {
             toast.success("verification link send");
             dispatch(resetIsVerificationEmailSend());
-            navigate("/user/verify");
+            navigate("/user/verifymessage");
         }
         if (error) {
             toast.error(error);
@@ -69,15 +72,15 @@ const SignUp = () => {
     }, [navigate, isAuthenticated, location, error, isVerificationEmailSend, dispatch])
 
     if (status === STATUSES.LOADING) {
-        return <div className="w-full bg-slate-900 grid place-content-center h-[80vh] ">
+        return <div className="w-full bg-slate-900 grid place-content-center h-screen ">
             <Loader />
         </div>
     }
 
     return (
         <>
-            <div className="grid bg-slate-900 h-[100vh]  fixed z-20 top-0 left-0 w-[100vw] place-content-center">
-                <div className="bg-slate-800 p-10 rounded-lg text-white">
+            <div className="bg-slate-900 flex flex-col items-center justify-center inset-0 z-10 fixed">
+                <div className="bg-slate-800 px-5 py-10 rounded-lg text-white">
                     <div className="px-4" >
                         <img className='w-24' src={Logo} alt="Byte logo" />
                         <h3 className="text-xl mb-4 ">Sign UP</h3>
@@ -124,7 +127,6 @@ const SignUp = () => {
                                 <span class="md:hidden">Upload</span>
                             </label>
                             <input
-                                required
                                 id='fileInput'
                                 className='hidden '
                                 type="file"
@@ -144,9 +146,11 @@ const SignUp = () => {
                         </p>
                     </Link>
                 </div >
-                <Link to="/" >
-                    <button className="text-white p-2 mt-5"  >Go to Home</button>
-                </Link>
+                <div className='w-full max-w-sm px-4'>
+                    <Link to="/" >
+                        <button class="text-white  p-2 mt-5"  >Go to Home</button>
+                    </Link>
+                </div>
             </div >
         </>
     )
