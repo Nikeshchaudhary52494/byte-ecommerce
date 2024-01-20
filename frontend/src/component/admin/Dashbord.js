@@ -28,7 +28,7 @@ const Dashbord = () => {
     }, [dispatch])
 
     if (status === STATUSES.LOADING) {
-        return <div class="w-full grid place-content-center h-[80vh] ">
+        return <div class="w-full grid place-content-center h-screen ">
             <Loader />
         </div>
     }

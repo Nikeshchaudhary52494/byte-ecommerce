@@ -3,44 +3,53 @@ import { motion } from "framer-motion"
 import { useDispatch } from 'react-redux'
 import { fetchProducts2, setCategory } from '../../slices/productSlice/productsSlice';
 import { useNavigate } from 'react-router-dom';
+import book from "../images/book.jpg"
+import phone from "../images/iphone.webp"
+import laptop from "../images/airbook.webp"
+import sound from "../images/headPhone.webp"
+import mopper from "../images/mopper.webp"
+import shirt from "../images/shirt.jpg"
+import teddy from "../images/teddy.webp"
+import watch from "../images/watch2.jpg"
+import sofa from "../images/sofa.avif"
 
 const CategoriesList = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const categoriesList = [{
-        imgAddress: "https://m.media-amazon.com/images/I/315vs3rLEZL._SY445_SX342_QL70_FMwebp_.jpg",
+        imgAddress: phone,
         categoryName: "Phone"
     },
     {
-        imgAddress: "https://m.media-amazon.com/images/I/316ArzLeJ2L._SY445_SX342_QL70_FMwebp_.jpg",
+        imgAddress: laptop,
         categoryName: "Laptop"
     },
     {
-        imgAddress: "https://m.media-amazon.com/images/I/61Xv6ytnYiL._UY741_.jpg",
+        imgAddress: shirt,
         categoryName: "Fashion"
     },
     {
-        imgAddress: "https://m.media-amazon.com/images/I/31zwQpCoUTL._SX300_SY300_QL70_FMwebp_.jpg",
+        imgAddress: mopper,
         categoryName: "HouseHolds"
     },
     {
-        imgAddress: "https://m.media-amazon.com/images/I/61ZrPtiuqSL._SY450_.jpg",
+        imgAddress: watch,
         categoryName: "Watches"
     },
     {
-        imgAddress: "https://img.freepik.com/premium-photo/white-leather-sofa-white-background-isolated-3d-illustration_356060-3780.jpg",
+        imgAddress: sofa,
         categoryName: "Furnitures"
     },
     {
-        imgAddress: "https://rukminim2.flixcart.com/flap/128/128/image/dff3f7adcf3a90c6.png?q=100",
+        imgAddress: teddy,
         categoryName: "Toys & kids"
     },
     {
-        imgAddress: "https://www.headphonezone.in/cdn/shop/products/Headphone-Zone-Sony-WH-XB910N-Blue-01.jpg?v=1656404563&width=800",
+        imgAddress: sound,
         categoryName: "Sound"
     }, {
-        imgAddress: "https://clipart-library.com/img/1163422.jpg",
+        imgAddress: book,
         categoryName: "Books"
     }
     ]

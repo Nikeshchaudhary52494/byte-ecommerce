@@ -8,6 +8,7 @@ import SingleOrder from '../../User/SingleOrder';
 import { resetIsOrderStatusUpdated, updateOrderStatus } from '../../../slices/adminSlice/adminSlice';
 import { toast } from 'react-toastify';
 import { updatedProductStock } from '../../../slices/productSlice/productsSlice';
+import SingleOrderDetails from '../../layout/SingleOrderDetails';
 
 const ManageSingleOrder = () => {
     const dispatch = useDispatch();
@@ -51,7 +52,7 @@ const ManageSingleOrder = () => {
     return (
         <div className="min-h-screen bg-slate-900 flex md:flex-row flex-col-reverse">
             <div className='md:w-[70%]'>
-                <SingleOrder />
+                <SingleOrderDetails />
             </div>
             <div className='border-l border-s-slate-700 p-10'>
                 <p className='text-cyan-500 font-bold text-3xl mb-3'>Update Order Status:</p>
