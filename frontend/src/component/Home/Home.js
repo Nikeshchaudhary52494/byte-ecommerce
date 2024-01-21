@@ -31,7 +31,7 @@ const Home = () => {
 
       {/* Categories at the Top */}
       <div className="md:flex overflow-x-scroll overflow-y-hidden hidden">
-        <div className="border pl-4 space-x-4 flex">
+        <div className="px-4 space-x-4 flex mx-auto">
           <CategoriesList />
         </div>
       </div>
