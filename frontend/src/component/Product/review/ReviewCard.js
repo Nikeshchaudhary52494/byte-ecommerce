@@ -15,7 +15,7 @@ const ReviewCard = ({ review }) => {
 
   return (
 
-    <div className="flex flex-col shadow-sm bg-slate-100 rounded-lg max-w-md p-10 sm:3/4">
+    <div className="flex flex-col shadow-sm bg-slate-100 rounded-lg max-w-md p-10 w-full sm:3/4">
       <div className="flex justify-left mb-4 items-center">
         <img className="h-14 w-14 mr-4 object-cover rounded-full" src={review.avatar} alt="User" />
         <div>
