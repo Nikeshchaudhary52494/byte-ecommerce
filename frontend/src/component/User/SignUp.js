@@ -11,7 +11,7 @@ import { STATUSES } from '../../store/statuses'
 
 
 const SignUp = () => {
-    const { isVerificationEmailSend, isAuthenticated, error, status } = useSelector((state) => state.user)
+    const { isEmailSend, isAuthenticated, error, status } = useSelector((state) => state.user)
     const navigate = useNavigate();
     const location = useLocation();
     const dispatch = useDispatch();
@@ -60,7 +60,7 @@ const SignUp = () => {
         if (isAuthenticated) {
             navigate("/");
         }
-        if (isVerificationEmailSend) {
+        if (isEmailSend) {
             toast.success("verification link send");
             dispatch(resetIsEmailSend());
             navigate("/user/verifymessage");
@@ -69,7 +69,7 @@ const SignUp = () => {
             toast.error(error);
             dispatch(resetError());
         }
-    }, [navigate, isAuthenticated, location, error, isVerificationEmailSend, dispatch])
+    }, [navigate, isAuthenticated, location, error, isEmailSend, dispatch])
 
     if (status === STATUSES.LOADING)
         return <Loader />

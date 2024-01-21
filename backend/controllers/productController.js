@@ -2,7 +2,7 @@ const Product = require("../models/productModel");
 const ErrorHandler = require("../utils/errorhandler");
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const ApiFeatures = require("../utils/apiFeatures");
-const cloudinary = require("cloudinary")
+const cloudinary = require("cloudinary").v2
 
 // create product -- Admin
 exports.createProduct = catchAsyncErrors(async (req, res, next) => {
@@ -11,7 +11,7 @@ exports.createProduct = catchAsyncErrors(async (req, res, next) => {
   const uploadedImages = [];
   for (const file of fileArray) {
     const fileUri = getDataUri(file);
-    const myCloud = await cloudinary.uploader.upload(fileUri.content, { folder: 'uploads' });
+    const myCloud = await cloudinary.uploader.upload(fileUri.content, { folder: 'ByteProducts' });
     uploadedImages.push({
       public_id: myCloud.public_id,
       url: myCloud.url,

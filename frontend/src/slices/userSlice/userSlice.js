@@ -71,7 +71,11 @@ export const updatepassword = createAsyncThunk('user/updatepassword', async (pas
   }
 });
 export const forgotPassword = createAsyncThunk("user/forgetpassword", async ({ email }) => {
-  await axiosInstance.post("/api/v1/password/forgot", { email });
+  try {
+    await axiosInstance.post("/api/v1/password/forgot", { email });
+  } catch (error) {
+    throw error.response.data;
+  }
 })
 export const resetPassword = createAsyncThunk("user/resetpassword", async ({ token, passwordData }) => {
   await axiosInstance.put(`/api/v1/password/reset/${token}`, passwordData);
@@ -128,6 +132,7 @@ const userSlice = createSlice({
         state.status = STATUSES.IDLE;
       })
       .addCase(forgotPassword.rejected, (state, action) => {
+        console.log(action.error);
         state.error = action.error;
         state.status = STATUSES.ERROR;
       })

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { forgotPassword, resetIsEmailSend } from '../../slices/userSlice/userSlice';
+import { forgotPassword, resetError, resetIsEmailSend } from '../../slices/userSlice/userSlice';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { STATUSES } from '../../store/statuses';
@@ -8,7 +8,7 @@ import Loader from '../layout/Loader/Loader';
 
 const ForgetPassword = () => {
 
-    const { status, isEmailSend } = useSelector((state) => state.user);
+    const { status, isEmailSend, error } = useSelector((state) => state.user);
 
     const [email, setEmail] = useState("");
     const dispatch = useDispatch();
@@ -25,7 +25,11 @@ const ForgetPassword = () => {
             navigate("/forgetpasswordmessage");
             toast.success("Token sent to your email");
         }
-    })
+        if (error) {
+            toast.error(error.message);
+            dispatch(resetError());
+        }
+    }, [navigate, dispatch, error, isEmailSend])
 
     if (status === STATUSES.LOADING)
         return <Loader />
@@ -40,7 +44,7 @@ const ForgetPassword = () => {
                     onSubmit={handleSubmit}>
                     <input
                         className='p-2 rounded-md w-64 outline-none'
-                        type="text"
+                        type="email"
                         required
                         placeholder="Email"
                         value={email}

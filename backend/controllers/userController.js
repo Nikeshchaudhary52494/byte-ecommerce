@@ -4,7 +4,7 @@ const User = require("../models/userModel");
 const { sendToken } = require("../utils/jwtToken");
 const { sendEmail } = require("../utils/sendEmail");
 const crypto = require("crypto")
-const cloudinary = require("cloudinary");
+const cloudinary = require("cloudinary").v2;
 const getDataUri = require("../utils/dataUri");
 const Cart = require("../models/cartModel");
 
@@ -22,7 +22,7 @@ exports.registerUser = catchAsyncErrors(async (req, res, next) => {
 
         const image = req.files.image;
         const fileUri = getDataUri(image);
-        myCloud = await cloudinary.uploader.upload(fileUri.content);
+        myCloud = await cloudinary.uploader.upload(fileUri.content, { folder: "ByteUsers" });
         const { name, email, password } = req.body;
         const verificationToken = crypto.randomBytes(20).toString('hex');
         const verificationLink = `https://byte-ecommerce.vercel.app/user/verify/${verificationToken}`;
