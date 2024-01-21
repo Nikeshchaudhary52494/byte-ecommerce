@@ -12,6 +12,14 @@ const Cart = require("../models/cartModel");
 exports.registerUser = catchAsyncErrors(async (req, res, next) => {
     let myCloud;
     try {
+        const existingUser = await User.findOne({ email: req.body.email });
+        if (existingUser) {
+            return res.status(400).json({
+                success: false,
+                message: "Email is already registered. Please use a different email address.",
+            });
+        }
+
         const image = req.files.image;
         const fileUri = getDataUri(image);
         myCloud = await cloudinary.uploader.upload(fileUri.content);

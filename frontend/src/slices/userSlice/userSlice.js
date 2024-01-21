@@ -90,8 +90,8 @@ const userSlice = createSlice({
     resetIspasswordUpdated: (state, action) => {
       state.isPasswordUpdated = null;
     },
-    resetIsVerificationEmailSend: (state, action) => {
-      state.isVerificationEmailSend = null;
+    resetIsEmailSend: (state, action) => {
+      state.isEmailSend = null;
     },
     resetIsVerified: (state, action) => {
       state.isVerified = null;
@@ -104,7 +104,7 @@ const userSlice = createSlice({
     builder
       .addCase(registerUser.pending, setLoadingState)
       .addCase(registerUser.fulfilled, (state, action) => {
-        state.isVerificationEmailSend = true;
+        state.isEmailSend = true;
         state.status = STATUSES.IDLE;
       })
       .addCase(registerUser.rejected, (state, action) => {
@@ -119,6 +119,15 @@ const userSlice = createSlice({
         state.status = STATUSES.IDLE;
       })
       .addCase(verifyUser.rejected, (state, action) => {
+        state.error = action.error;
+        state.status = STATUSES.ERROR;
+      })
+      .addCase(forgotPassword.pending, setLoadingState)
+      .addCase(forgotPassword.fulfilled, (state, action) => {
+        state.isEmailSend = true;
+        state.status = STATUSES.IDLE;
+      })
+      .addCase(forgotPassword.rejected, (state, action) => {
         state.error = action.error;
         state.status = STATUSES.ERROR;
       })
@@ -170,7 +179,7 @@ export const {
   resetIsProfileUpdated,
   resetIspasswordUpdated,
   resetError,
-  resetIsVerificationEmailSend,
+  resetIsEmailSend,
   resetIsVerified,
   resetIsLogin
 } = userSlice.actions;

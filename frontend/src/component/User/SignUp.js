@@ -3,7 +3,7 @@ import { motion } from "framer-motion"
 import { Link, useLocation, useNavigate } from "react-router-dom"
 import demoAvatar from "../images/userProfile.avif"
 import Logo from "../images/byte.png"
-import { registerUser, resetError, resetIsVerificationEmailSend } from '../../slices/userSlice/userSlice'
+import { registerUser, resetError, resetIsEmailSend } from '../../slices/userSlice/userSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import Loader from '../layout/Loader/Loader'
@@ -62,7 +62,7 @@ const SignUp = () => {
         }
         if (isVerificationEmailSend) {
             toast.success("verification link send");
-            dispatch(resetIsVerificationEmailSend());
+            dispatch(resetIsEmailSend());
             navigate("/user/verifymessage");
         }
         if (error) {

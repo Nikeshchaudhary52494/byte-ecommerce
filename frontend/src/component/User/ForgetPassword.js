@@ -1,22 +1,35 @@
-import React, { useState } from 'react'
-import { useDispatch } from 'react-redux';
-import { forgotPassword } from '../../slices/userSlice/userSlice';
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+import { forgotPassword, resetIsEmailSend } from '../../slices/userSlice/userSlice';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { STATUSES } from '../../store/statuses';
+import Loader from '../layout/Loader/Loader';
 
 const ForgetPassword = () => {
+
+    const { status, isEmailSend } = useSelector((state) => state.user);
+
     const [email, setEmail] = useState("");
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        dispatch(forgotPassword({ email })).then(() => {
-            setEmail("");
+        dispatch(forgotPassword({ email }))
+    }
+
+    useEffect(() => {
+        if (isEmailSend) {
+            dispatch(resetIsEmailSend());
             navigate("/forgetpasswordmessage");
             toast.success("Token sent to your email");
-        })
-    }
+        }
+    })
+
+    if (status === STATUSES.LOADING)
+        return <Loader />
+
     return (
         <div className='p-10 bg-slate-900 min-h-screen'>
             <div className='flex flex-col items-center'>
@@ -42,7 +55,6 @@ const ForgetPassword = () => {
                 </form>
             </div>
         </div>
-
     )
 }
 
