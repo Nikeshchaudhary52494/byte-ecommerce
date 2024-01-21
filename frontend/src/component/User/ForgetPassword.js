@@ -1,14 +1,20 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { forgotPassword } from '../../slices/userSlice/userSlice';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const ForgetPassword = () => {
     const [email, setEmail] = useState("");
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+
     const handleSubmit = (e) => {
         e.preventDefault();
         dispatch(forgotPassword({ email })).then(() => {
             setEmail("");
+            navigate("/forgetpasswordmessage");
+            toast.success("Token sent to your email");
         })
     }
     return (

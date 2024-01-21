@@ -95,11 +95,8 @@ const UpdateProduct = () => {
         }
     }, [productDetails, navigate, name, description, price, category, isProductUpdated, itemCondition, dispatch, stock]);
 
-    if (status === STATUSES.LOADING) {
-        return <div className="w-full grid place-content-center h-screen ">
-            <Loader />
-        </div>
-    }
+    if (status === STATUSES.LOADING)
+        return <Loader />
 
     return (
         <div className="bg-slate-800 p-5 border rounded-lg text-white">

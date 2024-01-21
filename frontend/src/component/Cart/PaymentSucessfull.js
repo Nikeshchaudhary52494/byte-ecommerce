@@ -14,9 +14,7 @@ const PaymentSucessfull = () => {
     return (
         <>
             {loading ? (
-                <div className='inset-0 fixed z-10 flex justify-center items-center bg-slate-900 top-0'>
-                    <Loader />
-                </div>
+                <Loader />
             ) : (
                 <div className='inset-0 fixed flex z-10 flex-col justify-center items-center bg-slate-900 top-0'>
                     <div className='flex flex-col items-center'>

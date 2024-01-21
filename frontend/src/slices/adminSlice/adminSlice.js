@@ -5,7 +5,9 @@ const adminSlice = createSlice({
     name: "admin",
     initialState: {
         usersData: [],
-        productsData: [],
+        productsData:{
+            products:[]
+        },
         status: STATUSES.IDLE,
     },
     reducers: {

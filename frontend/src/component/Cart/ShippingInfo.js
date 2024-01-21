@@ -25,7 +25,6 @@ const ShippingInfo = () => {
             shippingPrice: 5,
             totalPrice: totalPrice + 5,
         }
-        console.log({ orderData });
         dispatch(createNewOrder({ orderData }));
     }
     useEffect(() => {

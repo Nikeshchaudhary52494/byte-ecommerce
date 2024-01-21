@@ -3,12 +3,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { createMessage, resetError, resetIsMessageSend } from '../../slices/contactUsSlice/contactUsSlice';
 import { toast } from 'react-toastify';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { STATUSES } from '../../store/statuses';
+import Loader from '../layout/Loader/Loader';
 const ContactUs = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();
 
-    const { isMessageSend, error } = useSelector((state) => state.contactUs);
+    const { isMessageSend, error, status } = useSelector((state) => state.contactUs);
 
     const [message, setMessage] = useState('');
 
@@ -22,11 +24,14 @@ const ContactUs = () => {
             dispatch(resetIsMessageSend());
             navigate(location.state);
         }
-        if(error){
+        if (error) {
             toast.error(error);
             dispatch(resetError())
         }
     })
+
+    if (status === STATUSES.LOADING)
+        return <Loader />
 
     return (
         <div className='fixed inset-0 z-10 flex items-center justify-center bg-slate-900 text-white'>

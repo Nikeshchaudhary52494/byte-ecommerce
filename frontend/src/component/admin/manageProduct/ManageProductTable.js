@@ -5,9 +5,11 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useTable } from 'react-table';
 import { getAdminProducts } from '../../../slices/adminSlice/adminSlice';
 import { deleteProduct } from '../../../slices/productSlice/productsSlice';
+import Loader from '../../layout/Loader/Loader';
+import { STATUSES } from '../../../store/statuses';
 
 const ManageProductTable = () => {
-    const data = useSelector((state) => state.admin.productsData.products || []);
+    const { products: data, status } = useSelector((state) => state.admin.productsData);
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const location = useLocation();
@@ -58,6 +60,9 @@ const ManageProductTable = () => {
             rows,
             prepareRow,
         } = useTable({ columns, data });
+
+        if (status === STATUSES.LOADING)
+            return <Loader />
 
         return (
             <div className="overflow-x-auto">

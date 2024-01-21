@@ -81,12 +81,8 @@ const AddProductForm = () => {
         }
     })
 
-    if (status === STATUSES.LOADING) {
-        return <div className="w-full grid place-content-center min-h-screen ">
-            <Loader />
-        </div>
-
-    }
+    if (status === STATUSES.LOADING)
+        return <Loader />
 
     return (
         <div className="flex overflow-auto bg-slate-900 h-screen fixed z-20 top-0 left-0 w-screen items-center justify-center">

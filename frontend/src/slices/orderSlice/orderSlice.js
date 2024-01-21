@@ -5,7 +5,10 @@ import axiosInstance from "../../store/axiosConfig";
 const orderSlice = createSlice({
     name: "orders",
     initialState: {
-        data: [],
+        data: {
+            orders: [],
+            totalAmount: 0
+        },
         status: STATUSES.IDLE,
         myOrders: [],
         singleOrderData: []

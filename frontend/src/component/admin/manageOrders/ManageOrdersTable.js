@@ -4,10 +4,12 @@ import { useTable } from 'react-table';
 import { useNavigate } from 'react-router-dom';
 import { MdDelete, MdEdit } from "react-icons/md";
 import { deleteOrder, getAllOrders } from '../../../slices/orderSlice/orderSlice';
+import Loader from '../../layout/Loader/Loader';
+import { STATUSES } from '../../../store/statuses';
 
 const ManageOrdersTable = () => {
-    const { orders } = useSelector((state) => state.orders.data);
-    const data = orders ? orders : [];
+    let { data, status } = useSelector((state) => state.orders);
+    data = data.orders;
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -59,6 +61,9 @@ const ManageOrdersTable = () => {
             rows,
             prepareRow,
         } = useTable({ columns, data });
+
+        if (status === STATUSES.LOADING)
+            return <Loader />
 
         return (
             <div className="overflow-x-auto">

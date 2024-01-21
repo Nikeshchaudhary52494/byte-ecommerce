@@ -34,6 +34,7 @@ import PageNotFound from "./component/layout/PageNotFound.js";
 import ProtectedRoute from "./component/Route/ProtectedRoute.js";
 import VerifyMessage from "./component/User/VerifyMessage.js";
 import VerifyAccount from "./component/User/VerifyAccount.js";
+import ForgetPasswordMessage from "./component/User/ForgetPasswordMessage.js";
 
 function App() {
 
@@ -64,7 +65,8 @@ function App() {
         </Route>
         <Route path="myorders" element={<ProtectedRoute Component={Myorders} />} />
         <Route path="order/:id" element={<ProtectedRoute Component={SingleOrder} />} />
-        <Route path="password/reset/:token" element={<ProtectedRoute Component={ResetPassword} />} />
+        <Route path="password/reset/:token" element={<ResetPassword />} />
+        <Route path="forgetpasswordmessage" element={<ForgetPasswordMessage />} />
         <Route path='admin'>
           <Route path="dashbord" element={<ProtectedRoute Component={Dashbord} adminOnly={true} />} />
           <Route path="manageuser" element={<ProtectedRoute Component={ManageUser} adminOnly={true} />} />

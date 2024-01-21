@@ -18,7 +18,7 @@ const Home = () => {
 
 
   if (status === STATUSES.LOADING) {
-    return <div className="w-full grid place-content-center h-[80vh] ">
+    return <div className="w-full grid place-content-center h-screen ">
       <Loader />
     </div>
   }
