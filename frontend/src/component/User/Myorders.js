@@ -6,6 +6,7 @@ import { myOrders } from '../../slices/orderSlice/orderSlice';
 import { FaList } from 'react-icons/fa';
 import { STATUSES } from '../../store/statuses';
 import Loader from '../layout/Loader/Loader';
+import MetaData from '../layout/MetaData';
 
 const Myorders = () => {
     const { myOrders: data, status } = useSelector((state) => state.orders);
@@ -52,6 +53,7 @@ const Myorders = () => {
 
         return (
             <>
+                <MetaData title={"MyOrders"} />
                 <div className="sm:px-20 px-5 pb-20 min-h-screen bg-slate-900">
                     <h3 className='text-white font-bold text-3xl py-5'>My Orders</h3>
                     <div className='overflow-x-auto'>

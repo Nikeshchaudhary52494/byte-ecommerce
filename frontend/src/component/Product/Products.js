@@ -6,6 +6,7 @@ import ProductCard from "../layout/ProductCard";
 import { FaFilter } from "react-icons/fa"
 import ProductFilter from "./productFilter.js";
 import NoProductAvailable from "../layout/NoProductAvailable.js";
+import MetaData from "../layout/MetaData.js";
 
 const Products = () => {
 
@@ -30,6 +31,7 @@ const Products = () => {
 
     return (
         <>
+            <MetaData title={"Products"} />
             {/* filter option */}
             <div onClick={() => setToggleFilter(!toggleFilter)} className="bg-blue-600  cursor-pointer m-2 fixed flex  gap-5 items-center justify-center text-white rounded-full p-2 sm:px-4 sm:py-2">
                 < FaFilter />

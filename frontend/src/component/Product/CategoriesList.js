@@ -12,6 +12,7 @@ import shirt from "../images/shirt.jpg"
 import teddy from "../images/teddy.webp"
 import watch from "../images/watch2.jpg"
 import sofa from "../images/sofa.avif"
+import camera from "../images/camera.jpg"
 
 const CategoriesList = () => {
     const dispatch = useDispatch();
@@ -31,7 +32,7 @@ const CategoriesList = () => {
     },
     {
         imgAddress: mopper,
-        categoryName: "HouseHolds"
+        categoryName: "Households"
     },
     {
         imgAddress: watch,
@@ -39,16 +40,21 @@ const CategoriesList = () => {
     },
     {
         imgAddress: sofa,
-        categoryName: "Furnitures"
+        categoryName: "Furniture"
     },
     {
         imgAddress: teddy,
-        categoryName: "Toys & kids"
+        categoryName: "Toys"
     },
     {
         imgAddress: sound,
         categoryName: "Sound"
-    }, {
+    },
+    {
+        imgAddress: camera,
+        categoryName: "Camera"
+    },
+    {
         imgAddress: book,
         categoryName: "Books"
     }

@@ -8,6 +8,7 @@ import { loginUser, resetError, resetIsLogin } from '../../slices/userSlice/user
 import { toast } from "react-toastify"
 import { STATUSES } from '../../store/statuses'
 import Loader from "../layout/Loader/Loader"
+import MetaData from '../layout/MetaData'
 
 
 const Login = () => {
@@ -53,6 +54,7 @@ const Login = () => {
 
   return (
     <>
+      <MetaData title={"Login"} />
       <div className="bg-slate-900 flex flex-col items-center justify-center inset-0 z-10 fixed">
         <div class="bg-slate-800 px-5 py-10 rounded-lg text-white">
           <div class="px-4" >

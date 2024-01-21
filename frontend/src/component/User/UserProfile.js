@@ -7,6 +7,7 @@ import { STATUSES } from '../../store/statuses';
 import { MdEdit, MdLogout } from 'react-icons/md';
 import { RiShoppingBagFill } from "react-icons/ri";
 import BackButton from '../layout/BackButton';
+import MetaData from '../layout/MetaData';
 
 const UserProfile = () => {
     const navigate = useNavigate();
@@ -34,6 +35,7 @@ const UserProfile = () => {
     return (
         <div>
             <>
+                <MetaData title={"Profile"} />
                 {isAuthenticated ? (
                     <div className='flex justify-center fixed inset-0 z-10  flex-col-reverse items-center bg-slate-900 h-screen'>
                         <div className='w-[80%] max-w-lg bg-slate-800 p-2 rounded-lg'>

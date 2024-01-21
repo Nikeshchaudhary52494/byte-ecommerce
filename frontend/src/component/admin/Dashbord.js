@@ -12,6 +12,7 @@ import Loader from '../layout/Loader/Loader';
 import { getAllMessages } from '../../slices/contactUsSlice/contactUsSlice';
 import { MdRateReview } from "react-icons/md";
 import { FaHome } from 'react-icons/fa';
+import MetaData from '../layout/MetaData';
 
 const Dashbord = () => {
     const navigate = useNavigate();
@@ -34,6 +35,7 @@ const Dashbord = () => {
     }
     return (
         <>
+            <MetaData title={"Dashboard"} />
             <div className='bg-slate-800 absolute left-0 top-0 w-screen z-10 overflow-y-auto min-h-screen flex flex-col items-center p-10'>
                 <FaHome onClick={() => navigate("/")} className='text-white cursor-pointer absolute left-5 top-5 text-3xl ' />
                 <div className='text-2xl flex gap-4 items-center text-white font-bold pl-10 mt-10'>

@@ -38,6 +38,8 @@ const AddProductForm = () => {
         "Toys",
         "Furniture",
         "Books",
+        "Camera",
+        "MISCELLANEOUS"
     ];
     const itemCondition = [
         "New",

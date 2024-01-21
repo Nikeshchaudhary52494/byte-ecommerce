@@ -1,31 +1,33 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BsMouse } from "react-icons/bs";
 import Typed from "react-typed";
 import MetaData from "../layout/MetaData";
 import Loader from "../layout/Loader/Loader";
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { STATUSES } from '../../store/statuses';
 import ProductCard from "../layout/ProductCard";
 import CategoriesList from "../Product/CategoriesList";
 import Footer from "../layout/Footer";
 import { useNavigate } from "react-router-dom";
+import { fetchProducts } from "../../slices/productSlice/productsSlice";
 
 
 const Home = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const { data: products, status } = useSelector((state) => state.products);
 
+  useEffect(() => {
+    dispatch(fetchProducts());
+  }, [dispatch])
 
-  if (status === STATUSES.LOADING) {
-    return <div className="w-full grid place-content-center h-screen ">
-      <Loader />
-    </div>
-  }
+  if (status === STATUSES.LOADING)
+    return <Loader />
 
   return (
     <>
-      <MetaData title="BYTE ECOMMERCE" />
+      <MetaData title={"Home"} />
 
       {/* Categories at the Top */}
       <div className="space-x-4 hidden pl-4 md:flex justify-center overflow-x-auto">

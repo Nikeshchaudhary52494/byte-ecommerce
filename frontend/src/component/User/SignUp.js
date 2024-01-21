@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import Loader from '../layout/Loader/Loader'
 import { STATUSES } from '../../store/statuses'
+import MetaData from '../layout/MetaData'
 
 
 const SignUp = () => {
@@ -76,6 +77,7 @@ const SignUp = () => {
 
     return (
         <>
+            <MetaData title={"SignUp"} />
             <div className="bg-slate-900 flex flex-col items-center justify-center inset-0 z-10 fixed">
                 <div className="bg-slate-800 px-5 py-10 rounded-lg text-white">
                     <div className="px-4" >

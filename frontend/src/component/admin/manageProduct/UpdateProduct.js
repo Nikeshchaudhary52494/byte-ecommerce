@@ -33,7 +33,9 @@ const UpdateProduct = () => {
         "Sound",
         "Toys",
         "Furniture",
-        "Books"
+        "Books",
+        "Camera",
+        "MISCELLANEOUS"
     ];
     const condition = [
         "New",

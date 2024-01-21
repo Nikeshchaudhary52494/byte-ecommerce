@@ -10,6 +10,7 @@ import ReviewCard from "./review/ReviewCard.js"
 import AddReview from "./review/AddReview.js";
 import { toast } from 'react-toastify';
 import { getProductDetails } from "../../slices/productSlice/productsSlice.js";
+import MetaData from "../layout/MetaData.js";
 const ProductDetails = () => {
 
   const { isAuthenticated } = useSelector((state) => state.user);
@@ -87,6 +88,7 @@ const ProductDetails = () => {
 
   return (
     < >
+      <MetaData title={"Details"} />
       <div className=" max-w-5xl mx-auto p-4 flex items-center lg:flex-row lg:items-start flex-col lg:items-top gap-10 m-5 justify-center ">
 
         {/* Carousel section */}
