@@ -24,12 +24,9 @@ const Products = () => {
         };
     }, [toggleFilter]);
 
-    if (status === STATUSES.LOADING) {
-        return <div class="w-full grid place-content-center h-screen ">
-            <Loader />
-        </div>
+    if (status === STATUSES.LOADING)
+        return <Loader />
 
-    }
 
     return (
         <>

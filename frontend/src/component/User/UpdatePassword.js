@@ -4,12 +4,14 @@ import { resetError, resetIspasswordUpdated, updatepassword } from '../../slices
 import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import BackButton from '../layout/BackButton';
+import { STATUSES } from '../../store/statuses';
+import Loader from '../layout/Loader/Loader';
 
 const UpdatePassword = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();
-    const { error, isPasswordUpdated } = useSelector((state) => state.user);
+    const { error, isPasswordUpdated, status } = useSelector((state) => state.user);
     const [formData, setFormData] = useState({
         oldPassword: '',
         newPassword: '',
@@ -41,6 +43,10 @@ const UpdatePassword = () => {
             navigate(location.state);
         }
     }, [dispatch, error, isPasswordUpdated, navigate, location.state]);
+
+    if (status === STATUSES.LOADING)
+        return <Loader />
+
 
     return (
         <div className='flex bg-slate-900 overflow-auto h-screen fixed z-10 top-0 left-0 w-screen justify-center items-center'>

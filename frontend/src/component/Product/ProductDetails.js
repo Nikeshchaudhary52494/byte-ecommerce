@@ -82,12 +82,8 @@ const ProductDetails = () => {
     dispatch(getProductDetails({ id: id }));
   }, [dispatch, id]);
 
-  if (status === STATUSES.LOADING) {
-    return <div className="w-full grid place-content-center h-[80vh] ">
-      <Loader />
-    </div>
-
-  }
+  if (status === STATUSES.LOADING)
+    return <Loader />
 
   return (
     < >

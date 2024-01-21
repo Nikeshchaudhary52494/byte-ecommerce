@@ -2,10 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addReview, getProductDetails, resetError, resetIsReviewAdded } from '../../../slices/productSlice/productsSlice';
 import { toast } from 'react-toastify';
+import { STATUSES } from '../../../store/statuses';
+import Loader from '../../layout/Loader/Loader';
 
 const AddReview = ({ toggle, setToggle, productId }) => {
     const dispatch = useDispatch();
-    const { error, isReviewAdded } = useSelector((state) => state.products)
+    const { error, isReviewAdded, status } = useSelector((state) => state.products)
 
     const [review, setReview] = useState({
         comment: '',
@@ -40,6 +42,9 @@ const AddReview = ({ toggle, setToggle, productId }) => {
             dispatch(getProductDetails({ id: productId }));
         }
     }, [isReviewAdded, error, dispatch, productId])
+
+    if (status === STATUSES.LOADING)
+        return <Loader />
 
     return (
         <>

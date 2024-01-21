@@ -16,13 +16,8 @@ const SingleOrder = () => {
     }, [dispatch, id]);
 
 
-    if (status === STATUSES.LOADING) {
-        return (
-            <div className="min-h-screen flex bg-slate-900 items-center justify-center">
-                <Loader />
-            </div>
-        );
-    }
+    if (status === STATUSES.LOADING)
+        return <Loader />
 
     return (
         <SingleOrderDetails />

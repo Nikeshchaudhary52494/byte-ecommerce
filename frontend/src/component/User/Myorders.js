@@ -47,11 +47,8 @@ const Myorders = () => {
             prepareRow,
         } = useTable({ columns, data });
 
-        if (status === STATUSES.LOADING) {
-            return <div className="w-full grid place-content-center bg-slate-900 h-screen ">
-                <Loader />
-            </div>
-        }
+        if (status === STATUSES.LOADING)
+            return <Loader />
 
         return (
             <>

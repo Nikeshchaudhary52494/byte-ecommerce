@@ -6,7 +6,8 @@ import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { loginUser, resetError, resetIsLogin } from '../../slices/userSlice/userSlice'
 import { toast } from "react-toastify"
-
+import { STATUSES } from '../../store/statuses'
+import Loader from "../layout/Loader/Loader"
 
 
 const Login = () => {
@@ -14,7 +15,7 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { isAuthenticated, error, isLogin } = useSelector((state) => state.user);
+  const { isAuthenticated, error, isLogin, status } = useSelector((state) => state.user);
 
   const [user, setUser] = useState({
     email: "",
@@ -46,6 +47,9 @@ const Login = () => {
       dispatch(resetError());
     }
   }, [navigate, isAuthenticated, isLogin, location, error, dispatch])
+
+  if (status === STATUSES.LOADING)
+    return <Loader />
 
   return (
     <>

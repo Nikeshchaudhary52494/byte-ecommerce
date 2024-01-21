@@ -74,17 +74,8 @@ const UpdateUserProfile = () => {
     }, [error, isProfileUpdated, navigate, dispatch, location.state])
 
 
-    if (status === STATUSES.LOADING) {
-        return (
-            <div className="w-full grid place-content-center inset-0 fixed z-10 top-0 bg-slate-900 ">
-                <Loader />
-            </div>
-        );
-    }
-
-    if (status === STATUSES.ERROR) {
-        return <h2>Something went wrong!</h2>;
-    }
+    if (status === STATUSES.LOADING)
+        return <Loader />
 
     return (
         <div className='flex bg-slate-900 overflow-auto h-screen fixed z-10 top-0 left-0 w-screen justify-center items-center'>

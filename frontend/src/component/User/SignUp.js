@@ -71,11 +71,8 @@ const SignUp = () => {
         }
     }, [navigate, isAuthenticated, location, error, isVerificationEmailSend, dispatch])
 
-    if (status === STATUSES.LOADING) {
-        return <div className="w-full bg-slate-900 grid place-content-center h-screen ">
-            <Loader />
-        </div>
-    }
+    if (status === STATUSES.LOADING)
+        return <Loader />
 
     return (
         <>
