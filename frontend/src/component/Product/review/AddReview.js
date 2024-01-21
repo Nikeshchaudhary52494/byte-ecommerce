@@ -28,20 +28,19 @@ const AddReview = ({ toggle, setToggle, productId }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        dispatch(addReview({ rating, comment, productId }))
+        dispatch(addReview({ rating, comment, productId }));
 
     };
     useEffect(() => {
         if (error) {
             toast.error(error);
-            dispatch(resetError())
+            dispatch(resetError());
         }
         if (isReviewAdded) {
-            toast.success("Review added successfully");
             dispatch(resetIsReviewAdded());
             dispatch(getProductDetails({ id: productId }));
         }
-    }, [isReviewAdded, error, dispatch, productId])
+    }, [error, dispatch, isReviewAdded, productId]);
 
     if (status === STATUSES.LOADING)
         return <Loader />

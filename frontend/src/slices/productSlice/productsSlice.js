@@ -69,7 +69,8 @@ const productSlice = createSlice({
             })
             .addCase(addReview.pending, (state, action) => {
                 state.status = STATUSES.LOADING;
-            }).addCase(addReview.fulfilled, (state, action) => {
+            })
+            .addCase(addReview.fulfilled, (state, action) => {
                 state.isReviewAdded = true;
                 state.status = STATUSES.IDLE;
             })

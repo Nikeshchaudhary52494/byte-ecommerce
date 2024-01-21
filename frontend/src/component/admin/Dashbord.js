@@ -36,17 +36,17 @@ const Dashbord = () => {
     return (
         <>
             <MetaData title={"Dashboard"} />
-            <div className='bg-slate-800 absolute left-0 top-0 w-screen z-10 overflow-y-auto min-h-screen flex flex-col items-center p-10'>
+            <div className='bg-slate-800 w-screen min-h-screen absolute top-0 z-10 py-20'>
                 <FaHome onClick={() => navigate("/")} className='text-white cursor-pointer absolute left-5 top-5 text-3xl ' />
-                <div className='text-2xl flex gap-4 items-center text-white font-bold pl-10 mt-10'>
+                <div className='text-2xl flex gap-4  items-center justify-center text-white font-bold mt-10'>
                     <MdDashboard />
                     <h4>Dashboard</h4>
                 </div>
-                <div>
+                <div className='mx-auto max-w-5xl'>
                     <div className='bg-blue-500 mx-5 p-5 rounded-sm mt-10 text-center text-white font-bold'>
                         TotalAmount: {data.totalAmount}
                     </div>
-                    <div className='grid grid-cols-1 w-[90vw] md:grid-cols-2 lg:grid-cols-3 mt-1 mb-10 mx-5 max-w-5xl text-white rounded-sm  gap-1 '>
+                    <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-1 mb-10 mx-5 text-white rounded-sm  gap-1 '>
                         <Link to="/admin/manageproduct" className='bg-orange-500 p-2 rounded-sm text-center text-white font-bold'>
                             Manage Product
                         </Link>
@@ -60,7 +60,7 @@ const Dashbord = () => {
                             <MdRateReview /> Review
                         </Link>
                         <div className='h-28 flex-grow rounded-sm flex items-center text-3xl font-bold justify-center bg-violet-500'>
-                            <IoMdCart /> total order : {ordersLength}
+                            <IoMdCart /> Total order : {ordersLength}
                         </div>
                         <div className='h-28 flex-grow rounded-sm flex items-center text-3xl font-bold justify-center bg-fuchsia-500'>
                             <FaUser />
