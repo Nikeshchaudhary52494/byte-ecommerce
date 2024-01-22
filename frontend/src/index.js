@@ -8,10 +8,8 @@ import store from "./store/store";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { loadUser } from "./slices/userSlice/userSlice";
-import { fetchProducts } from "./slices/productSlice/productsSlice";
 
 const loadData = async () => {
-  await store.dispatch(fetchProducts());
   await store.dispatch(loadUser());
 };
 
