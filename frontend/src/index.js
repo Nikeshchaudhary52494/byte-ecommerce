@@ -8,39 +8,30 @@ import store from "./store/store";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { loadUser } from "./slices/userSlice/userSlice";
-import { fetchProducts } from "./slices/productSlice/productsSlice";
-
-const loadData = async () => {
-  await store.dispatch(fetchProducts());
-  await store.dispatch(loadUser());
-};
 
 const root = createRoot(document.getElementById('root'));
-
-loadData().then(() => {
-  root.render(
-    <React.StrictMode>
-      <Provider store={store}>
-        <Router>
-          <Routes>
-            <Route path="/*" element={<App />} />
-          </Routes>
-        </Router>
-        <ToastContainer
-          position="bottom-center"
-          autoClose={1500}
-          limit={2}
-          hideProgressBar={false}
-          newestOnTop={true}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="dark"
-        />
-      </Provider>
-    </React.StrictMode>,
-  );
-}
+store.dispatch(loadUser());
+root.render(
+  <React.StrictMode>
+    <Provider store={store}>
+      <Router>
+        <Routes>
+          <Route path="/*" element={<App />} />
+        </Routes>
+      </Router>
+      <ToastContainer
+        position="bottom-center"
+        autoClose={1500}
+        limit={2}
+        hideProgressBar={false}
+        newestOnTop={true}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
+    </Provider>
+  </React.StrictMode>,
 );
