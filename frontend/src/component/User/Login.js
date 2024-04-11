@@ -19,8 +19,8 @@ const Login = () => {
   const { isAuthenticated, error, isLogin, status } = useSelector((state) => state.user);
 
   const [user, setUser] = useState({
-    email: "",
-    password: ""
+    email: "testuser@gmail.com",
+    password: "12345678"
   })
 
   const { email, password } = user;
@@ -32,6 +32,14 @@ const Login = () => {
   const submitHandler = async (e) => {
     e.preventDefault()
     dispatch(loginUser(user));
+  }
+
+  const guestLogin = (e) => {
+    e.preventDefault()
+    dispatch(loginUser({
+      email: "adminUser@gmail.com",
+      password: "12345678"
+    }));
   }
 
   useEffect(() => {
@@ -99,10 +107,11 @@ const Login = () => {
             </Link>
           </div>
         </div>
-        <div className='w-full max-w-sm px-4'>
+        <div className='w-full flex justify-between items-center max-w-sm px-4'>
           <Link to="/" >
-            <button class="text-white  p-2 mt-5"  >Go to Home</button>
+            <button className="text-white  p-2 mt-5"  >Go to Home</button>
           </Link>
+          <button onClick={guestLogin} className='bg-blue-500 hover:bg-blue-600 text-white p-2 rounded'>Test admin</button>
         </div>
       </div>
     </>
